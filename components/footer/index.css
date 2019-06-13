@@ -24,6 +24,7 @@
 
 .Footer-item {
   margin: 0.4rem;
+  white-space: nowrap;
 }
 
 .Footer-section--inline {

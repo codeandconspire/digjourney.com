@@ -27,7 +27,7 @@ function arrow (text, rotate) {
   if (typeof text === 'string') {
     let words = text.split(' ')
     return html`
-      ${words.slice(0, words.length - 1).join(' ')} <span class="u-textNowrap">${words[words.length - 1]}</span> ${svg}
+      ${words.slice(0, words.length - 1).join(' ')} <span class="u-textNowrap">${words[words.length - 1]} ${svg}</span>
     `
   }
 

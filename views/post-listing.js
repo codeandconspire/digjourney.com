@@ -81,7 +81,7 @@ function home (state, emit) {
             image: memo(function (url, sizes) {
               if (!url) return null
               var sources = srcset(url, sizes, {
-                transforms: 'c_thumb',
+                transforms: 'c_thumb,g_face',
                 aspect: 10 / 12
               })
               return {
@@ -124,7 +124,7 @@ function home (state, emit) {
               image: memo(function (url, sizes) {
                 if (!url) return null
                 var sources = srcset(url, sizes, {
-                  transforms: 'c_thumb'
+                  transforms: 'c_thumb,g_face'
                 })
                 return Object.assign({
                   srcset: sources,
