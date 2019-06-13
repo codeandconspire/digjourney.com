@@ -1,6 +1,8 @@
+var lazy = require('choo-lazy-view')
 var choo = require('choo')
-var app = choo({ hash: false })
+var app = choo()
 var middleware = require('./lib/prismic-middleware')
+
 var REPOSITORY = 'https://digjourney.cdn.prismic.io/api/v2'
 
 app.state.origin = process.env.NODE_ENV === 'development'
@@ -12,14 +14,15 @@ if (process.env.NODE_ENV === 'development') {
   app.use(require('choo-service-worker/clear')())
 }
 
+app.use(lazy)
 app.use(require('./stores/ui'))
 app.use(require('./stores/navigation'))
 app.use(require('./stores/prismic')({ repository: REPOSITORY, middleware }))
 app.use(require('choo-meta')({ origin: app.state.origin }))
 app.use(require('choo-service-worker')('/sw.js'))
 
-app.route('/', require('./views/home'))
-app.route('/*', require('./views/catchall'))
+app.route('/', lazy(() => import('./views/home')))
+app.route('/*', lazy(() => import('./views/catchall')))
 
 try {
   module.exports = app.mount('body')
