@@ -1,4 +1,5 @@
 var html = require('choo/html')
+var asElement = require('prismic-element')
 var view = require('../components/view')
 var Hero = require('../components/hero')
 var { i18n, asText, srcset, HTTPError, memo, src } = require('../components/base')
@@ -16,8 +17,7 @@ function home (state, emit) {
           return html`
             <div>
               ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
-                title: asText(partial.data.intro_text),
-                image: memo(getHeroImage, [partial.data.image, 'hero'])
+                body: asElement(partial.data.intro)
               }) : Hero.loading({ image: true })}
             </div>
           `
@@ -26,8 +26,7 @@ function home (state, emit) {
         return html`
           <div>
             ${state.cache(Hero, `hero-${doc.id}`).render({
-              title: asText(doc.data.intro_text),
-              image: memo(getHeroImage, [doc.data.image, 'hero'])
+              body: asElement(partial.data.intro)
             })}
           </div>
         `
@@ -68,7 +67,6 @@ function meta (state) {
     }
 
     var image = doc.data.featured_image
-    if (!image.url) image = doc.data.image
     if (image.url) {
       Object.assign(props, {
         'og:image': src(image.url, 1000),
