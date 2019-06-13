@@ -22,6 +22,12 @@ app.use(require('choo-meta')({ origin: app.state.origin }))
 app.use(require('choo-service-worker')('/sw.js'))
 
 app.route('/', lazy(() => import('./views/home')))
+app.route('/insikter', lazy(() => import('./views/posts')))
+app.route('/insikter/:slug', lazy(() => import('./views/post')))
+app.route('/radgivning', lazy(() => import('./views/products')))
+app.route('/radgivning/:slug', lazy(() => import('./views/product')))
+app.route('/utbildning', lazy(() => import('./views/training')))
+app.route('/utbildning/:slug', lazy(() => import('./views/training')))
 app.route('/*', lazy(() => import('./views/catchall')))
 
 try {

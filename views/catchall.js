@@ -11,26 +11,18 @@ function catchall (state, emit) {
     return view(state, emit)
   }
 
-  if (segments.length === 2) {
-    state.params.slug = slug
-    state.params.type = segments[0] === 'discover' ? 'article' : 'page'
+  if (segments.length === 1) {
     let view = require('./page')
     return view(state, emit)
   }
 
-  return state.prismic.getByUID('landing', slug, function (err, doc) {
-    if (!err) {
-      let view = require('./page')
-      state.params.slug = slug
-      state.params.type = 'landing'
-      return view(state, emit)
-    }
-
-    return state.prismic.getByUID('page', slug, function (err, doc) {
-      var view = err ? require('./404') : require('./page')
-      state.params.slug = slug
-      state.params.type = 'page'
-      return view(state, emit)
-    })
-  })
+  if (segments.length === 2) {
+    state.params.slug = slug
+    if (segments[0] === 'insikter') state.params.type = 'post'
+    else if (segments[0] === 'radgivning') state.params.type = 'product'
+    else if (segments[0] === 'utbildning') state.params.type = 'training'
+    else state.params.type = 'page'
+    let view = require('./page')
+    return view(state, emit)
+  }
 }
