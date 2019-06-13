@@ -1,11 +1,15 @@
 var html = require('choo/html')
-var button = require('../button')
-var { loader } = require('../base')
+var { i18n, loader } = require('../base')
+
+var text = i18n()
 
 module.exports = highlight
 module.exports.loading = loading
 
 function highlight (props) {
+  var link = Object.assign({}, props.link)
+  delete link.text
+
   return html`
     <section class="Highlight Highlight--${props.direction || 'left'}">
       ${props.image ? html`
@@ -15,11 +19,11 @@ function highlight (props) {
       ` : null}
       <div class="Highlight-body">
         <div class="Text Highlight-text">
+          ${props.label ? html`<span class="Highlight-label">${props.label}</span>` : null}
           ${props.title ? html`<h1>${props.title}</h1>` : null}
-          ${props.body ? props.body : null}
-          ${props.action ? html`
+          ${props.link ? html`
             <p>
-              ${button(props.action)}
+              <a ${link}>${props.link.text || text`Read more`}</a>
             </p>
           ` : null}
         </div>

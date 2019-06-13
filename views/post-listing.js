@@ -76,7 +76,7 @@ function home (state, emit) {
             action: (item.link.url || item.link.id) && !item.link.isBroken ? {
               href: resolve(item.link),
               onclick: item.link.id ? partial(item.link) : null,
-              text: item.link.type === 'Document' ? item.link.data.call_to_action : text`Read more`
+              text: item.link.type === 'Document' ? item.link.data.cta : text`Read more`
             } : null,
             image: memo(function (url, sizes) {
               if (!url) return null

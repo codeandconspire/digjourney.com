@@ -92,40 +92,31 @@ function slices (slice, index, onclick) {
       `
     }
     case 'highlight': {
+      let link = slice.primary.link
       let title = asText(slice.primary.heading)
-      if (!title && slice.primary.link.id) {
-        title = asText(slice.primary.link.data.title)
-      }
-
-      let body = null
-      if (slice.primary.highlight_body.length) {
-        body = asElement(slice.primary.highlight_body)
-      } else if (slice.primary.link.id) {
-        body = asElement(slice.primary.link.data.description)
-      }
+      if (!title && link.id) title = asText(link.data.title)
 
       let image = slice.primary.image
-      if (!image || (!image.url && slice.primary.link.id)) {
-        image = slice.primary.link.data.featured_image
-        if (!image || !image.url) image = slice.primary.link.data.image
+      if (!image || (!image.url && link.id)) {
+        image = link.data.featured_image
+        if (!image || !image.url) image = link.data.image
       }
 
       let props = {
         title: title,
-        body: body,
+        label: text(link.type || link.link_type),
         direction: slice.primary.direction.toLowerCase(),
-        action: (slice.primary.link.url || slice.primary.link.id) && !slice.primary.link.isBroken ? {
-          href: resolve(slice.primary.link),
-          onclick: slice.primary.link.id ? onclick(slice.primary.link) : null,
-          text: slice.primary.link.type === 'Document' ? slice.primary.link.data.call_to_action : text`Read more`
+        link: (link.url || link.id) && !link.isBroken ? {
+          href: resolve(link),
+          onclick: link.id ? onclick(link) : null,
+          text: link.id ? link.data.cta : text`Read more`
         } : null,
         image: memo(function (url, sizes) {
           if (!url) return null
-          var sources = srcset(url, sizes, { aspect: 10 / 12 })
           return {
-            src: sources.split(' ')[0],
+            src: src(url, 720),
             sizes: '(min-width: 1000px) 35vw, (min-width: 600px) 200px, 100vw',
-            srcset: sources,
+            srcset: srcset(url, sizes, { aspect: 10 / 12 }),
             alt: image.alt || '',
             width: image.dimensions.width,
             height: image.dimensions.width * 10 / 12
@@ -160,7 +151,7 @@ function slices (slice, index, onclick) {
             link: (item.link.url || item.link.id) && !item.link.isBroken ? {
               href: resolve(item.link),
               onclick: item.link.id ? onclick(item.link) : null,
-              text: item.link.type === 'Document' ? item.link.data.call_to_action : null
+              text: item.link.type === 'Document' ? item.link.data.cta : null
             } : null
           })
         })
@@ -200,7 +191,7 @@ function slices (slice, index, onclick) {
             var linkText = item.link_text
             if (!linkText) {
               if (link.id && !link.isBroken) {
-                linkText = link.data.call_to_action || asText(link.data.title)
+                linkText = link.data.cta || asText(link.data.title)
               } else if (link.url) {
                 linkText = text`Read more`
               }
@@ -279,7 +270,7 @@ function slices (slice, index, onclick) {
 
             var linkText = item.link_text
             if (!linkText) {
-              if (item.link.id) linkText = item.link.data.call_to_action
+              if (item.link.id) linkText = item.link.data.cta
               else if (item.link.url) linkText = text`Read more`
             }
             var link = item.link.id || item.link.url ? {

@@ -13,23 +13,29 @@ function page (state, emit) {
       ${state.prismic.getByUID('page', state.params.slug, function (err, doc) {
         if (err) throw HTTPError(404, err)
         if (!doc) {
-          if (!state.partial) return Hero.loading({ center: true })
-          return state.cache(Hero, `hero-${state.partial.id}`).render({
-            body: html`
-              <h1>${asText(state.partial.data.title)}</h1>
-              ${asElement(state.partial.data.description, resolve)}
-            `
-          })
+          doc = state.partial
+          return html`
+            <div>
+              ${doc ? state.cache(Hero, `hero-${doc.id}`).render({
+                body: html`
+                  ${doc.data.title.length ? html`<h1>${asText(doc.data.title)}</h1>` : null}
+                  ${doc.data.description.length ? asElement(doc.data.description, resolve) : null}
+                `
+              }) : Hero.loading({ center: true })}
+            </div>
+          `
         }
 
         return html`
-          ${state.cache(Hero, `hero-${doc.id}`).render({
-            body: html`
-              <h1>${asText(doc.data.title)}</h1>
-              ${asElement(doc.data.description, resolve)}
-            `
-          })}
-          ${doc.data.body.map((slice, index) => slices(slice, index, link))}
+          <div>
+            ${state.cache(Hero, `hero-${doc.id}`).render({
+              body: html`
+                ${doc.data.title.length ? html`<h1>${asText(doc.data.title)}</h1>` : null}
+                ${doc.data.description.length ? asElement(doc.data.description, resolve) : null}
+              `
+            })}
+            ${doc.data.body.map((slice, index) => slices(slice, index, onclick))}
+          </div>
         `
       })}
     </main>
@@ -37,7 +43,7 @@ function page (state, emit) {
 
   // create link handler, emitting pushState w/ partial info
   // obj -> fn
-  function link (doc) {
+  function onclick (doc) {
     return function (event) {
       emit('pushState', event.currentTarget.href, { partial: doc })
       event.preventDefault()

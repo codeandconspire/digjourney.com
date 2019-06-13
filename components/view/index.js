@@ -72,7 +72,7 @@ function createView (view, meta) {
             .map((item) => ({
               href: resolve(item.link),
               onclick: onclick(item.link),
-              label: item.link.data.call_to_action || asText(item.link.data.title)
+              label: item.link.data.cta || asText(item.link.data.title)
             })),
           menu: doc.data.footer_menu.map(branch).filter(Boolean)
         }

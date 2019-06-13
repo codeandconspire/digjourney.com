@@ -5,6 +5,12 @@
   margin: 3.4rem 0;
 }
 
+.Highlight-label {
+  color: rgb(var(--color-muted));
+  font-weight: bold;
+  font-size: 1rem;
+}
+
 @media (min-width: 800px) and (min-height: 400px) {
   .Highlight {
     margin: 5rem 0;
@@ -29,7 +35,7 @@
     margin-right: 1.5rem;
     flex-basis: 30%;
   }
-  
+
   .Highlight-body {
     margin-left: 1.5rem;
     flex-basis: 70%;
@@ -60,7 +66,7 @@
     margin-right: 2.5rem;
     flex-basis: 50%;
   }
-  
+
   .Highlight-body {
     margin-left: 2.5rem;
     flex-basis: 50%;

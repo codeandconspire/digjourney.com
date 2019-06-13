@@ -32,17 +32,14 @@
   font-size: 0.875rem;
 }
 
-.Text a:not(.Embed-link):not(.Button) {
-  border-bottom: 2px solid rgb(var(--color-orange));
+.Text a:not(.Embed-link) {
+  color: #5422EE;
+  border-bottom: 1px solid currentColor;
   font-weight: 600;
   transition: color 100ms var(--ease-out);
 }
 
-.Text a:not(.Embed-link):not(.Button):hover {
-  color: rgb(var(--color-orange));
-}
-
-.Text a:not(.Embed-link):not(.Button):active {
+.Text a:not(.Embed-link):active {
   opacity: 0.5;
 }
 
@@ -95,16 +92,6 @@
   color: rgb(255, 255, 255);
   padding: 1rem;
   text-align: left;
-}
-
-.Text .Button {
-  margin: 0.5rem 0;
-}
-
-@media (min-width: 500px) {
-  .Text .Button {
-    margin: 1rem 0;
-  }
 }
 
 /**

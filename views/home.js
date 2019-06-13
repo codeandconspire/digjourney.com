@@ -12,16 +12,18 @@ function home (state, emit) {
       ${state.prismic.getSingle('homepage', function (err, doc) {
         if (err) throw HTTPError(404, err)
         if (!doc) {
-          if (!state.partial) return Hero.loading({ image: true })
+          if (!state.partial || !partial.data.intro.length) {
+            return Hero.loading({ image: true })
+          }
           return state.cache(Hero, `hero-${state.partial.id}`).render({
             body: asElement(partial.data.intro, resolve)
           })
         }
 
         return html`
-          ${state.cache(Hero, `hero-${doc.id}`).render({
+          ${doc.data.intro.length ? state.cache(Hero, `hero-${doc.id}`).render({
             body: asElement(doc.data.intro, resolve)
-          })}
+          }) : null}
         `
       })}
     </main>
