@@ -15,21 +15,22 @@ if (typeof window !== 'undefined') {
 exports.resolve = resolve
 function resolve (doc) {
   var root = ''
-  if (!doc.parent || !doc.parent.id || doc.parent.isBroken) {
-    root = `/${doc.uid}`
+  var parent = doc.data && doc.data.parent
+  if (parent && parent.id && !parent.isBroken) {
+    root = `/${parent.uid}`
   }
 
   switch (doc.type) {
     case 'website':
     case 'homepage': return '/'
+    case 'post_listing': return '/insikter'
+    case 'post': return `/insikter/${doc.uid}`
+    case 'product_listing': return '/radgivning'
+    case 'product': return `/radgivning/${doc.uid}`
+    case 'training_listing': return '/utbildning'
+    case 'training': return `/utbildning/${doc.uid}`
     case 'page':
-    case 'post_listing':
-    case 'product_listing':
-    case 'training_listing':
     case 'contact': return `${root}/${doc.uid}`
-    case 'post':
-    case 'product':
-    case 'training':
     case 'Web':
     case 'Media': return doc.url
     default: {

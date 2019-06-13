@@ -15,11 +15,9 @@ module.exports = class Hero extends Component {
   static loading (opts = {}) {
     return html`
       <div class="${className('Hero is-loading', { 'Hero--center': opts.center })}">
-        <div class="Hero-content">
-          <div class="Hero-container u-container">
-            <h1 class="Hero-title">${loader(18)}</h1>
-            <p class="Hero-text">${loader(32)}</p>
-          </div>
+        <div class="Hero-body u-container">
+          <h1 class="Hero-title">${loader(18)}</h1>
+          <p class="Hero-text">${loader(32)}</p>
         </div>
       </div>
     `
@@ -31,11 +29,9 @@ module.exports = class Hero extends Component {
 
   createElement (props) {
     return html`
-      <div class="Hero">
-        <div class="${className('Hero', { 'Hero--center': props.center })}">
-          <div class="Hero-container u-container">
-            ${props.body}
-          </div>
+      <div class="${className('Hero', { 'Hero--center': props.center })}">
+        <div class="Hero-body u-container">
+          ${props.body}
         </div>
       </div>
     `

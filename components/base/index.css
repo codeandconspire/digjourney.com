@@ -14,17 +14,24 @@
  */
 
 @font-face {
-  font-family: "Gilroy";
+  font-family: "Basier Circle";
   font-style: normal;
-  font-weight: 400;
-  src: url("./fonts/g-regular.woff") format("woff");
+  font-weight: bold;
+  src: url("./fonts/basiercircle-bold.woff") format("woff");
 }
 
 @font-face {
-  font-family: "Gilroy";
+  font-family: "Basier Circle";
   font-style: normal;
-  font-weight: 600;
-  src: url("./fonts/g-semibold.woff") format("woff");
+  font-weight: normal;
+  src: url("./fonts/basiercircle-regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Basier Circle";
+  font-style: italic;
+  font-weight: normal;
+  src: url("./fonts/basiercircle-regularitalic.woff") format("woff");
 }
 
 /**

@@ -18,11 +18,18 @@ module.exports = {
 }
 
 function arrow (text, rotate) {
-  var words = text.split(' ')
-  return html`
-    <span>
-      ${words.slice(0, words.length - 1).join(' ')} <span class="u-textNowrap">
-      ${words[words.length - 1]} <svg class="u-arrow" style="${rotate ? 'transform: rotate(90deg)' : ''}" role="presentation" viewBox="0 0 7 11"><path fill="none" fill-rule="evenodd" stroke="#8D89A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1.66 9.9L5.9 5.66 1.66 1.4"/></svg>
-    </span>
+  var svg = html`
+    <svg class="u-arrow" style="${rotate ? 'transform: rotate(90deg)' : ''}" role="presentation" viewBox="0 0 7 11">
+      <path fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1.66 9.9L5.9 5.66 1.66 1.4"/>
+    </svg>
   `
+
+  if (typeof text === 'string') {
+    let words = text.split(' ')
+    return html`
+      ${words.slice(0, words.length - 1).join(' ')} <span class="u-textNowrap">${words[words.length - 1]}</span> ${svg}
+    `
+  }
+
+  return html`${text} ${svg}`
 }

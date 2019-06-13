@@ -34,7 +34,7 @@ module.exports = class Header extends Component {
       <header class="Header ${animate ? 'is-animate' : ''} ${open ? 'is-open' : ''}" id="${id}">
         <div class="Header-content u-container">
           <a class="Header-home" ${home}>
-            ${symbol.logo('Header-logo')}${symbol.global('Header-logotype')}
+            DigJourney
           </a>
           <div class="Header-menu">
             <a class="Header-toggle" onclick=${toggle} href="#navigation">
@@ -42,24 +42,27 @@ module.exports = class Header extends Component {
               <div class="Header-figure"><div class="Header-lines"></div></div>
             </a>
             <ul class="Header-list">
-              ${props.menu.map(({ label, href, children, onclick }) => html`
-                <li class="${className('Header-item', { 'Header-item--dropdown': children.length })}">
-                  <a class="Header-link" href="${href}" onclick=${onclick}>
-                    ${children.length ? symbol.chevron(label) : label}
-                  </a>
-                  ${children.length ? html`
-                    <ul class="Header-dropdown">
-                      ${children.map(({ label, href, description, onclick }) => html`
-                        <li class="Header-item">
-                          <a class="Header-link" href="${href}" onclick=${onclick}>
-                            <div><strong class="Header-title">${label}</strong> <span class="u-hiddenVisually">–</span> ${description}</div>
-                          </a>
-                        </li>
-                      `)}
-                    </ul>
-                  ` : null}
-                </li>
-              `)}
+              ${props.menu.map(function ({ label, href, children, onclick }) {
+                label = html`<span class="Header-label">${label}</span>`
+                return html`
+                  <li class="${className('Header-item', { 'Header-item--dropdown': children.length })}">
+                    <a class="Header-link" href="${href}" onclick=${onclick}>
+                      ${children.length ? symbol.chevron(label) : label}
+                    </a>
+                    ${children.length ? html`
+                      <ul class="Header-dropdown">
+                        ${children.map(({ label, href, description, onclick }) => html`
+                          <li class="Header-item">
+                            <a class="Header-link" href="${href}" onclick=${onclick}>
+                              <div><span class="Header-title">${label}</span> <span class="u-hiddenVisually">–</span> ${description}</div>
+                            </a>
+                          </li>
+                        `)}
+                      </ul>
+                    ` : null}
+                  </li>
+                `
+              })}
             </ul>
           </div>
         </div>

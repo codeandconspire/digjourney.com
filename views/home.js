@@ -2,7 +2,7 @@ var html = require('choo/html')
 var asElement = require('prismic-element')
 var view = require('../components/view')
 var Hero = require('../components/hero')
-var { i18n, asText, srcset, HTTPError, memo, src } = require('../components/base')
+var { i18n, asText, srcset, HTTPError, src, resolve } = require('../components/base')
 
 var text = i18n()
 
@@ -15,20 +15,16 @@ function home (state, emit) {
         if (err) throw HTTPError(404, err)
         if (!doc) {
           return html`
-            <div>
-              ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
-                body: asElement(partial.data.intro)
-              }) : Hero.loading({ image: true })}
-            </div>
+            ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
+              body: asElement(partial.data.intro, resolve)
+            }) : Hero.loading({ image: true })}
           `
         }
 
         return html`
-          <div>
-            ${state.cache(Hero, `hero-${doc.id}`).render({
-              body: asElement(partial.data.intro)
-            })}
-          </div>
+          ${state.cache(Hero, `hero-${doc.id}`).render({
+            body: asElement(doc.data.intro, resolve)
+          })}
         `
       })}
     </main>

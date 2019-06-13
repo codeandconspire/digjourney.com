@@ -119,6 +119,18 @@ app.use(function (ctx, next) {
   return next()
 })
 
+// push fonts with all html requests
+app.use(function (ctx, next) {
+  if (!ctx.accepts('html')) return next()
+  var reg = /\.woff$/
+  for (let [key, asset] of ctx.assets) {
+    if (reg.test(key)) {
+      ctx.append('Link', `<${asset.url}>; rel=preload; crossorigin=anonymous; as=font`)
+    }
+  }
+  return next()
+})
+
 /**
  * Purge Cloudflare cache when starting production server
  */
