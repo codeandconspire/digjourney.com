@@ -1,0 +1,16 @@
+@import "../global";
+
+/* @define utilties */
+.u-colorOrange { color: rgb(var(--color-orange)) !important; }
+.u-colorRoyal { color: rgb(var(--color-royal)) !important; }
+.u-colorYellow { color: rgb(var(--color-yellow)) !important; }
+.u-colorRed { color: rgb(var(--color-red)) !important; }
+.u-colorLavender { color: rgb(var(--color-lavender)) !important; }
+.u-colorFog { color: rgb(var(--color-fog)) !important; }
+
+.u-bgOrange { background-color: rgb(var(--color-orange)) !important; }
+.u-bgRoyal { background-color: rgb(var(--color-royal)) !important; }
+.u-bgYellow { background-color: rgb(var(--color-yellow)) !important; }
+.u-bgRed { background-color: rgb(var(--color-red)) !important; }
+.u-bgLavender { background-color: rgb(var(--color-lavender)) !important; }
+.u-bgFog { background-color: rgb(var(--color-fog)) !important; }

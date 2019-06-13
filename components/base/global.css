@@ -1,0 +1,66 @@
+:root {
+  --color-orange: 255, 130, 0;
+  --color-royal: 32, 23, 71;
+  --color-yellow: 255, 209, 0;
+  --color-red: 224, 60, 49;
+  --color-lavender: 141, 137, 165;
+  --color-fog: 243, 243, 246;
+
+  --color-muted: 0, 0, 0, 0.5;
+
+  --color-link: blue;
+
+  --document-font-family: "Gilroy", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --document-font-size: 1rem;
+  --document-line-height: 1.5;
+
+  --document-background: 255, 255, 255;
+  --document-color: var(--color-royal);
+
+  --document-width: 1800px;
+  --document-margin: 1rem;
+
+  --container-large-width: var(--document-width);
+  --container-medium-width: 43rem;
+  --container-small-width: 30rem;
+
+  --loading-color: 0, 0, 0, 0.06;
+  --loading-color-solid: 235, 235, 235;
+
+  --focus-ring-width: 3px;
+  --focus-ring-color: var(--color-yellow);
+
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 350px) {
+  :root {
+    --document-margin: 1.125rem;
+  }
+}
+
+@media (min-width: 400px) {
+  :root {
+    --document-margin: 1.5rem;
+  }
+}
+
+@media (min-width: 600px) {
+  :root {
+    --document-margin: 2.5rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  :root {
+    --document-margin: 3.5rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --document-margin: 5rem;
+  }
+}

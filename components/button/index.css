@@ -1,0 +1,44 @@
+@import "../base";
+
+/* @define Button */
+.Button {
+  position: relative;
+  display: inline-block;
+  min-width: 9.2rem;
+  padding: 0 1.8rem;
+  line-height: 3.15rem;
+  font-size: 1rem;
+  color: rgb(255, 255, 255);
+  font-weight: 600;
+  white-space: nowrap;
+  user-select: none;
+  text-align: center;
+}
+
+.Button-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 4rem;
+  transform-origin: center;
+  transition: 120ms var(--ease-out);
+  transition-property: transform;
+  background: rgb(var(--color-orange));
+}
+
+.Button-text {
+  position: relative;
+  z-index: 1;
+}
+
+.Button:not([disabled]):hover .Button-background {
+  transform: scale(1.07);
+  color: rgb(255, 255, 255);
+}
+
+.Button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

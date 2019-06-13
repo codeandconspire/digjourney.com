@@ -1,0 +1,133 @@
+@import "../base";
+
+/* @define Principles */
+.Principles {
+  padding-bottom: 2rem;
+}
+
+.Principles-item {
+  position: relative;
+}
+
+@media (min-width: 600px) {
+  .Principles-item {
+    padding-left: 3em;
+  }
+}
+
+@media (min-width: 1000px) {
+  .Principles-item {
+    padding-left: 5.3125em;
+  }
+}
+
+@media (max-width: 1000px) {
+  .Principles-item:not(:first-child) {
+    margin-top: 4.375rem;
+  }
+}
+
+.Principles-item:nth-child(2n) {
+  margin-left: auto;
+  text-align: right;
+  padding-left: 0;
+}
+
+@media (min-width: 600px) {
+  .Principles-item:nth-child(2n) {
+    padding-right: 3rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .Principles-item:nth-child(2n) {
+    padding-right: 5.3125rem;
+    margin-top: -2.5rem;
+  }
+}
+
+
+.Principles-item::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 1.3rem;
+  left: -93px;
+  z-index: -1;
+
+  width: 195px;
+  height: 195px;
+
+  border-radius: 50%;
+  background: rgb(var(--color-fog));
+}
+
+@media (min-width: 600px) {
+  .Principles-item::before {
+    width: 215px;
+    height: 215px;
+    top: 2rem;
+    left: 0;
+  }
+}
+
+.Principles-item:nth-child(2n)::before {
+  left: auto;
+  right: -93px;
+}
+
+@media (min-width: 600px) {
+  .Principles-item:nth-child(2n)::before {
+    right: 0;
+  }
+}
+
+.Principles-number {
+  font-size: 4rem;
+  font-weight: 600;
+  line-height: 1;
+  color: rgb(var(--color-orange));
+}
+
+.Principles-title {
+  margin-top: .5rem;
+  max-width: 400px;
+
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+@media (min-width: 800px) {
+  .Principles-title {
+    font-size: 2.625rem;
+  }
+}
+
+.Principles-item:nth-child(2n) .Principles-title {
+  margin-left: auto;
+}
+
+.Principles-body {
+  margin-top: .625rem;
+  max-width: 550px;
+
+  font-size: 1.125rem;
+  line-height: 1.45;
+}
+
+.Principles-item:nth-child(2n) .Principles-body {
+  margin-left: auto;
+}
+
+@media (min-width: 600px) {
+  .Principles-body {
+    margin-top: 1rem;
+  }
+}
+
+@media (min-width: 800px) {
+  .Principles-body {
+    font-size: 1.25rem;
+  }
+}

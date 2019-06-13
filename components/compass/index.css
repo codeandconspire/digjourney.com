@@ -1,0 +1,104 @@
+@import "../base";
+
+/* @define Compass */
+.Compass {
+  position: relative;
+}
+
+.Compass-wrap {
+  display: grid;
+  grid-gap: 3rem;
+}
+
+@media (min-width: 600px) {
+  .Compass--image .Compass-wrap {
+    grid-gap: 3rem;
+    grid-template-columns: 200px 1fr;
+  }
+}
+
+@media (min-width: 1000px) {
+  .Compass--image .Compass-wrap {
+    grid-gap: 5rem;
+    grid-template-columns: 330px 1fr;
+  }
+}
+
+
+.Compass-figure {
+  flex: 1 0 auto;
+  max-width: 290px;
+}
+
+@media (min-width: 600px) {
+  .Compass-figure {
+    max-width: 200px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .Compass-figure {
+    max-width: 330px;
+  }
+}
+
+.Compass-image {
+  border-radius: 50%;
+  display: block;
+  max-width: none;
+  width: 375px;
+  height: 375px;
+  float: right;
+  object-fit: cover;
+}
+
+@media (min-width: 600px) {
+  .Compass-image {
+    width: 400px;
+    height: 400px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .Compass-image {
+    width: 660px;
+    height: 660px;
+  }
+}
+
+
+.Compass--image .Compass-content {
+  max-width: 34rem;
+}
+
+@media (min-width: 600px) {
+  .Compass--image .Compass-content {
+    margin-top: 3rem;
+  }
+}
+
+@media (min-width: 600px) {
+  .Compass--image .Compass-content {
+    max-width: 50rem;
+  }
+}
+
+.Compass-title {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 3rem;
+  max-width: 18em;
+}
+
+@media (min-width: 600px) {
+  .Compass-title {
+    font-size: 32px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .Compass-title {
+    font-size: 42px;
+  }
+}

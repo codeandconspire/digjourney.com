@@ -1,0 +1,59 @@
+@import "../base";
+
+/* @define Person */
+.Person {
+  text-align: center;
+  position: relative;
+}
+
+.Person-figure {
+  opacity: 1;
+  transition: opacity 200ms ease;
+}
+
+.Person--link:hover .Person-figure {
+  opacity: .8;
+}
+
+.Person-image {
+  max-width: 180px;
+  margin: 0 auto;
+}
+
+.Person-title {
+  margin-top: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.Person-text,
+.Person-link {
+  margin-top: .2rem;
+  font-size: 0.875rem;
+}
+
+.Person-link {
+  color: rgb(var(--color-orange));
+  border-bottom: 1px solid rgba(var(--color-orange), 0);
+  transition: border-color 120ms var(--ease-out);
+}
+
+.Person-link:hover,
+.Person-link:active {
+  border-bottom-color: rgba(var(--color-orange), 1);
+}
+
+.Person-link::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  background: rgb(255, 255, 255);
+}
+
+.Person-link:active::after {
+  opacity: 0.3;
+}

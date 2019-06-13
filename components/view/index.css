@@ -1,0 +1,96 @@
+@import "../base";
+
+/* @define View */
+.View {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: rgb(var(--document-background));
+}
+
+/**
+ * Header
+ */
+
+.View-header {
+  position: relative;
+  z-index: 5;
+}
+
+/**
+ * Main content area
+ */
+
+.View-main {
+  flex-grow: 1;
+}
+
+@media (max-width: 799px) {
+  .View.is-overlayed .View-main {
+    display: none !important;
+  }
+}
+
+.View-title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+@media (min-width: 600px) {
+  .View-title {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/**
+ * Footer
+ */
+
+.View-footer::before {
+  content: "";
+  height: 13vh;
+  display: block;
+  max-height: 7rem;
+}
+
+@media (min-width: 1000px) {
+  .View-footer::before {
+    max-height: none;
+    min-height: 8rem;
+  }
+}
+
+/**
+ * Slide in things
+ */
+
+:root[scripting-enabled] .View-slide {
+  opacity: 0;
+  transform: translateY(20vh);
+  animation: View-slide--appear 600ms 3000ms forwards var(--ease-out);
+}
+
+:root[scripting-enabled] .View-slide.is-initialized {
+  animation: none;
+}
+
+:root[scripting-enabled] .View-slide.is-visible {
+  will-change: transform;
+  animation: View-slide--appear 600ms forwards var(--ease-out);
+}
+
+@keyframes View-slide--appear {
+  to {
+    opacity: 1;
+    transform: translateY(0vh);
+  }
+}
+
+:root[scripting-enabled] .View-slide.is-immediate {
+  opacity: 1;
+  transform: translateY(0vh);
+  animation: none;
+}
