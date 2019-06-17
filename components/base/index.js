@@ -235,7 +235,10 @@ function srcset (uri, sizes, opts = {}) {
       opts.transforms = opts.transforms ? size[1] + ',' + opts.transforms : size[1]
       size = size[0]
     }
-    if (opts.aspect) opts.transforms += `,h_${Math.floor(size * opts.aspect)}`
+    if (opts.aspect) {
+      let height = `h_${Math.floor(size * opts.aspect)}`
+      opts.transforms = opts.transforms ? `${opts.transforms},${height}` : height
+    }
 
     return `${src(uri, size, opts)} ${size}w`
   }).join(',')
@@ -261,17 +264,6 @@ function asText (richtext) {
     text += (i > 0 ? ' ' : '') + richtext[i].text
   }
   return text
-}
-
-// get truncated snippet of text
-// (str, num?) = arr
-exports.snippet = snippet
-function snippet (str, maxlen = Infinity) {
-  if (!str || str.length < maxlen) return str
-  var words = str.split(' ')
-  var snipped = ''
-  while (snipped.length < maxlen) snipped += ' ' + words.shift()
-  return [snipped, ' ', html`<span class="u-textNowrap">${words[0]}…</span>`]
 }
 
 // create placeholder loading text of given length

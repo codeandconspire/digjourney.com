@@ -11,18 +11,14 @@ function home (state, emit) {
     <main class="View-main">
       ${state.prismic.getSingle('homepage', function (err, doc) {
         if (err) throw HTTPError(404, err)
-        if (!doc) {
-          if (!state.partial || !partial.data.intro.length) {
-            return Hero.loading({ image: true })
-          }
-          return state.cache(Hero, `hero-${state.partial.id}`).render({
-            body: asElement(partial.data.intro, resolve)
-          })
-        }
+        if (!doc && !state.partial) return Hero.loading()
+        doc = doc || state.partial
+
+        var { intro } = doc.data
 
         return html`
-          ${doc.data.intro.length ? state.cache(Hero, `hero-${doc.id}`).render({
-            body: asElement(doc.data.intro, resolve)
+          ${intro && intro.length ? state.cache(Hero, `hero-${doc.id}`).render({
+            body: asElement(intro, resolve)
           }) : null}
         `
       })}

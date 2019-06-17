@@ -1,6 +1,6 @@
 var html = require('choo/html')
 var { Elements } = require('prismic-richtext')
-var { srcset } = require('../base')
+var { srcset, src } = require('../base')
 var embed = require('../embed')
 
 module.exports = serialize
@@ -28,20 +28,17 @@ function serialize (type, node, content, children) {
       })
     }
     case Elements.image: {
-      let sizes = [400, 600, 800, 1200].map(function (size, index) {
-        return Math.min(size, node.dimensions.width * (index + 1))
-      })
-      let src = node.url
-      let attrs = { alt: node.alt || '' }
-      if (!/\.svg$/.test(node.url)) {
+      let attrs = Object.assign({ alt: node.alt || '' }, node.dimensions)
+      if (!/\.(svg|gif)$/.test(node.url)) {
         attrs.sizes = '42rem'
-        attrs.srcset = srcset(node.url, sizes)
-        src = srcset(node.url, [800]).split(' ')[0]
+        attrs.srcset = srcset(node.url, [400, 600, 800, 1200].map(function (size, index) {
+          return Math.min(size, node.dimensions.width * (index + 1))
+        }))
       }
       return html`
         <figure>
-          <img ${attrs} src="${src}">
-          ${node.copyright ? html`<figcaption class="Text-caption">${node.copyright}</figcaption>` : null}
+          <img ${attrs} src="${src(node.url, 800)}">
+          ${node.alt ? html`<figcaption class="Text-caption">${node.alt}</figcaption>` : null}
         </figure>
       `
     }

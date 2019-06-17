@@ -42,7 +42,7 @@
 
 @media (min-width: 1400px) {
   .Hero-body {
-    font-size: 3.9rem;
+    font-size: 3rem;
   }
 }
 
@@ -56,12 +56,4 @@
   color: #B2E9FF;
   white-space: nowrap;
   border-bottom: 1px solid currentColor;
-}
-
-/**
- * Centered text
- */
-
-.Hero--center {
-  text-align: center;
 }

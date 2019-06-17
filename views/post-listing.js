@@ -8,7 +8,7 @@ var Hero = require('../components/hero')
 var grid = require('../components/grid')
 var Card = require('../components/card')
 var highlight = require('../components/highlight')
-var { i18n, asText, srcset, HTTPError, memo, resolve } = require('../components/base')
+var { i18n, asText, srcset, HTTPError, memo, resolve, metaKey } = require('../components/base')
 
 var text = i18n()
 
@@ -169,6 +169,7 @@ function home (state, emit) {
   // obj -> fn
   function partial (doc) {
     return function (event) {
+      if (metaKey(event)) return
       emit('pushState', event.currentTarget.href, { partial: doc })
       event.preventDefault()
     }

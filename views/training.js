@@ -3,7 +3,7 @@ var asElement = require('prismic-element')
 var view = require('../components/view')
 var Hero = require('../components/hero')
 var slices = require('../components/slices')
-var { asText, resolve, src, HTTPError } = require('../components/base')
+var { asText, resolve, src, HTTPError, metaKey } = require('../components/base')
 
 module.exports = view(page, meta, 'page')
 
@@ -13,7 +13,7 @@ function page (state, emit) {
       ${state.prismic.getByUID('page', state.params.slug, function (err, doc) {
         if (err) throw HTTPError(404, err)
         if (!doc) {
-          if (!state.partial) return Hero.loading({ center: true })
+          if (!state.partial) return Hero.loading()
           return state.cache(Hero, `hero-${state.partial.id}`).render({
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
@@ -39,6 +39,7 @@ function page (state, emit) {
   // obj -> fn
   function link (doc) {
     return function (event) {
+      if (metaKey(event)) return
       emit('pushState', event.currentTarget.href, { partial: doc })
       event.preventDefault()
     }

@@ -1,4 +1,5 @@
 var html = require('choo/html')
+var Hero = require('../hero')
 var { i18n } = require('../base')
 var button = require('../button')
 
@@ -14,17 +15,16 @@ if (typeof window !== 'undefined') {
 
 module.exports = error
 
-function error (err) {
+function error (err, state, emit) {
   return html`
     <main class="View-main">
-      <div class="u-container u-space2">
-          <div class="Text">
-            <h1>${text`Ouch`}</h1>
-            ${message(err.status)}
-            ${DEBUG ? html`<pre>${err.stack}</pre>` : null}
-          </div>
-        </div>
-      </div>
+      ${state.cache(Hero, 'error').render({
+        body: html`
+          <h1>${text`Oops`}</h1>
+          ${message(err.status)}
+          ${DEBUG ? html`<div class="Text"><pre>${err.stack}</pre></div>` : null}
+        `
+      })}
     </main>
   `
 }

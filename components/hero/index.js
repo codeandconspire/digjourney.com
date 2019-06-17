@@ -1,7 +1,5 @@
 var html = require('choo/html')
 var Component = require('choo/component')
-var nanoraf = require('nanoraf')
-var button = require('../button')
 var { className, loader } = require('../base')
 
 module.exports = class Hero extends Component {

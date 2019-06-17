@@ -8,19 +8,29 @@
   font-size: 1rem;
   text-align: left;
   max-width: var(--container-medium-width);
-  margin-right: auto;
-  margin-left: auto;
+}
+
+.Text--small {
+  font-size: 0.8rem;
 }
 
 @media (min-width: 350px) {
   .Text {
     font-size: 1.125rem;
   }
+
+  .Text--small {
+    font-size: 0.9rem;
+  }
 }
 
 @media (min-width: 800px) and (min-height: 400px) {
   .Text {
     font-size: 1.25rem;
+  }
+
+  .Text--small {
+    font-size: 1rem;
   }
 }
 
@@ -53,7 +63,9 @@
 .Text h1,
 .Text h2,
 .Text h3,
-.Text h4 {
+.Text h4,
+.Text h5,
+.Text h6 {
   margin: 0.8em 0;
 }
 
@@ -100,7 +112,17 @@
 
 .Text ul,
 .Text ol {
-  margin: calc(1.2em - 0.5em) 0 1.2em;
+  margin: 0;
+}
+
+.Text ul:not(:first-child),
+.Text ol:not(:first-child) {
+  margin-top: calc(1.2em - 0.5em);
+}
+
+.Text ul:not(:last-child),
+.Text ol:not(:last-child) {
+  margin: 1.2em;
 }
 
 .Text ul {
@@ -129,7 +151,7 @@
   position: absolute;
   left: 0;
   top: calc(0.5em + 0.6em);
-  background: rgb(var(--color-orange));
+  background: currentColor;
 }
 
 .Text li {
@@ -144,10 +166,14 @@
 .Text h2,
 .Text h3,
 .Text h4,
+.Text h5,
+.Text h6,
 .Text .Text-h1,
 .Text .Text-h2,
 .Text .Text-h3,
-.Text .Text-h4 {
+.Text .Text-h4,
+.Text .Text-h5,
+.Text .Text-h6 {
   font-weight: 600;
   line-height: 1.25;
 }
@@ -164,11 +190,29 @@
 }
 
 .Text h3,
-.Text .Text-h3,
-.Text h4,
-.Text .Text-h4 {
+.Text .Text-h3 {
   font-size: 1.1em;
   margin-top: 1.4em;
+}
+
+.Text h4,
+.Text .Text-h4 {
+  font-size: 1em;
+  margin-top: 1.4em;
+}
+
+.Text h5,
+.Text .Text-h5 {
+  font-size: 0.9em;
+  text-transform: uppercase;
+}
+
+.Text h6,
+.Text .Text-h6 {
+  font-size: 0.8em;
+  font-weight: normal;
+  text-transform: uppercase;
+  color: rgb(var(--color-muted));
 }
 
 @media (min-width: 800px) and (min-height: 400px) {

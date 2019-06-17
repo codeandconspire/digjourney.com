@@ -2,58 +2,55 @@
 
 /* @define Person */
 .Person {
-  text-align: center;
+  display: flex;
+  align-items: flex-start;
   position: relative;
 }
 
 .Person-figure {
+  flex: 0 0 180px;
+  margin-right: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 100%;
   opacity: 1;
   transition: opacity 200ms ease;
 }
 
-.Person--link:hover .Person-figure {
-  opacity: .8;
+.Person-figure::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
 }
 
 .Person-image {
-  max-width: 180px;
-  margin: 0 auto;
+  min-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  width: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@supports (object-fit: cover) {
+  .Person-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    transform: none;
+  }
+}
+
+.Person-info {
+  flex: 1 1 auto;
 }
 
 .Person-title {
   margin-top: 1.5rem;
   font-size: 1.25rem;
   font-weight: 600;
-}
-
-.Person-text,
-.Person-link {
-  margin-top: .2rem;
-  font-size: 0.875rem;
-}
-
-.Person-link {
-  color: rgb(var(--color-orange));
-  border-bottom: 1px solid rgba(var(--color-orange), 0);
-  transition: border-color 120ms var(--ease-out);
-}
-
-.Person-link:hover,
-.Person-link:active {
-  border-bottom-color: rgba(var(--color-orange), 1);
-}
-
-.Person-link::after {
-  content: "";
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-  background: rgb(255, 255, 255);
-}
-
-.Person-link:active::after {
-  opacity: 0.3;
 }

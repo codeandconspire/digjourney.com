@@ -9,7 +9,7 @@ app.state.origin = process.env.NODE_ENV === 'development'
   ? 'http://localhost:8080'
   : process.env.npm_package_now_alias
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
   app.use(require('choo-devtools')())
   app.use(require('choo-service-worker/clear')())
 }

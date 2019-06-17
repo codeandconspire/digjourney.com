@@ -1,7 +1,7 @@
 var assert = require('assert')
 var html = require('choo/html')
 var player = require('./player')
-var { pluck, i18n } = require('../base')
+var { pluck, i18n, metaKey } = require('../base')
 
 var text = i18n(require('./lang.json'))
 
@@ -35,6 +35,7 @@ function embed (props) {
   `
 
   function onclick (event) {
+    if (metaKey(event)) return
     player.render(props.url)
     event.preventDefault()
   }

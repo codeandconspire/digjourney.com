@@ -3,7 +3,7 @@ var nanoraf = require('nanoraf')
 var Component = require('choo/component')
 var link = require('./link')
 var figure = require('./figure')
-var { className, snippet, loader } = require('../base')
+var { className, loader } = require('../base')
 
 module.exports = Card
 
@@ -79,18 +79,6 @@ Card.prototype.update = function () {
 }
 
 Card.prototype.createElement = function (props = {}) {
-  var body = props.body
-  if (body) {
-    if (typeof window === 'undefined') {
-      if (Array.isArray(body) || body[0] === '<') body = html`<div class="Card-text">${body}</div>`
-      else body = html`<p class="Card-text">${snippet(body, props.truncate || 170)}</p>`
-    } else if (Array.isArray(body) || body instanceof window.Element) {
-      body = html`<div class="Card-text">${body}</div>`
-    } else {
-      body = html`<p class="Card-text">${snippet(body, props.truncate || 170)}</p>`
-    }
-  }
-
   if (props.link) {
     props.link.block = true
   }
@@ -132,7 +120,7 @@ Card.prototype.createElement = function (props = {}) {
           <h3 class="Card-title">
             ${props.title}
           </h3>
-          ${body}
+          ${props.body}
           ${props.location || (!props.background && props.date) ? html`
             <div class="Card-footer">
               ${props.location ? html`

@@ -3,7 +3,7 @@ var asElement = require('prismic-element')
 var view = require('../components/view')
 var Hero = require('../components/hero')
 var slices = require('../components/slices')
-var { asText, resolve, src, HTTPError } = require('../components/base')
+var { asText, resolve, src, HTTPError, metaKey } = require('../components/base')
 
 module.exports = view(page, meta, 'page')
 
@@ -12,29 +12,20 @@ function page (state, emit) {
     <main class="View-main">
       ${state.prismic.getByUID('page', state.params.slug, function (err, doc) {
         if (err) throw HTTPError(404, err)
-        if (!doc) {
-          doc = state.partial
-          return html`
-            <div>
-              ${doc ? state.cache(Hero, `hero-${doc.id}`).render({
-                body: html`
-                  ${doc.data.title.length ? html`<h1>${asText(doc.data.title)}</h1>` : null}
-                  ${doc.data.description.length ? asElement(doc.data.description, resolve) : null}
-                `
-              }) : Hero.loading({ center: true })}
-            </div>
-          `
-        }
+        if (!doc && !state.partial) return Hero.loading()
+        doc = doc || state.partial
+
+        var { title, description, body } = doc.data
 
         return html`
-          <div>
-            ${state.cache(Hero, `hero-${doc.id}`).render({
-              body: html`
-                ${doc.data.title.length ? html`<h1>${asText(doc.data.title)}</h1>` : null}
-                ${doc.data.description.length ? asElement(doc.data.description, resolve) : null}
-              `
-            })}
-            ${doc.data.body.map((slice, index) => slices(slice, index, onclick))}
+          ${state.cache(Hero, `hero-${doc.id}`).render({
+            body: html`
+              ${title && title.length ? html`<h1>${asText(title)}</h1>` : null}
+              ${description && description.length ? asElement(description, resolve) : null}
+            `
+          })}
+          <div class="u-spaceB8">
+            ${body ? body.map((slice, index) => slices(slice, index, onclick)) : null}
           </div>
         `
       })}
@@ -45,6 +36,7 @@ function page (state, emit) {
   // obj -> fn
   function onclick (doc) {
     return function (event) {
+      if (metaKey(event)) return
       emit('pushState', event.currentTarget.href, { partial: doc })
       event.preventDefault()
     }

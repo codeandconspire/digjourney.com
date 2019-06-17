@@ -184,6 +184,7 @@ hr {
   display: block;
   width: 100%;
   height: 1px;
+  margin: 0;
   border: 0;
   background: rgba(var(--color-lavender), 0.3);
 }

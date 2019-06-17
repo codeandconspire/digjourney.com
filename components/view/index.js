@@ -5,7 +5,7 @@ var Header = require('../header')
 var Footer = require('../footer')
 var Player = require('../embed/player')
 var PrismicToolbar = require('../prismic-toolbar')
-var { i18n, asText, memo, resolve } = require('../base')
+var { i18n, asText, memo, resolve, metaKey } = require('../base')
 
 var text = i18n()
 
@@ -41,7 +41,7 @@ function createView (view, meta) {
         emit('meta', Object.assign(defaults, next))
       } catch (err) {
         err.status = state.offline ? 503 : err.status || 500
-        children = error(err)
+        children = error(err, state, emit)
         emit('meta', { title: `${text`Oops`} – ${DEFAULT_TITLE}` })
       }
 
@@ -126,6 +126,7 @@ function createView (view, meta) {
 
     function onclick (doc) {
       return function (event) {
+        if (metaKey(event)) return
         emit('pushState', event.currentTarget.href, { partial: doc })
         event.preventDefault()
       }
