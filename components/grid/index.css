@@ -35,6 +35,11 @@
   margin-bottom: calc(var(--Grid-gutter-vertical) * -1);
 }
 
+.Grid--divided {
+  margin-bottom: calc(var(--Grid-gutter-vertical) * -2);
+  overflow: hidden;
+}
+
 .Grid--slim {
   --Grid-gutter: 0.6rem;
   --Grid-gutter-vertical: 0.6rem;
@@ -54,15 +59,30 @@
 .Grid-cell {
   flex: 0 0 100%;
   display: flex;
-  align-items: self-start;
+  flex-direction: column;
   min-width: 0; /* 1 */
   padding: 0 calc(var(--Grid-gutter) * 0.5);
   margin-bottom: var(--Grid-gutter-vertical);
 }
 
+.Grid--divided .Grid-cell {
+  margin-bottom: calc(var(--Grid-gutter-vertical) * 2);
+  margin-top: calc(var(--Grid-gutter-vertical) * -1);
+}
+
 .Grid-cell > * {
   flex-basis: 100%;
   min-width: 0; /* 1 */
+}
+
+.Grid--divided .Grid-cell::before {
+  flex: 0 0 1px;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-bottom: var(--Grid-gutter-vertical);
+  background: rgba(var(--color-lavender), 0.3);
 }
 
 .Grid-cell--appear {

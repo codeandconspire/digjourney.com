@@ -12,7 +12,12 @@ function grid (opts, children) {
     opts = {}
   }
 
-  var classes = className('Grid', { 'Grid--carousel': opts.carousel, 'Grid--slim': opts.slim })
+  var classes = className('Grid', {
+    'Grid--carousel': opts.carousel,
+    'Grid--divided': opts.divided,
+    'Grid--slim': opts.slim
+  })
+
   if (opts.ordered) return html`<ol class="${classes}">${children.map(child)}</ol>`
   return html`<div class="${classes}">${children.map(child)}</div>`
 

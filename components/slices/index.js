@@ -120,7 +120,7 @@ function slices (slice, index, onclick) {
       return html`
         <section class="u-container u-space2">
           ${slice.primary.heading.length ? html`
-            <header class="Text u-space2">
+            <header class="Text u-space1">
               <h2>${asText(slice.primary.heading)}</h2>
             </header>
           ` : null}
@@ -183,7 +183,7 @@ function slices (slice, index, onclick) {
               <h2>${asText(slice.primary.heading)}</h2>
             </header>
           ` : null}
-          ${grid({ size: { md: '1of2' } }, blurbs.map(function (item, i) {
+          ${grid({ divided: true, size: { md: '1of2' } }, blurbs.map(function (item, i) {
             var title = asText(item.heading)
             if (!title && item.link.id) title = asText(item.link.data.title)
 
