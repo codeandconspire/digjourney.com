@@ -14,7 +14,7 @@ var REPOSITORY = 'https://digjourney.cdn.prismic.io/api/v2'
 
 var app = jalla('index.js', {
   sw: 'sw.js',
-  serve: Boolean(process.env.NOW) || process.env.NODE_ENV === 'production'
+  serve: Boolean(process.env.NOW) && process.env.NODE_ENV === 'production'
 })
 
 /**
@@ -77,6 +77,7 @@ app.use(get('/api/prismic-preview', async function (ctx) {
  * to their proper url
  */
 app.use(get('/:slug', async function (ctx, slug, next) {
+  if (!ctx.accepts('html')) return next()
   var api = await Prismic.api(REPOSITORY, { req: ctx.req })
   try {
     let doc = await api.getByUID('page', slug)
