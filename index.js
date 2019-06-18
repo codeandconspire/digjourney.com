@@ -1,7 +1,10 @@
-var lazy = require('choo-lazy-view')
 var choo = require('choo')
-var app = choo()
+var html = require('choo/html')
+var lazy = require('choo-lazy-view')
 var middleware = require('./lib/prismic-middleware')
+
+var app = choo()
+var page = lazy(() => import('./views/page'), prefetch('page'))
 
 var REPOSITORY = 'https://digjourney.cdn.prismic.io/api/v2'
 
@@ -21,14 +24,14 @@ app.use(require('./stores/prismic')({ repository: REPOSITORY, middleware }))
 app.use(require('choo-meta')({ origin: app.state.origin }))
 app.use(require('choo-service-worker')('/sw.js'))
 
-app.route('/', lazy(() => import('./views/home')))
-app.route('/insikter', lazy(() => import('./views/post-listing')))
-app.route('/insikter/:slug', lazy(() => import('./views/post')))
-app.route('/radgivning', lazy(() => import('./views/product-listing')))
-app.route('/radgivning/:slug', lazy(() => import('./views/product')))
-app.route('/utbildning', lazy(() => import('./views/training-listing')))
-app.route('/utbildning/:slug', lazy(() => import('./views/training')))
-app.route('/*', lazy(() => import('./views/catchall')))
+app.route('/', lazy(() => import('./views/home'), prefetch('homepage', true)))
+app.route('/insikter', lazy(() => import('./views/post-listing'), prefetch('posting_listing', true)))
+app.route('/insikter/:slug', lazy(() => import('./views/post'), prefetch('post')))
+app.route('/radgivning', lazy(() => import('./views/product-listing'), prefetch('product_listing', true)))
+app.route('/radgivning/:slug', lazy(() => import('./views/product'), prefetch('product')))
+app.route('/utbildning', lazy(() => import('./views/training-listing'), prefetch('training_listing', true)))
+app.route('/utbildning/:slug', lazy(() => import('./views/training'), prefetch('training')))
+app.route('/*', catchall)
 
 try {
   module.exports = app.mount('body')
@@ -38,5 +41,32 @@ try {
   if (typeof window !== 'undefined') {
     document.documentElement.removeAttribute('scripting-enabled')
     document.documentElement.setAttribute('scripting-initial-only', '')
+  }
+}
+
+// custom view matching
+// (obj, fn) -> Element
+function catchall (state, emit) {
+  var view
+  var segments = state.href.split('/').slice(1)
+
+  if (segments.length < 3) {
+    state.params.slug = segments[segments.length - 1]
+    view = page
+  } else {
+    view = require('./views/404')
+  }
+
+  return view(state, emit)
+}
+
+// prefetch document while loading view
+// (str, bool?) -> fn
+function prefetch (type, single) {
+  return function (state, emit) {
+    if (typeof window === 'undefined') return html`<body></body>`
+    if (single) state.prismic.getSingle(type, { prefetch: true })
+    else state.prismic.getByUID(type, state.params.slug, { prefetch: true })
+    return document.body
   }
 }
