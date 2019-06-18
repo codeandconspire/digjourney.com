@@ -25,7 +25,7 @@
   transform-origin: center;
   transition: 120ms var(--ease-out);
   transition-property: transform;
-  background: rgb(var(--color-orange));
+  background: rgb(var(--color-moss));
 }
 
 .Button-text {

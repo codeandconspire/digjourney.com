@@ -229,7 +229,8 @@
 .Card-link {
   display: inline-block;
   margin: 0.5rem 0 0;
-  border-bottom: 2px solid rgb(var(--color-orange));
+  color: rgb(var(--color-moss));
+  border-bottom: 2px solid rgb(var(--color-moss));
   font-weight: 600;
   transition: color 100ms var(--ease-out);
 }
@@ -241,10 +242,6 @@
   position: absolute;
   left: 0;
   top: 0;
-}
-
-.Card-link:hover {
-  color: rgb(var(--color-orange));
 }
 
 .Card-link:active {

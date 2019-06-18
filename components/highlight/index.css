@@ -6,7 +6,7 @@
 }
 
 .Highlight-label {
-  color: rgb(var(--color-muted));
+  color: rgba(var(--color-muted));
   font-weight: bold;
   font-size: 1rem;
 }

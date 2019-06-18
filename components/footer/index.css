@@ -2,7 +2,7 @@
 
 /* @define Footer */
 .Footer {
-  background: rgb(var(--color-fog));
+  background: rgb(var(--color-gray));
   padding: 3rem 0 3.5rem;
   user-select: none;
 }
@@ -53,7 +53,7 @@
 
 .Footer-link:hover,
 .Footer-link:active {
-  background: rgba(var(--color-lavender), 0.1);
+  background: rgba(0, 0, 0, 0.05);
   transition: none;
 }
 
@@ -196,13 +196,6 @@
   width: 6.8rem;
   margin-top: 2rem;
   transform-origin: center;
-  transition: 90ms var(--ease-out);
-  transition-property: transform, color;
-}
-
-.Footer-home:hover {
-  transform: scale(1.05);
-  color: rgba(var(--color-royal), 0.9);
 }
 
 .Footer-copy {

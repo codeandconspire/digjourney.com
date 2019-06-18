@@ -1,16 +1,12 @@
 @import "../global";
 
 /* @define utilties */
-.u-colorOrange { color: rgb(var(--color-orange)) !important; }
-.u-colorRoyal { color: rgb(var(--color-royal)) !important; }
-.u-colorYellow { color: rgb(var(--color-yellow)) !important; }
-.u-colorRed { color: rgb(var(--color-red)) !important; }
-.u-colorLavender { color: rgb(var(--color-lavender)) !important; }
-.u-colorFog { color: rgb(var(--color-fog)) !important; }
+.u-colorMoss { color: rgb(var(--color-moss)) !important; }
+.u-colorPink { color: rgb(var(--color-pink)) !important; }
+.u-colorTwilight { color: rgb(var(--color-twilight)) !important; }
+.u-colorGray { color: rgb(var(--color-divider)) !important; }
 
-.u-bgOrange { background-color: rgb(var(--color-orange)) !important; }
-.u-bgRoyal { background-color: rgb(var(--color-royal)) !important; }
-.u-bgYellow { background-color: rgb(var(--color-yellow)) !important; }
-.u-bgRed { background-color: rgb(var(--color-red)) !important; }
-.u-bgLavender { background-color: rgb(var(--color-lavender)) !important; }
-.u-bgFog { background-color: rgb(var(--color-fog)) !important; }
+.u-bgMoss { background-color: rgb(var(--color-moss)) !important; }
+.u-bgPink { background-color: rgb(var(--color-pink)) !important; }
+.u-bgTwilight { background-color: rgb(var(--color-twilight)) !important; }
+.u-bgGray { background-color: rgb(var(--color-divider)) !important; }

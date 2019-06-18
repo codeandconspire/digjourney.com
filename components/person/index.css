@@ -49,6 +49,10 @@
   flex: 1 1 auto;
 }
 
+.Person-info :link {
+  border: 0;
+}
+
 .Person-title {
   margin-top: 1.5rem;
   font-size: 1.25rem;

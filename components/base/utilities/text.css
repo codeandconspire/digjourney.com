@@ -34,20 +34,6 @@
   text-transform: uppercase !important;
 }
 
-.u-textLink {
-  display: inline-block;
-  padding: 0.1rem 0.3rem;
-  margin: -0.1rem -0.3rem;
-  border-radius: 2px;
-  transition: background 400ms var(--ease-out);
-}
-
-.u-textLink:hover,
-.u-textLink:active {
-  background: rgba(var(--color-lavender), 0.1);
-  transition: none;
-}
-
 /**
  * Prevent text from wrapping onto multiple lines and truncate with an ellipsis.
  * 1. Ensure that the node has a maximum width after which truncation can occur.

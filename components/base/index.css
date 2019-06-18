@@ -85,7 +85,7 @@
  */
 
 ::selection {
-  background: rgba(var(--color-orange), 0.25);
+  background: rgba(var(--color-pink), 0.25);
 }
 
 /**
@@ -186,7 +186,7 @@ hr {
   height: 1px;
   margin: 0;
   border: 0;
-  background: rgba(var(--color-lavender), 0.3);
+  background: rgb(var(--color-divider));
 }
 
 /**

@@ -58,7 +58,6 @@
   width: 4.37em;
   float: left;
   margin: 0.05em 0.5em 0 0;
-  color: rgb(var(--color-orange));
 }
 
 .Header-logotype {
@@ -119,7 +118,7 @@
     top: calc(100% - 0.3rem);
     z-index: 102;
     font-size: 0.75rem;
-    color: rgb(var(--color-lavender));
+    color: rgba(var(--color-muted));
     background: rgb(255, 255, 255);
     border-radius: 4px;
     opacity: 0;
@@ -157,7 +156,7 @@
     left: 0;
     opacity: 0;
     transition: opacity 400ms var(--ease-out);
-    background: linear-gradient(to right, rgba(var(--color-fog), 0.4), rgba(var(--color-fog), 0.8) 30%, rgba(var(--color-fog), 1) 70%, rgba(var(--color-fog), 0.4));
+    background: linear-gradient(to right, rgba(var(--color-gray), 0.4), rgba(var(--color-gray), 0.8) 30%, rgba(var(--color-gray), 1) 70%, rgba(var(--color-gray), 0.4));
   }
 
   .Header-dropdown .Header-link:hover::before {
@@ -168,7 +167,7 @@
   .Header-title {
     display: block;
     margin-bottom: 0.15rem;
-    color: rgb(var(--color-royal));
+    color: rgb(var(--document-color));
     font-size: 0.875rem;
   }
 
@@ -195,7 +194,7 @@
 }
 
 .Header-toggle:active {
-  background: rgba(var(--color-lavender), 0.3);
+  background: rgba(var(--color-gray));
 }
 
 @media (min-width: 800px) {
