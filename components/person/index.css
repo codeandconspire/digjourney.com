@@ -8,7 +8,8 @@
 }
 
 .Person-figure {
-  flex: 0 0 180px;
+  flex: 0 0 16vw;
+  max-width: 180px;
   margin-right: 2.5rem;
   position: relative;
   overflow: hidden;
@@ -47,14 +48,28 @@
 
 .Person-info {
   flex: 1 1 auto;
-}
-
-.Person-info :link {
-  border: 0;
+  font-size: 0.9rem;
 }
 
 .Person-title {
   margin-top: 1.5rem;
   font-size: 1.25rem;
   font-weight: 600;
+}
+
+.Person-info a:not(.Person-link) {
+  color: rgb(var(--color-link));
+  border-bottom: 1px solid transparent;
+}
+
+.Person-info a:hover {
+  border-bottom-color: currentColor;
+  color: rgb(var(--color-link));
+}
+
+.Person-link {
+  display: inline-block;
+  margin-bottom: 0.5em;
+  color: currentColor;
+  border-bottom: 1px solid transparent;
 }

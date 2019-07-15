@@ -11,15 +11,15 @@ module.exports = class Header extends Component {
     this.emit = emit
     this.local = state.components[id] = {
       id: id,
-      open: false
+      isOpen: false
     }
   }
 
-  update (href, open, props) {
-    return href !== this.local.href || open !== this.local.open
+  update (href, props) {
+    return href !== this.local.href || props.isOpen !== this.local.isOpen
   }
 
-  createElement (href, open, props) {
+  createElement (href, props) {
     this.local.href = href.replace(/\/$/, '')
     var { id } = this.local
     var emit = this.emit
@@ -31,7 +31,7 @@ module.exports = class Header extends Component {
     var animate = (href === '/' || href === '')
 
     return html`
-      <header class="Header ${animate ? 'is-animate' : ''} ${open ? 'is-open' : ''}" id="${id}">
+      <header class="Header ${animate ? 'is-animate' : ''} ${props.isOpen ? 'is-open' : ''}" id="${id}">
         <div class="Header-content u-container">
           <a class="Header-home" ${home}>
             DigJourney
@@ -70,7 +70,7 @@ module.exports = class Header extends Component {
     `
 
     function toggle (event) {
-      emit('header:toggle', !open)
+      emit('header:toggle', !props.isOpen)
       window.scrollTo(0, 0)
       event.preventDefault()
     }

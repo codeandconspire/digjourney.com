@@ -7,7 +7,7 @@ var view = require('../components/view')
 var Hero = require('../components/hero')
 var grid = require('../components/grid')
 var Card = require('../components/card')
-var highlight = require('../components/highlight')
+var callout = require('../components/callout')
 var { i18n, asText, srcset, HTTPError, memo, resolve, metaKey } = require('../components/base')
 
 var text = i18n()
@@ -35,7 +35,7 @@ function home (state, emit) {
                 }, [state.partial.data.image && state.partial.data.image.url, [150]])
               }) : Hero.loading({ center: true, image: true })}
               <div class="u-container">
-                ${highlight.loading()}
+                ${callout.loading()}
                 <div class="u-space2">
                   ${grid({ size: { md: '1of2', lg: '1of3' } }, items)}
                 </div>
@@ -95,7 +95,7 @@ function home (state, emit) {
             }, [image && image.url, [400, 800, 1200, [1500, 'q_50']]])
           }
 
-          return highlight(props)
+          return callout(props)
         }).filter(Boolean)
 
         var opts = {

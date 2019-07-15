@@ -3,7 +3,7 @@
 /* @define Facts */
 .Facts {
   padding: var(--document-margin);
-  background-color: #F4F3F6;
+  background-color: rgb(var(--color-gray));
 }
 
 .Facts-heading {

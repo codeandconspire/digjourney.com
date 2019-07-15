@@ -1,0 +1,42 @@
+@import "../base";
+
+/* @define Quote */
+.Quote {
+  padding: 5rem 0;
+  overflow: hidden;
+  background: rgb(var(--color-gray));
+}
+
+.Quote-content {
+  margin: 0 auto;
+  max-width: 39rem;
+}
+
+.Quote-body {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.Quote-symbol {
+  transform: translateY(-50%);
+}
+
+@media (min-width: 39rem) {
+  .Quote-symbol {
+    transform: translateX(-100%);
+  }
+}
+
+.Quote-label {
+  font-weight: bold;
+}
+
+.Quote-label,
+.Quote-name {
+  display: block;
+  margin-top: 3rem;
+}
+
+.Quote-label + .Quote-name {
+  margin-top: 0;
+}

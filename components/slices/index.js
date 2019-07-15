@@ -4,8 +4,10 @@ var Card = require('../card')
 var grid = require('../grid')
 var facts = require('../facts')
 var embed = require('../embed')
+var quote = require('../quote')
 var person = require('../person')
-var highlight = require('../highlight')
+var callout = require('../callout')
+var symbols = require('../symbols')
 var serialize = require('../text/serialize')
 var { i18n, asText, resolve, srcset, src, memo } = require('../base')
 
@@ -13,12 +15,12 @@ var text = i18n()
 
 module.exports = slices
 
-function slices (slice, index, onclick) {
+function slices (slice, index, list, onclick) {
   switch (slice.slice_type) {
     case 'text': {
       if (!slice.primary.text.length) return null
       return html`
-        <div class="u-container">
+        <div class="u-container u-space1">
           <div class="Text">
             ${asElement(slice.primary.text, resolve, serialize)}
           </div>
@@ -45,7 +47,7 @@ function slices (slice, index, onclick) {
       var caption = slice.primary.image.alt
 
       return html`
-        <figure class="Text u-sizeFull">
+        <figure class="Text u-sizeFull u-space1">
           <div class="u-md-container">
             <img ${attrs} src="${src(slice.primary.image.url, 800)}">
           </div>
@@ -56,8 +58,11 @@ function slices (slice, index, onclick) {
       `
     }
     case 'line': {
+      let prev = list[index - 1]
       return html`
-        <div class="u-container"><hr class="u-medium u-space1"></div>
+        <div class="u-container">
+          <hr class="${prev && prev.slice_type === 'text' ? 'u-medium' : ''} u-space1">
+        </div>
       `
     }
     case 'video': {
@@ -66,17 +71,19 @@ function slices (slice, index, onclick) {
       if (!children) return null
 
       return html`
-        <div class="u-md-container">
+        <div class="u-md-container u-space1">
           <figure class="Text u-sizeFull">
             <div class="u-space1">${children}</div>
           </div>
         </div>
       `
     }
-    case 'highlight': {
+    case 'callout': {
       let link = slice.primary.link
       let title = asText(slice.primary.heading)
       if (!title && link.id) title = asText(link.data.title)
+      let body = asElement(slice.primary.text)
+      if (!text.length && link.id) body = asElement(link.data.description)
 
       let image = slice.primary.image
       if (!image || (!image.url && link.id)) {
@@ -84,14 +91,21 @@ function slices (slice, index, onclick) {
         if (!image || !image.url) image = link.data.image
       }
 
+      var action = slice.primary.link_text
+      if (!action) {
+        if (link.id) action = link.data.cta
+        else action = text`Read more`
+      }
+
       let props = {
         title: title,
-        label: text(link.type || link.link_type),
+        body: body,
+        theme: slice.primary.theme.toLowerCase(),
         direction: slice.primary.direction.toLowerCase(),
         link: (link.url || link.id) && !link.isBroken ? {
           href: resolve(link),
           onclick: link.id ? onclick(link) : null,
-          text: link.id ? link.data.cta : text`Read more`
+          text: action
         } : null,
         image: memo(function (url, sizes) {
           if (!url) return null
@@ -107,7 +121,7 @@ function slices (slice, index, onclick) {
       }
 
       return html`
-        <div class="u-container">${highlight(props)}</div>
+        <div class="u-container u-space1">${callout(props)}</div>
       `
     }
     case 'people': {
@@ -232,12 +246,62 @@ function slices (slice, index, onclick) {
     case 'facts_box': {
       let heading = slice.primary.heading
       return html`
-        <section class="u-container">
+        <section class="u-container u-space2">
           ${facts({
             heading: heading.length ? asText(heading) : null,
             body: asElement(slice.primary.body)
           })}
         </section>
+      `
+    }
+    case 'features': {
+      let items = slice.items.filter((item) => item.heading.length)
+      if (!items.length) return null
+
+      return html`
+        <div class="u-container u-space2">
+          ${grid({ size: { md: '1of2' } }, items.map(function (item) {
+            var symbol = item.symbol && item.symbol.toLowerCase()
+            return html`
+              <div class="Text">
+                ${symbol && symbol in symbols ? symbols[symbol]() : null}
+                <div class="${symbol in symbols ? 'u-spaceL3 u-spaceT3' : ''}">
+                  ${asElement(item.heading)}
+                  ${asElement(item.text, resolve)}
+                </div>
+              </div>
+            `
+          }))}
+        </div>
+      `
+    }
+    case 'logos': {
+      let items = slice.items.filter((item) => item.image.url)
+      if (!items.length) return null
+      let heading = asText(slice.primary.heading)
+
+      return html`
+        <div class="u-container u-space2">
+          <div class="Text u-sizeFull u-textCenter">
+            ${heading ? html`<h2 class="u-spaceB4">${asText(slice.primary.heading)}</h2>` : null}
+            <div class="u-flex u-flexWrap u-justifyCenter u-alignCenter">
+              ${items.map((item, index) => html`
+                <img class="u-spaceA4" style="width: auto;" width="${item.image.dimensions.width}" height="${item.image.dimensions.height}" alt="${item.image.alt || ''}" src="${item.image.url}">
+              `)}
+            </div>
+          </div>
+        </div>
+      `
+    }
+    case 'quote': {
+      return html`
+        <div class="u-space2">
+          ${quote({
+            body: asElement(slice.primary.body),
+            label: slice.primary.label,
+            name: slice.primary.name
+          })}
+        </div>
       `
     }
     default: return null

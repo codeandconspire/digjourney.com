@@ -27,7 +27,7 @@ module.exports = class Hero extends Component {
 
   createElement (props) {
     return html`
-      <div class="${className('Hero', { 'Hero--center': props.center })}">
+      <div class="${className('Hero', { 'Hero--center': props.center })}" id="${this.local.id}">
         <div class="Hero-body u-container">
           ${props.body}
         </div>

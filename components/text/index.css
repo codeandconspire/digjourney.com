@@ -43,7 +43,7 @@
 }
 
 .Text a:not(.Embed-link) {
-  color: #5422EE;
+  color: rgb(var(--color-link));
   border-bottom: 1px solid currentColor;
   font-weight: 600;
   transition: color 100ms var(--ease-out);
@@ -67,6 +67,30 @@
 .Text h5,
 .Text h6 {
   margin: 0.8em 0;
+}
+
+.Text p:first-child,
+.Text ul:first-child,
+.Text ol:first-child,
+.Text h1:first-child,
+.Text h2:first-child,
+.Text h3:first-child,
+.Text h4:first-child,
+.Text h5:first-child,
+.Text h6:first-child {
+  margin-top: 0;
+}
+
+.Text p:last-child,
+.Text ul:last-child,
+.Text ol:last-child,
+.Text h1:last-child,
+.Text h2:last-child,
+.Text h3:last-child,
+.Text h4:last-child,
+.Text h5:last-child,
+.Text h6:last-child {
+  margin-bottom: 0;
 }
 
 .Text img:not(.Embed-image) {
@@ -173,7 +197,7 @@
 .Text .Text-h4,
 .Text .Text-h5,
 .Text .Text-h6 {
-  font-weight: 600;
+  font-weight: bold;
   line-height: 1.25;
 }
 

@@ -15,18 +15,16 @@ function person (props = {}) {
       ${image}
       <div class="Person-info">
         <h3 class="Person-title">${props.title}</h3>
-        <div class="Text Text--small">
-          ${props.link ? link(props.link) : null}
-          ${props.link && props.body ? html`<br>` : null}
-          ${props.body}
-        </div>
+        ${props.link ? link(props.link) : null}
+        ${props.link && props.body ? html`<br>` : null}
+        ${props.body}
       </div>
     </div>
   `
 }
 
 function link (props) {
-  var attrs = { href: props.href }
+  var attrs = { href: props.href, class: 'Person-link' }
   if (props.external) {
     props.target = '_blank'
     props.rel = 'noopenere nofererrer'

@@ -14,7 +14,7 @@ var REPOSITORY = 'https://digjourney.cdn.prismic.io/api/v2'
 
 var app = jalla('index.js', {
   sw: 'sw.js',
-  serve: Boolean(process.env.NOW) && process.env.NODE_ENV === 'production'
+  serve: Boolean(process.env.NOW)
 })
 
 /**
@@ -135,10 +135,11 @@ app.use(function (ctx, next) {
 /**
  * Purge Cloudflare cache when starting production server
  */
-app.listen(process.env.PORT || 8080, function () {
-  if (process.env.NOW && app.env === 'production') {
-    purge(['/sw.js'], function (err) {
-      if (err) app.emit('error', err)
-    })
-  }
-})
+if (process.env.NOW && app.env === 'production') {
+  purge(['/sw.js'], function (err) {
+    if (err) app.emit('error', err)
+    else app.listen(process.env.PORT || 8080)
+  })
+} else {
+  app.listen(process.env.PORT || 8080)
+}

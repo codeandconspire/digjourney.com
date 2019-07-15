@@ -29,7 +29,7 @@ function page (state, emit) {
               ${asElement(doc.data.description, resolve)}
             `
           })}
-          ${doc.data.body.map((slice, index) => slices(slice, index, link))}
+          ${doc.data.body.map((slice, index, list) => slices(slice, index, list, link))}
         `
       })}
     </main>

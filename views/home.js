@@ -16,11 +16,11 @@ function home (state, emit) {
 
         var { intro } = doc.data
 
-        return html`
-          ${intro && intro.length ? state.cache(Hero, `hero-${doc.id}`).render({
+        return [
+          intro && intro.length ? state.cache(Hero, `hero-${doc.id}`).render({
             body: asElement(intro, resolve)
-          }) : null}
-        `
+          }) : null
+        ]
       })}
     </main>
   `

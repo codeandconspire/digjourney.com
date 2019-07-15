@@ -49,13 +49,14 @@ function createView (view, meta) {
         if (!doc) return { menu: [] }
         var homepage = doc.data.homepage_link
         return {
+          isOpen: state.ui.openNavigation,
           homepage: homepage.id && !homepage.isBroken ? {
             href: resolve(homepage),
             onclick: onclick(homepage)
           } : null,
           menu: doc.data.main_menu.map(branch).filter(Boolean)
         }
-      }, [doc && doc.id, 'menu'])
+      }, [doc && doc.id, state.ui.openNavigation, 'menu'])
 
       var footer = memo(function () {
         if (!doc) return null
@@ -81,7 +82,7 @@ function createView (view, meta) {
       return html`
         <body class="View ${state.ui.openNavigation ? 'is-overlayed' : ''}" id="view">
           <script type="application/ld+json">${raw(JSON.stringify(linkedData(state)))}</script>
-          ${state.cache(Header, 'header').render(state.href, state.ui.openNavigation, menu)}
+          ${state.cache(Header, 'header').render(state.href, menu)}
           ${children}
           ${state.cache(Footer, 'footer').render(footer)}
           ${Player.render()}

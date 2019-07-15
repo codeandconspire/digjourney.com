@@ -25,7 +25,7 @@ function page (state, emit) {
             `
           })}
           <div class="u-spaceB8">
-            ${body ? body.map((slice, index) => slices(slice, index, onclick)) : null}
+            ${body ? body.map((slice, index, list) => slices(slice, index, list, onclick)) : null}
           </div>
         `
       })}
