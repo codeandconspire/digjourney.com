@@ -10,6 +10,11 @@
   max-width: var(--container-medium-width);
 }
 
+.Text--center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .Text--small {
   font-size: 0.8rem;
 }
