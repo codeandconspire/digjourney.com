@@ -18,8 +18,8 @@
   "post": "Blogginlägg",
   "product_listing": "Våra tjänster",
   "product": "Rådgivning",
-  "training_listing": "Alla utbildningar",
-  "training": "Utbildning",
+  "course_listing": "Alla utbildningar",
+  "course": "Utbildning",
   "page": "Ämne",
   "contact": "Kontakt",
   "Web": "Webblänk",
@@ -28,5 +28,10 @@
   "Fill in your e-mail address": "Fyll i din e-postadress",
   "Subscribe": "Starta prenumeration",
   "Hooray! You'll hear from us soon.": "Hurra! Räkna med att höra från oss snart.",
-  "Oops! Something went wrong, please try again.": "Hoppsan! Något gick galet, prova igen."
+  "Oops! Something went wrong, please try again.": "Hoppsan! Något gick galet, prova igen.",
+  "Apply": "Ansök",
+  "Go to application": "Till anmälan",
+  "Location": "Plats",
+  "Teachers": "Kursledare",
+  "Upcoming course dates": "Kommande kurstillfällen"
 }

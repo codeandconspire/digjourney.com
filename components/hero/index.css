@@ -22,6 +22,15 @@
   }
 }
 
+.Hero--small {
+  min-height: auto;
+  padding-bottom: 8rem;
+}
+
+.Hero--small::before {
+  height: 10vh;
+}
+
 .Hero-body {
   font-weight: bold;
   font-size: 1.3rem;
@@ -46,6 +55,11 @@
   }
 }
 
+.Hero-label {
+  font-size: 1rem;
+  font-weight: normal;
+}
+
 .Hero-body h1 {
   margin-bottom: 1.2em;
   font-size: 1.6em;
@@ -56,4 +70,12 @@
   color: #B2E9FF;
   white-space: nowrap;
   border-bottom: 1px solid currentColor;
+}
+
+/**
+ * Themes
+ */
+
+.Hero--twilight {
+  background-color: rgb(var(--color-twilight));
 }

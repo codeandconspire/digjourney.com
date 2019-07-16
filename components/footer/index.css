@@ -2,22 +2,30 @@
 
 /* @define Footer */
 .Footer {
+  padding-top: 3rem;
+  border-top: 1px solid rgb(var(--color-divider));
+}
+
+.Footer-navigation {
   background: rgb(var(--color-gray));
   padding: 3rem 0 2.5rem;
-  user-select: none;
   color: rgb(var(--color-twilight));
 }
 
-
 @media (min-width: 800px) {
-  .Footer {
+  .Footer-navigation {
     padding: 4rem 0 3.5rem;
   }
 }
 
-.Footer--newsletter:not(.Footer--alt) {
-  padding-top: 0;
-  margin-top: 15rem;
+@media (min-width: 1000px) {
+  .Footer-navigation {
+    padding-bottom: 1.8rem;
+  }
+}
+
+.Footer--newsletter:not(.Footer--alt) .Footer-navigation {
+  padding-top: 15rem;
 }
 
 .Footer-menu {
@@ -92,11 +100,23 @@
 
 .Footer-newsletter {
   padding: 3rem 1.5rem 2rem;
-  margin: 0 0.5rem -5rem;
+  margin: -7.5rem 0.5rem 0;
   border-radius: 0.375rem;
   color: #fff;
   background-color: rgb(var(--color-twilight));
-  transform: translateY(-50%);
+  transform: translateY(50%);
+}
+
+@media (min-width: 600px) {
+  .Footer-newsletter {
+    margin-top: -5rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .Footer-newsletter {
+    margin-top: 0;
+  }
 }
 
 .Footer-form {
@@ -218,10 +238,6 @@
 }
 
 @media (min-width: 1000px) {
-  .Footer {
-    padding-bottom: 1.8rem;
-  }
-
   .Footer-meta {
     display: flex;
     flex-wrap: nowrap;
@@ -256,14 +272,15 @@
  */
 
 @media (max-width: 799px) {
-  .Footer--alt {
+  .Footer--alt .Footer-navigation {
     padding-top: 6.5rem;
     background: rgb(255, 255, 255);
     text-align: center;
     line-height: 1.35;
   }
 
-  .Footer--alt .Footer-newsletter {
+  .Footer--alt .Footer-newsletter,
+  .Footer--alt .Footer-contact {
     display: none;
   }
 

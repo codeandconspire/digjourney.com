@@ -18,6 +18,11 @@
   transition: opacity 200ms ease;
 }
 
+.Person--small .Person-figure {
+  max-width: 60px;
+  margin-right: 1.5rem;
+}
+
 .Person-figure::before {
   content: "";
   display: block;
@@ -52,9 +57,18 @@
 }
 
 .Person-title {
-  margin-top: 1.5rem;
   font-size: 1.25rem;
   font-weight: 600;
+}
+
+@media (min-width: 900px) {
+  .Person-title {
+    margin-top: 1.5rem;
+  }
+}
+
+.Person--small .Person-title {
+  margin-top: 0;
 }
 
 .Person-info a:not(.Person-link) {
@@ -72,4 +86,12 @@
   margin-bottom: 0.5em;
   color: currentColor;
   border-bottom: 1px solid transparent;
+}
+
+.Person-text {
+  color: rgb(var(--color-muted));
+}
+
+.Person--small .Person-text {
+  font-size: 0.9rem;
 }

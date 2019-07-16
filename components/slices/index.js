@@ -59,9 +59,11 @@ function slices (slice, index, list, onclick) {
     }
     case 'line': {
       let prev = list[index - 1]
+      let next = list[index + 1]
+      let narrow = (next && next.slice_type === 'text') && (!prev || prev.slice_type === 'text')
       return html`
         <div class="u-container">
-          <hr class="${prev && prev.slice_type === 'text' ? 'u-medium' : ''} u-space1">
+          <hr class="${narrow ? 'u-medium' : ''} u-space1">
         </div>
       `
     }
@@ -301,26 +303,6 @@ function slices (slice, index, list, onclick) {
             label: slice.primary.label,
             name: slice.primary.name
           })}
-        </div>
-      `
-    }
-    case 'contact': {
-      let heading = asText(slice.primary.heading)
-      if (!heading) return null
-      return html`
-        <div class="u-container u-space2">
-          <div class="Text Text--center u-textCenter">
-            <svg width="124" height="80" viewBox="0 0 124 80">
-              <g fill="none" fill-rule="evenodd">
-                <path fill="#E2F7FF" d="M62 80c40 0 62-40 62-40S102 0 62 0 0 40 0 40s22 40 62 40z"/>
-                <ellipse cx="62" cy="38.5" fill="#06C0C9" rx="29" ry="28.5"/>
-                <circle cx="62.5" cy="38.5" r="9.5" fill="#000"/>
-                <path fill="#110046" d="M0 39.5c19.2-14.6 40-21.9 62.5-21.9 22.4 0 43 7.5 61.5 22.4C106.8 13.3 86 0 62 0S17.2 13.2 0 39.5z"/>
-              </g>
-            </svg>
-            <h2 class="u-spaceT5">${heading}</h2>
-            ${asElement(slice.primary.text, resolve)}
-          </div>
         </div>
       `
     }

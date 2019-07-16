@@ -2,43 +2,31 @@
 
 /* @define Button */
 .Button {
-  position: relative;
   display: inline-block;
-  min-width: 9.2rem;
-  padding: 0 1.8rem;
-  line-height: 3.15rem;
+  padding: 1em 2rem;
+  border: 0;
   font-size: 1rem;
-  color: rgb(255, 255, 255);
-  font-weight: 600;
-  white-space: nowrap;
-  user-select: none;
-  text-align: center;
+  font-weight: normal;
+  line-height: 1;
+  border-radius: 0.1875rem;
+  text-decoration: none;
 }
 
-.Button-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 4rem;
-  transform-origin: center;
-  transition: 120ms var(--ease-out);
-  transition-property: transform;
-  background: rgb(var(--color-moss));
-}
-
-.Button-text {
-  position: relative;
-  z-index: 1;
-}
-
-.Button:not([disabled]):hover .Button-background {
-  transform: scale(1.07);
-  color: rgb(255, 255, 255);
+.Button,
+.Button:hover,
+.Button:active {
+  color: rgb(var(--color-twilight));
+  background-color: rgb(var(--color-pink));
 }
 
 .Button[disabled] {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.Button--primary,
+.Button--primary:hover,
+.Button--primary:active {
+  color: #fff;
+  background-color: rgb(var(--color-moss));
 }

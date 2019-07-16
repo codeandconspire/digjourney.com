@@ -29,8 +29,8 @@ app.route('/insikter', lazy(() => import('./views/post-listing'), prefetch('post
 app.route('/insikter/:slug', lazy(() => import('./views/post'), prefetch('post')))
 app.route('/radgivning', lazy(() => import('./views/product-listing'), prefetch('product_listing', true)))
 app.route('/radgivning/:slug', lazy(() => import('./views/product'), prefetch('product')))
-app.route('/utbildning', lazy(() => import('./views/training-listing'), prefetch('training_listing', true)))
-app.route('/utbildning/:slug', lazy(() => import('./views/training'), prefetch('training')))
+app.route('/utbildning', lazy(() => import('./views/course-listing'), prefetch('course_listing', true)))
+app.route('/utbildning/:slug', lazy(() => import('./views/course'), prefetch('course')))
 app.route('/*', catchall)
 
 try {

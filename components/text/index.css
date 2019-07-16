@@ -15,6 +15,11 @@
   margin-right: auto;
 }
 
+.Text--muted,
+.Text-muted {
+  color: rgb(var(--color-muted));
+}
+
 .Text--small {
   font-size: 0.8rem;
 }

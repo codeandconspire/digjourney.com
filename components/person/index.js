@@ -1,6 +1,6 @@
 var html = require('choo/html')
 var figure = require('./figure')
-var { loader } = require('../base')
+var { loader, className } = require('../base')
 
 module.exports = person
 person.loading = loading
@@ -11,15 +11,15 @@ function person (props = {}) {
   else if (image) image = figure(image)
 
   return html`
-    <div class="Person">
+    <article class="${className('Person', { 'Person--small': props.small })}">
       ${image}
       <div class="Person-info">
         <h3 class="Person-title">${props.title}</h3>
         ${props.link ? link(props.link) : null}
         ${props.link && props.body ? html`<br>` : null}
-        ${props.body}
+        ${props.body ? html`<div class="Person-text">${props.body}</div>` : null}
       </div>
-    </div>
+    </article>
   `
 }
 

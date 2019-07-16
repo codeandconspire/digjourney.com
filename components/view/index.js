@@ -69,7 +69,7 @@ function createView (view, meta) {
           <script type="application/ld+json">${raw(JSON.stringify(linkedData(state)))}</script>
           ${state.cache(Header, 'header').render(state.href, menu)}
           ${children}
-          ${state.cache(Footer, 'footer').render(footer, doc ? asElement(doc.data.newsletter) : null)}
+          ${state.cache(Footer, 'footer').render(footer, doc ? asElement(doc.data.newsletter) : null, doc ? asElement(doc.data.contact_blurb) : null)}
           ${Player.render()}
           ${state.cache(PrismicToolbar, 'prismic-toolbar').placeholder(state.href)}
         </body>
