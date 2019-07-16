@@ -61,20 +61,6 @@ function createView (view, meta) {
       var footer = memo(function () {
         if (!doc) return null
         return {
-          social: doc.data.social_links
-            .filter((item) => item.link.url)
-            .map((item) => ({
-              type: item.type,
-              href: item.link.url,
-              onclick: onclick(item.link)
-            })),
-          legal: doc.data.legal_links
-            .filter((item) => item.link.id && !item.link.isBroken)
-            .map((item) => ({
-              href: resolve(item.link),
-              onclick: onclick(item.link),
-              label: item.link.data.cta || asText(item.link.data.title)
-            })),
           menu: doc.data.footer_menu.map(branch).filter(Boolean)
         }
       }, [doc && doc.id, 'footer'])
@@ -108,13 +94,13 @@ function createView (view, meta) {
     function branch (slice) {
       var { primary, items } = slice
       if (slice.slice_type !== 'menu_item') return null
-      if (!primary.link.id || primary.link.isBroken) return null
+      if (primary.link.isBroken) return null
       return {
         label: primary.label || asText(primary.link.data.title),
-        href: resolve(primary.link),
+        href: primary.link.id ? resolve(primary.link) : null,
         onclick: onclick(primary.link),
         children: items.map(function (item) {
-          if (!item.link.id || item.link.isBroken) return null
+          if ((!item.link.id && !item.link.url) || item.link.isBroken) return null
           return {
             label: item.label || asText(item.link.data.title),
             href: resolve(item.link),

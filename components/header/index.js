@@ -46,9 +46,15 @@ module.exports = class Header extends Component {
                 label = html`<span class="Header-label">${label}</span>`
                 return html`
                   <li class="${className('Header-item', { 'Header-item--dropdown': children.length })}">
-                    <a class="Header-link" href="${href}" onclick=${onclick}>
-                      ${children.length ? symbol.chevron(label) : label}
-                    </a>
+                    ${href ? html`
+                      <a class="Header-link" href="${href}" onclick=${onclick}>
+                        ${children.length ? symbol.chevron(label) : label}
+                      </a>
+                    ` : html`
+                      <span class="Header-link">
+                        ${children.length ? symbol.chevron(label) : label}
+                      </span>
+                    `}
                     ${children.length ? html`
                       <ul class="Header-dropdown">
                         ${children.map(({ label, href, description, onclick }) => html`
