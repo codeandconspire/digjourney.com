@@ -15,7 +15,7 @@
   }
 }
 
-.Footer--newsletter {
+.Footer--newsletter:not(.Footer--alt) {
   padding-top: 0;
   margin-top: 15rem;
 }
@@ -50,7 +50,7 @@
 
 .Footer-link:link:hover,
 .Footer-link:link:active {
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(var(--color-twilight), 0.05);
   transition: none;
 }
 
@@ -91,7 +91,7 @@
  */
 
 .Footer-newsletter {
-  padding: 3rem 1rem 2rem;
+  padding: 3rem 1.5rem 2rem;
   margin: 0 0.5rem -5rem;
   border-radius: 0.375rem;
   color: #fff;
@@ -113,9 +113,15 @@
   font-size: 1rem;
   line-height: 1;
   background-color: #fff;
-  color: rgb(var(--document-color));
+  color: rgb(var(--color-twilight));
   border-radius: 0.1875rem;
   -webkit-appearance: none;
+}
+
+.Footer-email:focus-visible,
+.Footer-email:focus {
+  outline: 0 !important;
+  border: 0 !important;
 }
 
 .Footer-button {
@@ -127,12 +133,22 @@
   font-size: 1rem;
   line-height: 1;
   color: rgb(var(--color-twilight));
-  background-color: rgb(var(--color-pink));
+  background: rgb(var(--color-pink));
   border-radius: 0.1875rem;
+  transition: background 100ms var(--ease-out);
+}
+
+.Footer-button:hover,
+.Footer-button:active {
+  background: rgb(var(--color-dark-pink));
+}
+
+.Footer-button:active {
+  opacity: 0.7;
 }
 
 .Footer-button:disabled {
-  opacity: 0.6;
+  opacity: 0.4;
 }
 
 .Footer-message {
@@ -147,7 +163,7 @@
   .Footer-newsletter {
     display: flex;
     align-items: center;
-    padding: 3rem 3rem 5rem;
+    padding: 3.5rem 5.5rem 3.5rem;
   }
 
   .Footer-form {
@@ -158,7 +174,6 @@
 
 @media (min-width: 1100px) {
   .Footer-newsletter {
-    max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -246,6 +261,10 @@
     background: rgb(255, 255, 255);
     text-align: center;
     line-height: 1.35;
+  }
+
+  .Footer--alt .Footer-newsletter {
+    display: none;
   }
 
   .Footer--alt .Footer-meta {

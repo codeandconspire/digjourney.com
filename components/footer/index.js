@@ -32,16 +32,20 @@ module.exports = class Footer extends Component {
     return html`
       <footer class="Footer ${newsletter ? 'Footer--newsletter' : ''} ${alt ? 'Footer--alt' : ''}" id="navigation">
         ${newsletter ? html`
-          <div class="Footer-newsletter">
-            <div class="Text">${newsletter}</div>
-            <form class="Footer-form" method="POST" action="${this.state.mailchimp}" onsubmit=${onsubmit}>
-              <label for="TODO:EMAIL">
-                <span class="u-hiddenVisually">${text`Fill in your e-mail address`}</span>
-                <input class="Footer-email" type="email" name="TODO:EMAIL" id="TODO:EMAIL" placeholder="${text`Fill in your e-mail address`}" disabled=${this.local.isLoading} required>
-              </label>
-              <button class="Footer-button" type="submit" disabled=${this.local.isLoading}>${text`Subscribe`}</button>
-              ${self.local.message ? html`<span class="Footer-message">${this.local.message}</span>` : null}
-            </form>
+          <div class="u-container">
+            <div class="u-dedent">
+              <div class="Footer-newsletter">
+                <div class="Text">${newsletter}</div>
+                <form class="Footer-form" method="POST" action="${this.state.mailchimp}" onsubmit=${onsubmit}>
+                  <label for="MERGE0">
+                    <span class="u-hiddenVisually">${text`Fill in your e-mail address`}</span>
+                    <input class="Footer-email" type="email" name="MERGE0" id="MERGE0" placeholder="${text`Fill in your e-mail address`}" disabled=${this.local.isLoading} required>
+                  </label>
+                  <button class="Footer-button" type="submit" disabled=${this.local.isLoading}>${text`Subscribe`}</button>
+                  ${self.local.message ? html`<span class="Footer-message">${this.local.message}</span>` : null}
+                </form>
+              </div>
+            </div>
           </div>
         ` : null}
         <div class="u-container">

@@ -91,6 +91,17 @@
  * Centered page container
  */
 
+@media (max-width: 999px) {
+  .u-dedent {
+    margin-left: calc((var(--document-margin) * 0.8) * -1);
+    margin-right: calc((var(--document-margin) * 0.8) * -1);
+  }
+}
+
+/**
+ * Centered page container
+ */
+
 .u-container,
 .u-md-container,
 .u-lg-container,
