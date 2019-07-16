@@ -1,5 +1,6 @@
 var html = require('choo/html')
 var raw = require('choo/html/raw')
+var asElement = require('prismic-element')
 var error = require('./error')
 var Header = require('../header')
 var Footer = require('../footer')
@@ -60,9 +61,7 @@ function createView (view, meta) {
 
       var footer = memo(function () {
         if (!doc) return null
-        return {
-          menu: doc.data.footer_menu.map(branch).filter(Boolean)
-        }
+        return doc.data.footer_menu.map(branch).filter(Boolean)
       }, [doc && doc.id, 'footer'])
 
       return html`
@@ -70,7 +69,7 @@ function createView (view, meta) {
           <script type="application/ld+json">${raw(JSON.stringify(linkedData(state)))}</script>
           ${state.cache(Header, 'header').render(state.href, menu)}
           ${children}
-          ${state.cache(Footer, 'footer').render(footer)}
+          ${state.cache(Footer, 'footer').render(footer, doc ? asElement(doc.data.newsletter) : null)}
           ${Player.render()}
           ${state.cache(PrismicToolbar, 'prismic-toolbar').placeholder(state.href)}
         </body>

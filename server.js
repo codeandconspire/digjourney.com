@@ -8,9 +8,11 @@ var { get, post } = require('koa-route')
 var Prismic = require('prismic-javascript')
 var purge = require('./lib/purge')
 var { resolve } = require('./components/base')
+var subscribe = require('./lib/mailchimp-proxy')
 var imageproxy = require('./lib/cloudinary-proxy')
 
 var REPOSITORY = 'https://digjourney.cdn.prismic.io/api/v2'
+var MAILCHIMP = 'https://digjourney.us3.list-manage.com/subscribe?u=da19434c486fcc616e3c247aa&id=efda908eed'
 
 var app = jalla('index.js', {
   sw: 'sw.js',
@@ -71,6 +73,33 @@ app.use(get('/api/prismic-preview', async function (ctx) {
   })
   ctx.redirect(href)
 }))
+
+/**
+ * Forward subscription requests to MailChimp
+ */
+app.use(compose([
+  // expose mailchimp endpoint on state
+  function (ctx, next) {
+    ctx.state.mailchimp = MAILCHIMP
+    return next()
+  },
+  // newsletter subscription endpoint
+  post('/api/subscribe', compose([body(), async function (ctx, next) {
+    ctx.set('Cache-Control', 'private, no-cache')
+    try {
+      await subscribe(ctx.request.body, MAILCHIMP)
+      if (ctx.accepts('html')) {
+        ctx.redirect('back')
+      } else {
+        ctx.body = {}
+        ctx.type = 'application/json'
+      }
+    } catch (err) {
+      if (ctx.accepts('html')) ctx.redirect('back')
+      else ctx.throw(err.status || 400, 'Could not subscribe')
+    }
+  }]))
+]))
 
 /**
  * Capture requests for pages at the site root and redirect pages with a parent

@@ -7,6 +7,11 @@
   user-select: none;
 }
 
+.Footer--newsletter {
+  padding-top: 0;
+  margin-top: 15rem;
+}
+
 .Footer-menu {
   display: flex;
   flex-wrap: wrap;
@@ -64,6 +69,84 @@
 @media (min-width: 1000px) {
   .Footer-section {
     flex-basis: 16.66666%;
+  }
+}
+
+/**
+ * Newsletter
+ */
+
+.Footer-newsletter {
+  padding: 3rem 1rem 2rem;
+  margin: 0 0.5rem -5rem;
+  border-radius: 0.375rem;
+  color: #fff;
+  background-color: rgb(var(--color-twilight));
+  transform: translateY(-50%);
+}
+
+.Footer-form {
+  width: 100%;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.Footer-email {
+  display: block;
+  width: 100%;
+  padding: 1em;
+  border: 0;
+  font-size: 1rem;
+  line-height: 1;
+  background-color: #fff;
+  color: rgb(var(--document-color));
+  border-radius: 0.1875rem;
+  -webkit-appearance: none;
+}
+
+.Footer-button {
+  display: block;
+  width: 100%;
+  padding: 1em;
+  margin-top: 0.5em;
+  border: 0;
+  font-size: 1rem;
+  line-height: 1;
+  color: rgb(var(--color-twilight));
+  background-color: rgb(var(--color-pink));
+  border-radius: 0.1875rem;
+}
+
+.Footer-button:disabled {
+  opacity: 0.6;
+}
+
+.Footer-message {
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  font-weight: bold;
+  position: absolute;
+}
+
+@media (min-width: 800px) {
+  .Footer-newsletter {
+    display: flex;
+    align-items: center;
+    padding: 3rem 3rem 5rem;
+  }
+
+  .Footer-form {
+    flex: 0 1 28em;
+    margin-left: 3rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .Footer-newsletter {
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
