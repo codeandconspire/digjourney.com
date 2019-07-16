@@ -227,6 +227,15 @@
     padding-top: 6.5rem;
     background: rgb(255, 255, 255);
     text-align: center;
+    line-height: 1.35;
+  }
+
+  .Footer-meta {
+    display: none;
+  }
+
+  .Footer-list {
+    margin: 0.4rem 0 1.8rem;
   }
 
   .Footer--alt .Footer-menu {
@@ -234,17 +243,16 @@
   }
 
   .Footer--alt .Footer-link--primary {
-    font-size: 1.5rem;
-    position: relative;
-    right: -0.5rem;
+    font-size: 1.375rem;
   }
 
   .Footer--alt .Footer-copy {
     display: none;
   }
 
-  .Footer--alt .Footer-section {
-    flex-basis: 100%;
+  .Footer--alt .Footer-menu {
+    display: block;
+    text-align: left;
   }
 
   .Footer--alt .Footer-meta {
