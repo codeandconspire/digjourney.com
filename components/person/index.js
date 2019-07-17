@@ -34,10 +34,11 @@ function link (props) {
 
 function loading (props = {}) {
   return html`
-    <div class="Person is-loading">
+    <div class="${className('Person is-loading', { 'Person--small': props.small })}">
       ${figure.loading()}
       <div class="Person-info">
         <h3 class="Person-title">${loader(4)}</h3>
+        <div class="Person-text"><p>${loader(15)}</p></div>
       </div>
     </div>
   `

@@ -22,9 +22,8 @@ function page (state, emit) {
         if (!doc) {
           if (!state.partial) return Hero.loading()
           return state.cache(Hero, `hero-${state.partial.id}`).render({
-            small: true,
             theme: 'twilight',
-            labe: loader(18),
+            label: loader(18),
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
             `
@@ -33,7 +32,6 @@ function page (state, emit) {
 
         return html`
           ${state.cache(Hero, `hero-${doc.id}`).render({
-            small: true,
             theme: 'twilight',
             label: doc.data.label,
             body: html`
@@ -62,7 +60,7 @@ function page (state, emit) {
                         grid.cell({ size: { lg: '1of3' } }, [html`
                           <div class="Text">
                             <h4>${text`Location`}</h4>
-                            ${asElement(slice.primary.location, resolve)}
+                            ${asElement(doc.data.location, resolve)}
                           </div>
                         `]),
                         grid.cell({ size: { lg: '2of3' } }, html`
@@ -73,7 +71,7 @@ function page (state, emit) {
                             </div>
                             ${grid(
                               { size: { lg: '1of2' } },
-                              slice.items.map((item) => person({
+                              doc.data.teachers.map((item) => person({
                                 small: true,
                                 image: memo(function (url) {
                                   if (!url) return null

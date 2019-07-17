@@ -4,8 +4,7 @@
 .Hero {
   display: flex;
   flex-direction: column;
-  padding: 5rem 0 10rem;
-  min-height: 100vh;
+  padding: 5rem 0 8rem;
   color: #fff;
   background-color: #5422EE;
 }
@@ -13,22 +12,13 @@
 .Hero::before {
   flex: 0 1 auto;
   content: "";
-  height: 17vh;
+  height: 10vh;
 }
 
 @media (min-width: 600px) {
   .Hero::before {
     height: 26vh;
   }
-}
-
-.Hero--small {
-  min-height: auto;
-  padding-bottom: 8rem;
-}
-
-.Hero--small::before {
-  height: 10vh;
 }
 
 .Hero-body {

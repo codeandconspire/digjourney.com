@@ -51,6 +51,10 @@
   }
 }
 
+.Person.is-loading .Person-image {
+  background-color: rgba(var(--loading-color));
+}
+
 .Person-info {
   flex: 1 1 auto;
   font-size: 0.9rem;

@@ -20,7 +20,8 @@
   color: rgb(var(--color-muted));
 }
 
-.Text--small {
+.Text--small,
+.Text-small {
   font-size: 0.8rem;
 }
 
@@ -29,7 +30,8 @@
     font-size: 1.125rem;
   }
 
-  .Text--small {
+  .Text--small,
+  .Text-small {
     font-size: 0.9rem;
   }
 }
@@ -39,7 +41,8 @@
     font-size: 1.25rem;
   }
 
-  .Text--small {
+  .Text--small,
+  .Text-small {
     font-size: 1rem;
   }
 }

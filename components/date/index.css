@@ -3,13 +3,46 @@
 /* @define Date */
 .Date {
   display: flex;
+  flex-wrap: wrap;;
   align-items: center;
   padding: 1.2rem 1.75rem;
   margin: 0.5rem 0;
   border: 1px solid rgb(var(--color-divider));
+  background-color: #fff;
   border-radius: 0.375rem;
+  color: rgb(var(--color-muted));
+}
+
+@media (min-width: 800px) {
+  .Date {
+    flex-wrap: nowrap;
+  }
 }
 
 .Date-content {
+  flex: 9 0 auto;
+  padding-right: 1.5rem;
   margin-right: auto;
+}
+
+.Date-title {
+  font-size: 1.125rem;
+  color: rgb(var(--document-color));
+}
+
+.Date-action {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Date-meta {
+  margin: 0 1.5rem 0 0;
+}
+
+@media (min-width: 800px) {
+  .Date-meta {
+    margin-bottom: 0;
+  }
 }

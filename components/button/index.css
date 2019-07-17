@@ -8,6 +8,7 @@
   font-size: 1rem;
   font-weight: normal;
   line-height: 1;
+  white-space: nowrap;
   border-radius: 0.1875rem;
   text-decoration: none;
 }

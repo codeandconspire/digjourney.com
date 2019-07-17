@@ -10,7 +10,10 @@ function date (props) {
         <strong class="Date-title">${props.title}</strong>
         ${props.label ? html`<br><span class="Date-label">${props.label}</span>` : null}
       </div>
-      ${props.link ? link(props.link) : null}
+      <div class="Date-action">
+        ${props.meta ? html`<span class="Date-meta">${props.meta}</span>` : null}
+        ${props.link ? link(props.link) : null}
+      </div>
     </div>
   `
 }

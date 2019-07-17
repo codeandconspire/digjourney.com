@@ -1,14 +1,12 @@
 var html = require('choo/html')
 var parse = require('date-fns/parse')
-var format = require('date-fns/format')
 var asElement = require('prismic-element')
 var { Predicates } = require('prismic-javascript')
 var view = require('../components/view')
 var Hero = require('../components/hero')
-var grid = require('../components/grid')
-var Card = require('../components/card')
-var callout = require('../components/callout')
-var { i18n, asText, srcset, HTTPError, memo, resolve, metaKey } = require('../components/base')
+var course = require('../components/course')
+var serialize = require('../components/text/serialize')
+var { i18n, asText, src, HTTPError, memo, srcset, resolve, metaKey } = require('../components/base')
 
 var text = i18n()
 
@@ -17,146 +15,59 @@ module.exports = view(home, meta)
 function home (state, emit) {
   return html`
     <main class="View-main">
-      ${state.prismic.getSingle('discover', function (err, doc) {
+      ${state.prismic.getSingle('course_listing', function (err, doc) {
         if (err) throw HTTPError(404, err)
         if (!doc) {
-          let items = []
-          for (let i = 0; i < 6; i++) items.push(Card.loading({ date: true }))
-          return html`
-            <div>
-              ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
-                title: asText(state.partial.data.title),
-                image: memo(function (url, sizes) {
-                  if (!url) return null
-                  return Object.assign({
-                    alt: state.partial.data.image.alt || '',
-                    src: srcset(state.partial.data.image.url, sizes).split(' ')[0]
-                  }, state.partial.data.image.dimensions)
-                }, [state.partial.data.image && state.partial.data.image.url, [150]])
-              }) : Hero.loading({ center: true, image: true })}
-              <div class="u-container">
-                ${callout.loading()}
-                <div class="u-space2">
-                  ${grid({ size: { md: '1of2', lg: '1of3' } }, items)}
-                </div>
-              </div>
-            </div>
-          `
+          if (!state.partial) return Hero.loading()
+          return state.cache(Hero, `hero-${state.partial.id}`).render({
+            theme: 'twilight',
+            body: html`
+              <h1>${asText(state.partial.data.title)}</h1>
+              ${asElement(state.partial.data.description, resolve)}
+            `
+          })
         }
 
-        var image = memo(function (url, sizes) {
-          if (!url) return null
-          var sources = srcset(url, sizes)
-          return Object.assign({
-            sizes: '100vw',
-            srcset: sources,
-            alt: doc.data.image.alt || '',
-            src: sources.split(' ')[0]
-          }, doc.data.image.dimensions)
-        }, [doc.data.image && doc.data.image.url, [640, 750, 1125, 1440, [2880, 'q_50'], [3840, 'q_50']]])
-
-        var featured = doc.data.featured_articles.map(function (item, index) {
-          let title = asText(item.heading)
-          if (!title && item.link.id) title = asText(item.link.data.title)
-
-          let body = null
-          if (item.body.length) body = asElement(item.body)
-          else if (item.link.id) body = asElement(item.link.data.description)
-
-          let image = item.image
-          if (!image || (!image.url && item.link.id)) {
-            image = item.link.data.featured_image
-            if (!image || !image.url) image = item.link.data.image
-          }
-
-          let props = {
-            title: title,
-            body: body,
-            direction: index % 2 ? 'right' : 'left',
-            action: (item.link.url || item.link.id) && !item.link.isBroken ? {
-              href: resolve(item.link),
-              onclick: item.link.id ? partial(item.link) : null,
-              text: item.link.type === 'Document' ? item.link.data.cta : text`Read more`
-            } : null,
-            image: memo(function (url, sizes) {
-              if (!url) return null
-              var sources = srcset(url, sizes, {
-                transforms: 'c_thumb,g_face',
-                aspect: 10 / 12
-              })
-              return {
-                src: sources.split(' ')[0],
-                sizes: '(min-width: 1000px) 35vw, (min-width: 600px) 200px, 100vw',
-                srcset: sources,
-                alt: image.alt || '',
-                width: image.dimensions.width,
-                height: image.dimensions.width * 10 / 12
-              }
-            }, [image && image.url, [400, 800, 1200, [1500, 'q_50']]])
-          }
-
-          return callout(props)
+        var featured = doc.data.featured.map(function ({ link }) {
+          if (!link.id || link.isBroken) return null
+          return state.prismic.getByUID('course', link.uid, function (err, doc) {
+            if (err) return null
+            if (!doc) return course.loading()
+            return course(asCourse(doc))
+          })
         }).filter(Boolean)
 
         var opts = {
           pageSize: 100,
           orderings: '[document.first_publication_date desc]'
         }
-        var predicates = [Predicates.at('document.type', 'article')]
-        doc.data.featured_articles.forEach(function (item) {
-          if (item.link.id) {
-            predicates.push(Predicates.not('document.id', item.link.id))
-          }
+        var predicates = [Predicates.at('document.type', 'course')]
+        doc.data.featured.forEach(function ({ link }) {
+          if (!link.id || link.isBroken) return
+          predicates.push(Predicates.not('document.id', link.id))
         })
-        var articles = state.prismic.get(predicates, opts, function (err, response) {
-          if (err) return null
-          if (!response) {
-            let items = []
-            for (let i = 0; i < 6; i++) items.push(Card.loading({ date: true }))
-            return articles
-          }
-          return response.results.map(function (article) {
-            var image = article.data.featured_image
-            if (!image.url) image = article.data.image
-            var date = parse(article.first_publication_date)
 
-            return state.cache(Card, `${doc.id}-${article.id}`).render({
-              image: memo(function (url, sizes) {
-                if (!url) return null
-                var sources = srcset(url, sizes, {
-                  transforms: 'c_thumb,g_face'
-                })
-                return Object.assign({
-                  srcset: sources,
-                  sizes: '(min-midth: 600px) 33vw, (min-midth: 400px) 50vw, 100vw',
-                  alt: image.alt || '',
-                  src: sources.split(' ')[0]
-                }, image.dimensions)
-              }, [image && image.url, [520, 700, 900]]),
-              title: asText(article.data.title),
-              date: {
-                datetime: date,
-                text: html`<span class="u-textBold u-textUppercase">${format(date, 'MMM D, YYYY')}</span>`
-              },
-              link: {
-                onclick: partial(article),
-                href: resolve(article),
-                visible: false
-              }
-            })
-          })
+        var courses = state.prismic.get(predicates, opts, function (err, response) {
+          if (err) return []
+          if (!response) return [course.loading()]
+          return response.results.map((doc) => course(asCourse(doc)))
         })
 
         return html`
           <div>
             ${state.cache(Hero, `hero-${doc.id}`).render({
-              title: asText(doc.data.title),
-              image: image
+              theme: 'twilight',
+              body: html`
+                <h1>${asText(doc.data.title)}</h1>
+                ${asElement(doc.data.description, resolve)}
+              `
             })}
             <div class="u-container">
-              ${featured}
+              <div class="Text u-space2">
+                ${asElement(doc.data.body, resolve, serialize)}
+              </div>
               <div class="u-space2">
-                ${articles ? grid({ size: { md: '1of2', lg: '1of3' } }, articles) : null}
+                ${featured.concat(courses)}
               </div>
             </section>
           </div>
@@ -164,6 +75,47 @@ function home (state, emit) {
       })}
     </main>
   `
+
+  function asCourse (doc) {
+    var now = new Date()
+    return {
+      href: resolve(doc),
+      title: asText(doc.data.title),
+      description: asElement(doc.data.description, resolve),
+      features: doc.data.features.map(({ text }) => text).filter(Boolean),
+      teachers: doc.data.teachers.map(function (item) {
+        var name = asText(item.name)
+        if (!name) return null
+        return {
+          image: memo(function (url) {
+            if (!url) return null
+            return Object.assign({
+              alt: item.image.alt || '',
+              sizes: '60px',
+              srcset: srcset(url, [60, 120]),
+              src: src(url, [60])
+            }, item.image.dimensions)
+          }, [item.image.url, 'small']),
+          title: name,
+          body: asElement(item.description)
+        }
+      }).filter(Boolean),
+      dates: doc.data.schedule.map(function (item) {
+        if (parse(item.deadline) < now) return null
+        return {
+          title: item.title,
+          label: item.label,
+          meta: doc.data.price,
+          link: (item.link.id || item.link.url) && !item.link.isBroken ? {
+            primary: true,
+            href: resolve(item.link),
+            text: text`Go to application`,
+            external: item.link.target === '_blank'
+          } : null
+        }
+      }).filter(Boolean)
+    }
+  }
 
   // create onclick handler which emits pushState w/ partial info
   // obj -> fn
@@ -177,7 +129,7 @@ function home (state, emit) {
 }
 
 function meta (state) {
-  return state.prismic.getSingle('discover', function (err, doc) {
+  return state.prismic.getSingle('course_listing', function (err, doc) {
     if (err) throw err
     if (!doc) return null
     var props = {
@@ -186,12 +138,11 @@ function meta (state) {
     }
 
     var image = doc.data.featured_image
-    if (!image.url) image = doc.data.image
-    if (image.url) {
+    if (image && image.url) {
       Object.assign(props, {
-        'og:image': image.url,
-        'og:image:width': image.dimensions.width,
-        'og:image:height': image.dimensions.height
+        'og:image': src(image.url, 1200),
+        'og:image:width': 1200,
+        'og:image:height': 1200 * image.dimensions.height / image.dimensions.width
       })
     }
 
