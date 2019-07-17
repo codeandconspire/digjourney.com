@@ -2,7 +2,9 @@ var html = require('choo/html')
 var date = require('../date')
 var grid = require('../grid')
 var person = require('../person')
-var { i18n, loader } = require('../base')
+var { i18n, loader, luma } = require('../base')
+
+var COLORS = ['FFB3B3', '06C0C9', '4715E7', '067969', '110046']
 
 var text = i18n()
 
@@ -10,11 +12,30 @@ module.exports = course
 module.exports.loading = loading
 
 function course (props) {
+  var colors = []
+  if (props.tags) {
+    for (let i = 0, len = props.tags.length; i < len; i++) {
+      let color
+      for (let i = 0, len = COLORS.length; i < len; i++) {
+        color = COLORS[Math.floor(Math.random() * COLORS.length)]
+        if (!colors.includes(color)) break
+      }
+      colors.push(color)
+    }
+  }
+
   return html`
     <article class="Course">
       ${grid([
         grid.cell({ size: { lg: '1of3' } }, html`
           <div>
+            ${props.tags ? html`
+              <ul>
+                ${props.tags.map((tag, index) => html`
+                  <li class="Course-tag" style="background: #${colors[index]}; color: ${luma(colors[index]) < 170 ? '#fff' : 'currentColor'};">${tag}</li>
+                `)}
+              </ul>
+            ` : null}
             <h3 class="Course-title">${props.title}</h3>
             ${props.description}
             <a class="Course-link" href="${props.href}">${text`Read more about the course`}</a>

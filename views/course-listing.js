@@ -54,22 +54,20 @@ function home (state, emit) {
         })
 
         return html`
-          <div>
-            ${state.cache(Hero, `hero-${doc.id}`).render({
-              theme: 'twilight',
-              body: html`
-                <h1>${asText(doc.data.title)}</h1>
-                ${asElement(doc.data.description, resolve)}
-              `
-            })}
-            <div class="u-container">
-              <div class="Text u-space2">
-                ${asElement(doc.data.body, resolve, serialize)}
-              </div>
-              <div class="u-space2">
-                ${featured.concat(courses)}
-              </div>
-            </section>
+          ${state.cache(Hero, `hero-${doc.id}`).render({
+            theme: 'twilight',
+            body: html`
+              <h1>${asText(doc.data.title)}</h1>
+              ${asElement(doc.data.description, resolve)}
+            `
+          })}
+          <div class="u-container">
+            <div class="Text u-space2">
+              ${asElement(doc.data.body, resolve, serialize)}
+            </div>
+            <div class="u-space2">
+              ${featured.concat(courses)}
+            </div>
           </div>
         `
       })}
@@ -79,6 +77,7 @@ function home (state, emit) {
   function asCourse (doc) {
     var now = new Date()
     return {
+      tags: doc.tags,
       href: resolve(doc),
       title: asText(doc.data.title),
       description: asElement(doc.data.description, resolve),
