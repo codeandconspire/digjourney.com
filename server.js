@@ -16,6 +16,7 @@ var MAILCHIMP = 'https://digjourney.us3.list-manage.com/subscribe?u=da19434c486f
 
 var app = jalla('index.js', {
   sw: 'sw.js',
+  watch: !process.env.NOW,
   serve: Boolean(process.env.NOW)
 })
 
@@ -146,18 +147,6 @@ app.use(function (ctx, next) {
     }
   }
 
-  return next()
-})
-
-// push fonts with all html requests
-app.use(function (ctx, next) {
-  if (!ctx.accepts('html')) return next()
-  var reg = /\.woff$/
-  for (let [key, asset] of ctx.assets) {
-    if (reg.test(key)) {
-      ctx.append('Link', `<${asset.url}>; rel=preload; crossorigin=anonymous; as=font`)
-    }
-  }
   return next()
 })
 
