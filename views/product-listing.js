@@ -4,7 +4,9 @@ var view = require('../components/view')
 var Hero = require('../components/hero')
 var product = require('../components/product')
 var serialize = require('../components/text/serialize')
-var { asText, src, HTTPError, memo, srcset, resolve } = require('../components/base')
+var { i18n, asText, src, HTTPError, memo, srcset, resolve } = require('../components/base')
+
+var text = i18n()
 
 module.exports = view(products, meta)
 
@@ -95,7 +97,21 @@ function products (state, emit) {
             src: src(url, [60])
           }, doc.data.contact_image.dimensions)
         }, [doc.data.contact_image.url, 'small'])
-      } : null
+      } : null,
+      action: memo(function (link) {
+        if ((!link.id && !link.url) || link.isBroken) return null
+        var props = {
+          href: resolve(link),
+          text: doc.data.action_text || text`Read more`
+        }
+
+        if (link.target === '_blank') {
+          props.rel = 'nonopener noreferer'
+          props.target = '_blank'
+        }
+
+        return props
+      }, [doc.data.action, doc.id])
     }
   }
 }

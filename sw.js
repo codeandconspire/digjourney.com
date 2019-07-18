@@ -2,6 +2,7 @@
 
 var CACHE_KEY = getCacheKey()
 var ASSETS = process.env.ASSET_LIST
+var IS_DEV = process.env.NODE_ENV === 'development'
 
 self.addEventListener('install', function oninstall (event) {
   event.waitUntil(
@@ -35,7 +36,7 @@ self.addEventListener('fetch', function onfetch (event) {
           return cached
         }
 
-        if (cached && ASSETS.includes(url.pathname)) {
+        if (!IS_DEV && cached && ASSETS.includes(url.pathname)) {
           return cached
         }
 

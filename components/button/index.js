@@ -6,11 +6,11 @@ module.exports = button
 function button (props) {
   var attrs = Object.assign({}, props)
   delete attrs.text
-  delete attrs.primary
+  delete attrs.theme
 
   attrs.class = className('Button', {
     [props.class]: props.class,
-    'Button--primary': props.primary
+    [`Button--${props.theme}`]: props.theme
   })
 
   if (attrs.href) return html`<a ${attrs}>${props.text}</a>`

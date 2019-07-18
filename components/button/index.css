@@ -14,8 +14,7 @@
 }
 
 .Button,
-.Button:hover,
-.Button:active {
+.Button:hover {
   color: rgb(var(--color-blue));
   background-color: rgb(var(--color-pink));
 }
@@ -25,9 +24,35 @@
   cursor: not-allowed;
 }
 
-.Button--primary,
-.Button--primary:hover,
-.Button--primary:active {
+.Button--yellow,
+.Button--yellow:hover {
+  background-color: rgb(var(--color-yellow));
+}
+
+.Button--orange,
+.Button--orange:hover {
+  color: #fff;
+  background-color: rgb(var(--color-orange));
+}
+
+.Button--turquoise,
+.Button--turquoise:hover {
   color: #fff;
   background-color: rgb(var(--color-turquoise));
+}
+
+.Button--pink,
+.Button--pink:hover {
+  background-color: rgb(var(--color-pink));
+}
+
+.Button--blue,
+.Button--blue:hover {
+  color: #fff;
+  background-color: rgb(var(--color-blue));
+}
+
+.Button--gray,
+.Button--gray:hover {
+  background-color: rgb(var(--color-gray));
 }

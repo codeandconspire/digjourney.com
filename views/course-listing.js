@@ -108,7 +108,7 @@ function courses (state, emit) {
           label: item.label,
           meta: doc.data.price,
           link: (item.link.id || item.link.url) && !item.link.isBroken ? {
-            primary: true,
+            theme: 'turquoise',
             href: resolve(item.link),
             text: text`Go to application`,
             external: item.link.target === '_blank'

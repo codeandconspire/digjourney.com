@@ -1,6 +1,7 @@
 var html = require('choo/html')
 var grid = require('../grid')
 var person = require('../person')
+var button = require('../button')
 var { i18n, loader } = require('../base')
 
 var text = i18n()
@@ -54,6 +55,11 @@ function product (props) {
               <li class="Product-feature">${feature}</li>
             `)}
           </ul>
+        ` : null}
+        ${props.action ? html`
+          <div class="u-spaceT4">
+            ${button(Object.assign({ primary: true }, props.action))}
+          </div>
         ` : null}
       </div>
       ${props.contact ? html`
