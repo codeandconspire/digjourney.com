@@ -12,13 +12,14 @@ function page (state, emit) {
     <main class="View-main">
       ${state.prismic.getByUID('page', state.params.slug, function (err, doc) {
         if (err) throw HTTPError(404, err)
-        if (!doc && !state.partial) return Hero.loading({ theme: 'orange' })
+        if (!doc && !state.partial) return Hero.loading({ theme: 'blue' })
         doc = doc || state.partial
 
         var { title, description, body } = doc.data
 
         return html`
           ${state.cache(Hero, `hero-${doc.id}`).render({
+            theme: doc.data.theme.toLowerCase(),
             body: html`
               ${title && title.length ? html`<h1>${asText(title)}</h1>` : null}
               ${description && description.length ? asElement(description, resolve) : null}
