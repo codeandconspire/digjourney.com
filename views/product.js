@@ -13,8 +13,9 @@ function page (state, emit) {
       ${state.prismic.getByUID('page', state.params.slug, function (err, doc) {
         if (err) throw HTTPError(404, err)
         if (!doc) {
-          if (!state.partial) return Hero.loading()
+          if (!state.partial) return Hero.loading({ theme: 'gray' })
           return state.cache(Hero, `hero-${state.partial.id}`).render({
+            theme: 'gray',
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
               ${asElement(state.partial.data.description, resolve)}
@@ -24,6 +25,7 @@ function page (state, emit) {
 
         return html`
           ${state.cache(Hero, `hero-${doc.id}`).render({
+            theme: 'gray',
             body: html`
               <h1>${asText(doc.data.title)}</h1>
               ${asElement(doc.data.description, resolve)}

@@ -4,7 +4,7 @@ var grid = require('../grid')
 var person = require('../person')
 var { i18n, loader, luma } = require('../base')
 
-var COLORS = ['FFB3B3', '06C0C9', '4715E7', '067969', '110046']
+var COLORS = ['FFCB84', 'DA6526', '07AAB8', 'FFB3B3', '110046']
 
 var text = i18n()
 

@@ -16,7 +16,7 @@
 .Button,
 .Button:hover,
 .Button:active {
-  color: rgb(var(--color-twilight));
+  color: rgb(var(--color-blue));
   background-color: rgb(var(--color-pink));
 }
 
@@ -29,5 +29,5 @@
 .Button--primary:hover,
 .Button--primary:active {
   color: #fff;
-  background-color: rgb(var(--color-moss));
+  background-color: rgb(var(--color-turquoise));
 }

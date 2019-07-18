@@ -20,9 +20,9 @@ function course (state, emit) {
       ${state.prismic.getByUID('course', state.params.slug, function (err, doc) {
         if (err) throw HTTPError(404, err)
         if (!doc) {
-          if (!state.partial) return Hero.loading({ theme: 'twilight' })
+          if (!state.partial) return Hero.loading({ theme: 'yellow' })
           return state.cache(Hero, `hero-${state.partial.id}`).render({
-            theme: 'twilight',
+            theme: 'yellow',
             label: loader(18),
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
@@ -32,7 +32,7 @@ function course (state, emit) {
 
         return html`
           ${state.cache(Hero, `hero-${doc.id}`).render({
-            theme: 'twilight',
+            theme: 'yellow',
             label: doc.data.label,
             body: html`
               <h1 class="u-spaceB3">${asText(doc.data.title)}</h1>
@@ -146,8 +146,9 @@ function course (state, emit) {
 function meta (state) {
   return state.prismic.getByUID('course', state.params.slug, (err, doc) => {
     if (err) throw err
-    if (!doc) return null
+    if (!doc) return { 'theme-color': 'hotpink' }
     var props = {
+      'theme-color': 'hotpink',
       title: asText(doc.data.title),
       description: asText(doc.data.description)
     }

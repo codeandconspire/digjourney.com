@@ -18,9 +18,9 @@ function courses (state, emit) {
       ${state.prismic.getSingle('course_listing', function (err, doc) {
         if (err) throw HTTPError(404, err)
         if (!doc) {
-          if (!state.partial) return Hero.loading({ theme: 'twilight' })
+          if (!state.partial) return Hero.loading({ theme: 'turquoise' })
           return state.cache(Hero, `hero-${state.partial.id}`).render({
-            theme: 'twilight',
+            theme: 'turquoise',
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
               ${asElement(state.partial.data.description, resolve)}
@@ -55,7 +55,7 @@ function courses (state, emit) {
 
         return html`
           ${state.cache(Hero, `hero-${doc.id}`).render({
-            theme: 'twilight',
+            theme: 'blue',
             body: html`
               <h1>${asText(doc.data.title)}</h1>
               ${asElement(doc.data.description, resolve)}

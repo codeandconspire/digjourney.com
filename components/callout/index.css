@@ -6,6 +6,7 @@
   overflow: hidden;
   border-radius: 0.375rem;
   background-color: rgb(var(--color-gray));
+  color: rgb(var(--color-blue));
 }
 
 .Callout-content {
@@ -47,7 +48,7 @@
   display: inline-block;
   margin-top: 2rem;
   font-weight: bold;
-  color: rgb(var(--color-moss));
+  color: rgb(var(--color-blue));
   border-bottom: 1px solid currentColor;
 }
 
@@ -156,29 +157,47 @@
  * Themes
  */
 
-.Callout--moss {
-  color: #fff;
-  background-color: rgb(var(--color-moss));
+.Callout--yellow {
+  color: rgb(var(--color-blue));
+  background-color: rgb(var(--color-yellow));
 }
 
-.Callout--moss .Callout-link {
-  color: rgb(var(--color-pink));
+.Callout--yellow .Callout-link {
+  color: rgb(var(--color-blue));
+}
+
+.Callout--orange {
+  color: #fff;
+  background-color: rgb(var(--color-orange));
+}
+
+.Callout--orange .Callout-link {
+  color: rgb(var(--color-yellow));
+}
+
+.Callout--turquoise {
+  color: #fff;
+  background-color: rgb(var(--color-turquoise));
+}
+
+.Callout--turquoise .Callout-link {
+  color: rgb(var(--color-yellow));
 }
 
 .Callout--pink {
-  color: rgb(var(--color-twilight));
+  color: rgb(var(--color-blue));
   background-color: rgb(var(--color-pink));
 }
 
 .Callout--pink .Callout-link {
-  color: rgb(var(--color-twilight));
+  color: rgb(var(--color-blue));
 }
 
-.Callout--twilight {
+.Callout--blue {
   color: #fff;
-  background-color: rgb(var(--color-twilight));
+  background-color: rgb(var(--color-blue));
 }
 
-.Callout--twilight .Callout-link {
+.Callout--blue .Callout-link {
   color: rgb(var(--color-pink));
 }

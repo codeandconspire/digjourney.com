@@ -6,7 +6,7 @@
   flex-direction: column;
   padding: 5rem 0 8rem;
   color: #fff;
-  background-color: rgb(var(--color-gray));
+  background-color: rgb(var(--color-blue));
 }
 
 .Hero::before {
@@ -55,9 +55,8 @@
   font-size: 1.6em;
 }
 
-.Hero-body :link,
-.hero-body :visited {
-  color: #B2E9FF;
+.Hero-body a {
+  color: rgb(var(--color-pink));
   white-space: nowrap;
   border-bottom: 1px solid currentColor;
 }
@@ -66,15 +65,57 @@
  * Themes
  */
 
-.Hero--twilight {
-  background-color: rgb(var(--color-twilight));
+.Hero--gray {
+  color: rgb(var(--color-blue));
+  background-color: rgb(var(--color-gray));
+}
+
+.Hero--gray .Hero-body a {
+  color: rgb(var(--color-pink));
+}
+
+.Hero--yellow {
+  color: rgb(var(--color-blue));
+  background-color: rgb(var(--color-yellow));
+}
+
+.Hero--yellow .Hero-body a {
+  color: rgb(var(--color-blue));
+}
+
+.Hero--orange {
+  color: #fff;
+  background-color: rgb(var(--color-orange));
+}
+
+.Hero--orange .Hero-body a {
+  color: rgb(var(--color-yellow));
+}
+
+.Hero--turquoise {
+  color: #fff;
+  background-color: rgb(var(--color-turquoise));
+}
+
+.Hero--turquoise .Hero-body a {
+  color: rgb(var(--color-yellow));
 }
 
 .Hero--pink {
-  color: rgb(var(--color-twilight));
+  color: rgb(var(--color-blue));
   background-color: rgb(var(--color-pink));
 }
 
-.Hero--moss {
-  background-color: rgb(var(--color-moss));
+.Hero--pink .Hero-body a {
+  color: rgb(var(--color-blue));
 }
+
+.Hero--blue {
+  color: #fff;
+  background-color: rgb(var(--color-blue));
+}
+
+.Hero--blue .Hero-body a {
+  color: rgb(var(--color-pink));
+}
+

@@ -229,8 +229,8 @@
 .Card-link {
   display: inline-block;
   margin: 0.5rem 0 0;
-  color: rgb(var(--color-moss));
-  border-bottom: 2px solid rgb(var(--color-moss));
+  color: rgb(var(--color-turquoise));
+  border-bottom: 2px solid rgb(var(--color-turquoise));
   font-weight: 600;
   transition: color 100ms var(--ease-out);
 }
