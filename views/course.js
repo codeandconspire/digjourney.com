@@ -15,122 +15,123 @@ var text = i18n()
 module.exports = view(course, meta, 'page')
 
 function course (state, emit) {
-  return html`
-    <main class="View-main">
-      ${state.prismic.getByUID('course', state.params.slug, function (err, doc) {
-        if (err) throw HTTPError(404, err)
-        if (!doc) {
-          if (!state.partial) return Hero.loading({ theme: 'yellow' })
-          return state.cache(Hero, `hero-${state.partial.id}`).render({
+  return state.prismic.getByUID('course', state.params.slug, function (err, doc) {
+    if (err) throw HTTPError(404, err)
+    if (!doc) {
+      return html`
+        <main class="View-main">
+          ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
             theme: 'yellow',
             label: loader(18),
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
             `
-          })
-        }
+          }) : Hero.loading({ theme: 'yellow' })}
+        </main>
+      `
+    }
 
-        return html`
-          ${state.cache(Hero, `hero-${doc.id}`).render({
-            theme: 'yellow',
-            label: doc.data.label,
-            body: html`
-              <h1 class="u-spaceB3">${asText(doc.data.title)}</h1>
-              ${button(memo(function (link) {
-                if ((!link.url && !link.id) || link.isBroken) return null
-                var attrs = {
-                  text: text`Go to application`,
-                  href: resolve(doc.data.apply)
-                }
-                if (link.target === '_blank') {
-                  attrs.target = '_blank'
-                  attrs.rel = 'noopenere nofererrer'
-                }
-                return attrs
-              }, [doc.data.apply, 'apply']))}
-            `
-          })}
-          <div class="u-spaceB8">
-            ${doc.data.body.map(function (slice, index, list) {
-              switch (slice.slice_type) {
-                case 'course_details': {
-                  return html`
-                    <div class="u-container u-space1">
-                      ${grid([
-                        grid.cell({ size: { lg: '1of3' } }, [html`
-                          <div class="Text">
-                            <h4>${text`Location`}</h4>
-                            ${asElement(doc.data.location, resolve)}
-                          </div>
-                        `]),
-                        grid.cell({ size: { lg: '2of3' } }, html`
-                          <div>
-                            <div class="Text">
-                              <h4>${text`Teachers`}</h4>
-                              <span><!-- Maintain equal spacing --></span>
-                            </div>
-                            ${grid(
-                              { size: { lg: '1of2' } },
-                              doc.data.teachers.map((item) => person({
-                                small: true,
-                                image: memo(function (url) {
-                                  if (!url) return null
-                                  return Object.assign({
-                                    alt: item.image.alt || '',
-                                    sizes: '60px',
-                                    srcset: srcset(url, [60, 120]),
-                                    src: src(url, [60])
-                                  }, item.image.dimensions)
-                                }, [item.image.url, 'small']),
-                                title: asText(item.name),
-                                body: asElement(item.description)
-                              }))
-                            )}
-                          </div>
-                        `)
-                      ])}
-                    </div>
-                  `
-                }
-                case 'course_schedule': {
-                  let now = new Date()
-                  let valid = doc.data.schedule.filter(function (item) {
-                    return parse(item.deadline) > now
-                  })
-                  if (!valid.length) return null
-                  return html`
-                    <div class="u-container u-space2">
-                      <div class="Text">
-                        <h4>${text`Upcoming course dates`}</h4>
-                        <span><!-- Maintain equal spacing --></span>
-                      </div>
-                      <ol>
-                        ${valid.map((item) => html`
-                          <li>
-                            ${date({
-                              title: item.title,
-                              label: item.label,
-                              link: (item.link.id || item.link.url) && !item.link.isBroken ? {
-                                primary: true,
-                                href: resolve(item.link),
-                                text: text`Go to application`,
-                                external: item.link.target === '_blank'
-                              } : null
-                            })}
-                          </li>
-                        `)}
-                      </ol>
-                    </div>
-                  `
-                }
-                default: return slices(slice, index, list, link)
+    return html`
+      <main class="View-main">
+        ${state.cache(Hero, `hero-${doc.id}`).render({
+          theme: 'yellow',
+          label: doc.data.label,
+          body: html`
+            <h1 class="u-spaceB3">${asText(doc.data.title)}</h1>
+            ${button(memo(function (link) {
+              if ((!link.url && !link.id) || link.isBroken) return null
+              var attrs = {
+                text: text`Go to application`,
+                href: resolve(doc.data.apply)
               }
-            })}
-          </div>
-        `
-      })}
-    </main>
-  `
+              if (link.target === '_blank') {
+                attrs.target = '_blank'
+                attrs.rel = 'noopenere nofererrer'
+              }
+              return attrs
+            }, [doc.data.apply, 'apply']))}
+          `
+        })}
+        <div class="u-spaceB8">
+          ${doc.data.body.map(function (slice, index, list) {
+            switch (slice.slice_type) {
+              case 'course_details': {
+                return html`
+                  <div class="u-container u-space1">
+                    ${grid([
+                      grid.cell({ size: { lg: '1of3' } }, [html`
+                        <div class="Text">
+                          <h4>${text`Location`}</h4>
+                          ${asElement(doc.data.location, resolve)}
+                        </div>
+                      `]),
+                      grid.cell({ size: { lg: '2of3' } }, html`
+                        <div>
+                          <div class="Text">
+                            <h4>${text`Teachers`}</h4>
+                            <span><!-- Maintain equal spacing --></span>
+                          </div>
+                          ${grid(
+                            { size: { lg: '1of2' } },
+                            doc.data.teachers.map((item) => person({
+                              small: true,
+                              image: memo(function (url) {
+                                if (!url) return null
+                                return Object.assign({
+                                  alt: item.image.alt || '',
+                                  sizes: '60px',
+                                  srcset: srcset(url, [60, 120]),
+                                  src: src(url, [60])
+                                }, item.image.dimensions)
+                              }, [item.image.url, 'small']),
+                              title: asText(item.name),
+                              body: asElement(item.description)
+                            }))
+                          )}
+                        </div>
+                      `)
+                    ])}
+                  </div>
+                `
+              }
+              case 'course_schedule': {
+                let now = new Date()
+                let valid = doc.data.schedule.filter(function (item) {
+                  return parse(item.deadline) > now
+                })
+                if (!valid.length) return null
+                return html`
+                  <div class="u-container u-space2">
+                    <div class="Text">
+                      <h4>${text`Upcoming course dates`}</h4>
+                      <span><!-- Maintain equal spacing --></span>
+                    </div>
+                    <ol>
+                      ${valid.map((item) => html`
+                        <li>
+                          ${date({
+                            title: item.title,
+                            label: item.label,
+                            link: (item.link.id || item.link.url) && !item.link.isBroken ? {
+                              primary: true,
+                              href: resolve(item.link),
+                              text: text`Go to application`,
+                              external: item.link.target === '_blank'
+                            } : null
+                          })}
+                        </li>
+                      `)}
+                    </ol>
+                  </div>
+                `
+              }
+              default: return slices(slice, index, list, link)
+            }
+          })}
+        </div>
+      </main>
+    `
+  })
 
   // create link handler, emitting pushState w/ partial info
   // obj -> fn

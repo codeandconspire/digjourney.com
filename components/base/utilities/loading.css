@@ -9,5 +9,5 @@
 }
 
 .u-loadingLight {
-  background: rgba(var(--loading-color-light)) !important;
+  background: rgba(var(--loading-color-solid)) !important;
 }

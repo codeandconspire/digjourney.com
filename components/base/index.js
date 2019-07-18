@@ -26,7 +26,6 @@ function resolve (doc) {
     case 'post_listing': return '/insikter'
     case 'post': return `/insikter/${doc.uid}`
     case 'product_listing': return '/radgivning'
-    case 'product': return `/radgivning/${doc.uid}`
     case 'course_listing': return '/utbildning'
     case 'course': return `/utbildning/${doc.uid}`
     case 'page':

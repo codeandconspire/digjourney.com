@@ -13,66 +13,67 @@ var text = i18n()
 module.exports = view(courses, meta)
 
 function courses (state, emit) {
-  return html`
-    <main class="View-main">
-      ${state.prismic.getSingle('course_listing', function (err, doc) {
-        if (err) throw HTTPError(404, err)
-        if (!doc) {
-          if (!state.partial) return Hero.loading({ theme: 'turquoise' })
-          return state.cache(Hero, `hero-${state.partial.id}`).render({
+  return state.prismic.getSingle('course_listing', function (err, doc) {
+    if (err) throw HTTPError(404, err)
+    if (!doc) {
+      return html`
+        <main class="View-main">
+          ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
             theme: 'turquoise',
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
               ${asElement(state.partial.data.description, resolve)}
             `
-          })
-        }
+          }) : Hero.loading({ theme: 'turquoise' })}
+        </main>
+      `
+    }
 
-        var featured = doc.data.featured.map(function ({ link }) {
-          if (!link.id || link.isBroken) return null
-          return state.prismic.getByUID('course', link.uid, function (err, doc) {
-            if (err) return null
-            if (!doc) return course.loading()
-            return course(asCourse(doc))
-          })
-        }).filter(Boolean)
+    var featured = doc.data.featured.map(function ({ link }) {
+      if (!link.id || link.isBroken) return null
+      return state.prismic.getByUID('course', link.uid, function (err, doc) {
+        if (err) return null
+        if (!doc) return course.loading()
+        return course(asCourse(doc))
+      })
+    }).filter(Boolean)
 
-        var opts = {
-          pageSize: 100,
-          orderings: '[document.first_publication_date desc]'
-        }
-        var predicates = [Predicates.at('document.type', 'course')]
-        doc.data.featured.forEach(function ({ link }) {
-          if (!link.id || link.isBroken) return
-          predicates.push(Predicates.not('document.id', link.id))
-        })
+    var opts = {
+      pageSize: 100,
+      orderings: '[document.first_publication_date desc]'
+    }
+    var predicates = [Predicates.at('document.type', 'course')]
+    doc.data.featured.forEach(function ({ link }) {
+      if (!link.id || link.isBroken) return
+      predicates.push(Predicates.not('document.id', link.id))
+    })
 
-        var courses = state.prismic.get(predicates, opts, function (err, response) {
-          if (err) return []
-          if (!response) return [course.loading()]
-          return response.results.map((doc) => course(asCourse(doc)))
-        })
+    var courses = state.prismic.get(predicates, opts, function (err, response) {
+      if (err) return []
+      if (!response) return [course.loading()]
+      return response.results.map((doc) => course(asCourse(doc)))
+    })
 
-        return html`
-          ${state.cache(Hero, `hero-${doc.id}`).render({
-            theme: 'blue',
-            body: html`
-              <h1>${asText(doc.data.title)}</h1>
-              ${asElement(doc.data.description, resolve)}
-            `
-          })}
-          <div class="u-container">
-            <div class="Text u-space2">
-              ${asElement(doc.data.body, resolve, serialize)}
-            </div>
-            <div class="u-space2 u-expand u-xl-expand">
-              ${featured.concat(courses)}
-            </div>
+    return html`
+      <main class="View-main">
+        ${state.cache(Hero, `hero-${doc.id}`).render({
+          theme: 'turquoise',
+          body: html`
+            <h1>${asText(doc.data.title)}</h1>
+            ${asElement(doc.data.description, resolve)}
+          `
+        })}
+        <div class="u-container">
+          <div class="Text u-space2">
+            ${asElement(doc.data.body, resolve, serialize)}
           </div>
-        `
-      })}
-    </main>
-  `
+          <div class="u-space2 u-expand u-xl-expand">
+            ${featured.concat(courses)}
+          </div>
+        </div>
+      </main>
+    `
+  })
 
   function asCourse (doc) {
     var now = new Date()

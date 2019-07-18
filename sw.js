@@ -1,13 +1,13 @@
 /* eslint-env serviceworker */
 
 var CACHE_KEY = getCacheKey()
-var FILES = ['/'].concat(process.env.ASSET_LIST).filter(Boolean)
+var ASSETS = process.env.ASSET_LIST
 
 self.addEventListener('install', function oninstall (event) {
   event.waitUntil(
     caches
       .open(CACHE_KEY)
-      .then((cache) => cache.addAll(FILES))
+      .then((cache) => cache.addAll(['/'].concat(ASSETS)))
       .then(() => self.skipWaiting())
   )
 })
@@ -32,6 +32,10 @@ self.addEventListener('fetch', function onfetch (event) {
     caches.open(CACHE_KEY).then(function (cache) {
       return cache.match(req).then(function (cached) {
         if (req.cache === 'only-if-cached' && req.mode !== 'same-origin') {
+          return cached
+        }
+
+        if (cached && ASSETS.includes(url.pathname)) {
           return cached
         }
 

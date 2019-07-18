@@ -3,7 +3,7 @@
 /* @define Date */
 .Date {
   display: flex;
-  flex-wrap: wrap;;
+  flex-wrap: wrap;
   align-items: center;
   padding: 1.2rem 1.75rem;
   margin: 0.5rem 0;

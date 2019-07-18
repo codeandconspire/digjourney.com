@@ -133,6 +133,7 @@
   .Product-figure,
   .Product-contact {
     float: left;
+    clear: left;
     width: 33.333%;
   }
 
@@ -142,5 +143,7 @@
     width: 66.666%;
     padding-left: 2rem;
     margin-left: 0;
+    position: relative;
+    overflow: hidden;
   }
 }
