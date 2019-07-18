@@ -14,6 +14,18 @@
   padding: 1rem 1rem 2rem;
 }
 
+@media (min-width: 800px) and (min-height: 400px) {
+  .Callout-content {
+    padding: 3rem 3rem 5rem;
+  }
+}
+
+@media (min-width: 1800px) {
+  .Callout-content {
+    padding: 5rem calc(var(--document-margin) * 2) 3rem;
+  }
+}
+
 .Callout-body {
   margin: 1rem 0 0 0;
 }
@@ -25,10 +37,6 @@
 }
 
 @media (min-width: 800px) and (min-height: 400px) {
-  .Callout-content {
-    padding: 3rem 3rem 5rem;
-  }
-
   .Callout-title {
     font-size: 2.75rem;
   }

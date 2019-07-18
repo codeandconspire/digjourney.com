@@ -4,7 +4,7 @@ module.exports = facts
 
 function facts (props) {
   return html`
-    <div class="Facts">
+    <div class="Facts u-lg-expand u-xl-expand">
       ${props.heading ? html`
         <h2 class="Facts-heading">${props.heading}</h2>
       ` : null}

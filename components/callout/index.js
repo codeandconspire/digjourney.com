@@ -16,7 +16,7 @@ function callout (props) {
   })
 
   return html`
-    <section class="${classes}">
+    <section class="${classes} u-expand u-xl-expand">
       ${props.image ? html`
         <figure class="Callout-figure">
           ${getImage(props.image)}

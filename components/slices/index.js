@@ -49,10 +49,12 @@ function slices (slice, index, list, onclick) {
       return html`
         <figure class="Text u-sizeFull u-space1">
           <div class="u-md-container">
-            <img ${attrs} src="${src(slice.primary.image.url, 800)}">
-          </div>
-          <div class="u-container">
-            ${caption ? html`<figcaption class="Text-caption">${caption}</figcaption>` : null}
+            <div class="u-lg-expand u-xl-expand">
+              <img ${attrs} src="${src(slice.primary.image.url, 800)}">
+              <div class="u-container">
+                ${caption ? html`<figcaption class="Text-caption">${caption}</figcaption>` : null}
+              </div>
+            </div>
           </div>
         </figure>
       `
@@ -248,7 +250,7 @@ function slices (slice, index, list, onclick) {
     case 'facts_box': {
       let heading = slice.primary.heading
       return html`
-        <section class="u-container u-space2">
+        <section class="u-md-container u-space1">
           ${facts({
             heading: heading.length ? asText(heading) : null,
             body: asElement(slice.primary.body)
@@ -261,7 +263,7 @@ function slices (slice, index, list, onclick) {
       if (!items.length) return null
 
       return html`
-        <div class="u-container u-space2">
+        <div class="u-container u-space1">
           ${grid({ size: { md: '1of2' } }, items.map(function (item) {
             var symbol = item.symbol && item.symbol.toLowerCase()
             return html`
