@@ -50,7 +50,7 @@ module.exports = class Footer extends Component {
         ` : null}
         ${newsletter ? html`
           <div class="u-container">
-            <div class="u-dedent">
+            <div class="u-md-expand">
               <div class="Footer-newsletter">
                 <div class="Text">${newsletter}</div>
                 <form class="Footer-form" method="POST" action="${this.state.mailchimp}" onsubmit=${onsubmit}>

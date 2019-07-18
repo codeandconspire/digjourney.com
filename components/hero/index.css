@@ -6,7 +6,7 @@
   flex-direction: column;
   padding: 5rem 0 8rem;
   color: #fff;
-  background-color: #5422EE;
+  background-color: rgb(var(--color-gray));
 }
 
 .Hero::before {
@@ -68,4 +68,13 @@
 
 .Hero--twilight {
   background-color: rgb(var(--color-twilight));
+}
+
+.Hero--pink {
+  color: rgb(var(--color-twilight));
+  background-color: rgb(var(--color-pink));
+}
+
+.Hero--moss {
+  background-color: rgb(var(--color-moss));
 }

@@ -12,15 +12,15 @@ var { i18n, asText, resolve, loader, src, srcset, HTTPError, metaKey, memo } = r
 
 var text = i18n()
 
-module.exports = view(page, meta, 'page')
+module.exports = view(course, meta, 'page')
 
-function page (state, emit) {
+function course (state, emit) {
   return html`
     <main class="View-main">
       ${state.prismic.getByUID('course', state.params.slug, function (err, doc) {
         if (err) throw HTTPError(404, err)
         if (!doc) {
-          if (!state.partial) return Hero.loading()
+          if (!state.partial) return Hero.loading({ theme: 'twilight' })
           return state.cache(Hero, `hero-${state.partial.id}`).render({
             theme: 'twilight',
             label: loader(18),

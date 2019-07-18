@@ -62,7 +62,12 @@
 
 .Person-title {
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: bold;
+}
+
+.Person--small .Person-title {
+  font-size: 1rem;
+  font-weight: normal;
 }
 
 @media (min-width: 900px) {

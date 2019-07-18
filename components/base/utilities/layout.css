@@ -88,11 +88,37 @@
 .u-aspectPoster::before { padding-top: calc(100% * 278/195) !important; }
 
 /**
- * Centered page container
+ * Overflowing container
  */
 
+.u-expand {
+  margin-left: calc((var(--document-margin) * 0.8) * -1);
+  margin-right: calc((var(--document-margin) * 0.8) * -1);
+}
+
+@media (min-width: 1800px) {
+  .u-xl-expand {
+    margin-left: calc((var(--document-margin) * 2) * -1);
+    margin-right: calc((var(--document-margin) * 2) * -1);
+  }
+}
+
+@media (min-width: 1000px) {
+  .u-lg-expand {
+    margin-left: calc((var(--document-margin) * 0.8) * -1);
+    margin-right: calc((var(--document-margin) * 0.8) * -1);
+  }
+}
+
 @media (max-width: 999px) {
-  .u-dedent {
+  .u-md-expand {
+    margin-left: calc((var(--document-margin) * 0.8) * -1);
+    margin-right: calc((var(--document-margin) * 0.8) * -1);
+  }
+}
+
+@media (max-width: 599px) {
+  .u-sm-expand {
     margin-left: calc((var(--document-margin) * 0.8) * -1);
     margin-right: calc((var(--document-margin) * 0.8) * -1);
   }

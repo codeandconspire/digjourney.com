@@ -1,0 +1,146 @@
+@import "../base";
+
+/* @define Product */
+.Product {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 2rem 1rem 2rem;
+  border: 1px solid rgb(var(--color-divider));
+  border-radius: 0.375rem;
+}
+
+@media (min-width: 800px) and (min-height: 400px) {
+  .Product {
+    padding: 3rem 3rem 2rem;
+  }
+}
+
+@media (min-width: 1800px) {
+  .Product {
+    padding: 5rem calc(var(--document-margin) * 2) 3rem;
+  }
+}
+
+.Product-figure {
+  flex: 0 0 100%;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+@media (min-width: 600px) {
+  .Product-figure {
+    flex: 0 0 33.333%;
+  }
+}
+
+.Product-figure::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.Product-image {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  width: auto;
+  transform: translate(-50%, -50%);
+}
+
+.Product.is-loading .Product-image {
+  background-color: rgba(var(--loading-color));
+}
+
+@supports (object-fit: cover) {
+  .Product-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    transform: none;
+  }
+}
+
+.Product-header {
+  flex: 1 1 100%;
+}
+
+@media (min-width: 600px) {
+  .Product-header {
+    flex: 1 1 0%;
+    margin-left: 2rem;
+  }
+}
+
+.Product-label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.Product-title {
+  display: block;
+  margin: 0 0 0.4rem;
+  font-size: 2.75rem;
+  font-weight: bold;
+}
+
+.Product-properties {
+  margin: 0 0 1rem;
+}
+
+.Product-prop,
+.Product-value {
+  display: inline-block;
+}
+
+.Product-value {
+  margin: 0 1rem 0.5rem 0;
+}
+
+.Product-body {
+  margin-bottom: 2rem;
+}
+
+.Product-heading {
+  margin: 1rem 0;
+  font-weight: bold;
+}
+
+.Product-features {
+  padding-left: 1.5em;
+}
+
+.Product-feature {
+  margin-bottom: 0.5em;
+  position: relative;
+  list-style-position: outside;
+  list-style-image: url("./checkmark.svg");
+}
+
+@media (min-width: 1000px) {
+  .Product {
+    display: block;
+    overflow: hidden;
+  }
+
+  .Product-figure,
+  .Product-contact {
+    float: left;
+    width: 33.333%;
+  }
+
+  .Product-header,
+  .Product-body {
+    float: right;
+    width: 66.666%;
+    padding-left: 2rem;
+    margin-left: 0;
+  }
+}

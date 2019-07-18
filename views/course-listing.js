@@ -10,15 +10,15 @@ var { i18n, asText, src, HTTPError, memo, srcset, resolve, metaKey } = require('
 
 var text = i18n()
 
-module.exports = view(home, meta)
+module.exports = view(courses, meta)
 
-function home (state, emit) {
+function courses (state, emit) {
   return html`
     <main class="View-main">
       ${state.prismic.getSingle('course_listing', function (err, doc) {
         if (err) throw HTTPError(404, err)
         if (!doc) {
-          if (!state.partial) return Hero.loading()
+          if (!state.partial) return Hero.loading({ theme: 'twilight' })
           return state.cache(Hero, `hero-${state.partial.id}`).render({
             theme: 'twilight',
             body: html`
@@ -65,7 +65,7 @@ function home (state, emit) {
             <div class="Text u-space2">
               ${asElement(doc.data.body, resolve, serialize)}
             </div>
-            <div class="u-space2">
+            <div class="u-space2 u-expand u-xl-expand">
               ${featured.concat(courses)}
             </div>
           </div>
@@ -79,6 +79,7 @@ function home (state, emit) {
     return {
       tags: doc.tags,
       href: resolve(doc),
+      onclick: partial(doc),
       title: asText(doc.data.title),
       description: asElement(doc.data.description, resolve),
       features: doc.data.features.map(({ text }) => text).filter(Boolean),
