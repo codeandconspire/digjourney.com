@@ -132,8 +132,9 @@ function courses (state, emit) {
 function meta (state) {
   return state.prismic.getSingle('course_listing', function (err, doc) {
     if (err) throw err
-    if (!doc) return null
+    if (!doc) return { 'theme': 'turquoise' }
     var props = {
+      theme: 'turquoise',
       title: asText(doc.data.title),
       description: asText(doc.data.description)
     }

@@ -147,9 +147,9 @@ function course (state, emit) {
 function meta (state) {
   return state.prismic.getByUID('course', state.params.slug, (err, doc) => {
     if (err) throw err
-    if (!doc) return { 'theme-color': 'hotpink' }
+    if (!doc) return { 'theme': 'yellow' }
     var props = {
-      'theme-color': 'hotpink',
+      theme: 'yellow',
       title: asText(doc.data.title),
       description: asText(doc.data.description)
     }

@@ -349,3 +349,56 @@
     transform: translateY(0);
   }
 }
+
+/**
+ * Themes
+ */
+
+.Header--gray {
+  color: rgb(var(--color-blue));
+}
+
+.Header--yellow {
+  color: rgb(var(--color-blue));
+}
+
+.Header--yellow {
+  color: #fff;
+}
+
+.Header--turquoise {
+  color: #fff;
+}
+
+.Header--pink {
+  color: rgb(var(--color-blue));
+}
+
+.Header--blue {
+  color: #fff;
+}
+
+.Header--pink .Header-logo--onDark,
+.Header--yellow .Header-logo--onDark,
+.Header--orange .Header-logo--onDark {
+  display: none
+}
+
+.Header--pink .Header-logo--onLight,
+.Header--yellow .Header-logo--onLight,
+.Header--orange .Header-logo--onLight {
+  display: block
+}
+
+.Header--turquoise .Header-logo--onLight,
+.Header--turquoise .Header-logo--onDark,
+.Header--gray .Header-logo--onLight,
+.Header--gray .Header-logo--onDark {
+  display: none
+}
+
+.Header--turquoise .Header-logo--onWhite,
+.Header--turquoise .Header-logo--onWhite,
+.Header--gray .Header-logo--onWhite {
+  display: block
+}

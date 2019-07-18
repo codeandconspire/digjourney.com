@@ -14,18 +14,19 @@ var DEFAULT_TITLE = text`SITE_NAME`
 
 module.exports = createView
 
-function createView (view, meta) {
+function createView (view, getMeta) {
   return function (state, emit) {
     return state.prismic.getSingle('website', function (err, doc) {
       var children
+      var meta = { theme: 'blue' }
 
       try {
         if (err) throw err
         children = view(state, emit)
-        let next = meta ? meta(state) : {}
+        meta = meta ? getMeta(state) : {}
 
-        if (next && next.title && next.title !== DEFAULT_TITLE) {
-          next.title = `${next.title} – ${DEFAULT_TITLE}`
+        if (meta && meta.title && meta.title !== DEFAULT_TITLE) {
+          meta.title = `${meta.title} – ${DEFAULT_TITLE}`
         }
 
         let defaults = {
@@ -39,7 +40,7 @@ function createView (view, meta) {
           defaults['og:image:height'] = doc.data.featured_image.dimensions.height
         }
 
-        emit('meta', Object.assign(defaults, next))
+        emit('meta', Object.assign(defaults, meta))
       } catch (err) {
         err.status = state.offline ? 503 : err.status || 500
         children = error(err, state, emit)
@@ -67,7 +68,7 @@ function createView (view, meta) {
       return html`
         <body class="View ${state.ui.openNavigation ? 'is-overlayed' : ''}" id="view">
           <script type="application/ld+json">${raw(JSON.stringify(linkedData(state)))}</script>
-          ${state.cache(Header, 'header').render(state.href, menu)}
+          ${state.cache(Header, 'header').render(state.href, menu, meta.theme)}
           ${children}
           ${state.cache(Footer, 'footer').render(footer, doc ? asElement(doc.data.newsletter) : null, doc ? asElement(doc.data.contact_blurb) : null)}
           ${Player.render()}

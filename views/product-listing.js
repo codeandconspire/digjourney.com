@@ -103,8 +103,9 @@ function products (state, emit) {
 function meta (state) {
   return state.prismic.getSingle('product_listing', function (err, doc) {
     if (err) throw err
-    if (!doc) return null
+    if (!doc) return { 'theme': 'pink' }
     var props = {
+      theme: 'pink',
       title: asText(doc.data.title),
       description: asText(doc.data.description)
     }

@@ -51,8 +51,9 @@ function page (state, emit) {
 function meta (state) {
   return state.prismic.getByUID('page', state.params.slug, (err, doc) => {
     if (err) throw err
-    if (!doc) return null
+    if (!doc) return { 'theme': 'gray' }
     var props = {
+      theme: 'gray',
       title: asText(doc.data.title),
       description: asText(doc.data.description)
     }

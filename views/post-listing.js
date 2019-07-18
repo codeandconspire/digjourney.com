@@ -179,8 +179,9 @@ function home (state, emit) {
 function meta (state) {
   return state.prismic.getSingle('discover', function (err, doc) {
     if (err) throw err
-    if (!doc) return null
+    if (!doc) return { 'theme': 'blue' }
     var props = {
+      theme: 'blue',
       title: asText(doc.data.title),
       description: asText(doc.data.description)
     }

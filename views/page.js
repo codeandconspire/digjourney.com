@@ -14,12 +14,12 @@ function page (state, emit) {
       return html`
         <main class="View-main">
           ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
-            theme: doc.data.theme.toLowerCase(),
+            theme: state.partial.data.theme,
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
               ${asElement(state.partial.data.description, resolve)}
             `
-          }) : Hero.loading({ theme: doc.data.theme.toLowerCase() })}
+          }) : Hero.loading({ theme: 'gray' })}
         </main>
       `
     }
@@ -56,8 +56,9 @@ function page (state, emit) {
 function meta (state) {
   return state.prismic.getByUID('page', state.params.slug, (err, doc) => {
     if (err) throw err
-    if (!doc) return null
+    if (!doc) return { 'theme': 'gray' }
     var props = {
+      theme: doc.data.theme.toLowerCase(),
       title: asText(doc.data.title),
       description: asText(doc.data.description)
     }

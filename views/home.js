@@ -13,8 +13,9 @@ function home (state, emit) {
       return html`
         <main class="View-main">
           ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
+            theme: 'blue',
             body: asElement(state.partial.data.intro, resolve)
-          }) : Hero.loading()}
+          }) : Hero.loading({ theme: 'blue' })}
         </main>
       `
     }
@@ -22,6 +23,7 @@ function home (state, emit) {
     return html`
       <main class="View-main">
         ${state.cache(Hero, `hero-${doc.id}`).render({
+          theme: 'blue',
           body: asElement(doc.data.intro, resolve)
         })}
       </main>
@@ -41,8 +43,9 @@ function home (state, emit) {
 function meta (state) {
   return state.prismic.getSingle('homepage', function (err, doc) {
     if (err) throw HTTPError(404, err)
-    if (!doc) return null
+    if (!doc) return { 'theme': 'blue' }
     var props = {
+      theme: 'blue',
       title: asText(doc.data.title),
       description: asText(doc.data.description)
     }
