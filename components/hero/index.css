@@ -55,7 +55,7 @@
   font-size: 1.6em;
 }
 
-.Hero-body a {
+.Hero-body a:not([class]) {
   color: rgb(var(--color-pink));
   white-space: nowrap;
   border-bottom: 1px solid currentColor;
@@ -70,7 +70,7 @@
   background-color: rgb(var(--color-gray));
 }
 
-.Hero--gray .Hero-body a {
+.Hero--gray .Hero-body a:not([class]) {
   color: rgb(var(--color-pink));
 }
 
@@ -79,7 +79,7 @@
   background-color: rgb(var(--color-yellow));
 }
 
-.Hero--yellow .Hero-body a {
+.Hero--yellow .Hero-body a:not([class]) {
   color: rgb(var(--color-blue));
 }
 
@@ -88,7 +88,7 @@
   background-color: rgb(var(--color-orange));
 }
 
-.Hero--orange .Hero-body a {
+.Hero--orange .Hero-body a:not([class]) {
   color: rgb(var(--color-yellow));
 }
 
@@ -97,7 +97,7 @@
   background-color: rgb(var(--color-turquoise));
 }
 
-.Hero--turquoise .Hero-body a {
+.Hero--turquoise .Hero-body a:not([class]) {
   color: rgb(var(--color-yellow));
 }
 
@@ -106,16 +106,17 @@
   background-color: rgb(var(--color-pink));
 }
 
-.Hero--pink .Hero-body a {
+.Hero--pink .Hero-body a:not([class]) {
   color: rgb(var(--color-blue));
 }
 
 .Hero--blue {
+  --loading-color: 255, 255, 255, 0.16;
   color: #fff;
   background-color: rgb(var(--color-blue));
 }
 
-.Hero--blue .Hero-body a {
+.Hero--blue .Hero-body a:not([class]) {
   color: rgb(var(--color-pink));
 }
 

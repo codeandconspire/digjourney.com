@@ -6,7 +6,7 @@ var view = require('../components/view')
 var Hero = require('../components/hero')
 var course = require('../components/course')
 var serialize = require('../components/text/serialize')
-var { i18n, asText, src, HTTPError, memo, srcset, resolve, metaKey } = require('../components/base')
+var { i18n, loader, asText, src, HTTPError, memo, srcset, resolve, metaKey } = require('../components/base')
 
 var text = i18n()
 
@@ -25,6 +25,11 @@ function courses (state, emit) {
               ${asElement(state.partial.data.description, resolve)}
             `
           }) : Hero.loading({ theme: 'turquoise' })}
+          <div class="u-container">
+            <div class="Text u-space2">
+              <p>${loader(65)}</p>
+            </div>
+          </div>
         </main>
       `
     }

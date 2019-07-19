@@ -3,7 +3,7 @@ var asElement = require('prismic-element')
 var view = require('../components/view')
 var Hero = require('../components/hero')
 var slices = require('../components/slices')
-var { asText, resolve, src, HTTPError, metaKey } = require('../components/base')
+var { asText, loader, resolve, src, HTTPError, metaKey } = require('../components/base')
 
 module.exports = view(page, meta, 'page')
 
@@ -20,6 +20,11 @@ function page (state, emit) {
               ${asElement(state.partial.data.description, resolve)}
             `
           }) : Hero.loading({ theme: 'gray' })}
+          <div class="u-container u-space1">
+            <div class="Text">
+              ${loader(65)}
+            </div>
+          </div>
         </main>
       `
     }
@@ -33,9 +38,7 @@ function page (state, emit) {
             ${asElement(doc.data.description, resolve)}
           `
         })}
-        <div class="u-spaceB8">
-          ${doc.data.body.map((slice, index, list) => slices(slice, index, list, onclick))}
-        </div>
+        ${doc.data.body.map((slice, index, list) => slices(slice, index, list, onclick))}
       </main>
     `
   })
