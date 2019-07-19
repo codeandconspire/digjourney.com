@@ -2,7 +2,7 @@ var html = require('choo/html')
 var Component = require('choo/component')
 var { i18n } = require('../base')
 
-var text = i18n(require('./lang.json'))
+var text = i18n()
 
 class Player extends Component {
   update (content) {
