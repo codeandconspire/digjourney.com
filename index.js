@@ -19,6 +19,7 @@ if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
 
 app.use(lazy)
 app.use(require('./stores/ui'))
+app.use(require('./stores/tracking'))
 app.use(require('./stores/navigation'))
 app.use(require('./stores/prismic')({ repository: REPOSITORY, middleware }))
 app.use(require('choo-meta')({ origin: app.state.origin }))
