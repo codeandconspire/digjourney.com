@@ -1,0 +1,110 @@
+@import "../base";
+
+/* @define Book */
+.Book {
+  padding: 2rem 0 1.5rem;
+  background: rgb(var(--color-gray));
+}
+
+@media (min-width: 800px) and (min-height: 400px) {
+  .Book {
+    padding-top: 5rem;
+  }
+}
+
+.Book-content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 1000px) {
+  .Book-content {
+    align-items: center;
+  }
+}
+
+@media (min-width: 600px) {
+  .Book-figure {
+    flex: 0 1 33.333%;
+    margin-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .Book-figure {
+    flex: 0 1 50%;
+  }
+}
+
+.Book-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.Book-body {
+  flex: 1 1 0%;
+}
+
+.Book-title {
+  font-size: 2.75rem;
+  line-height: 1.25;
+  font-weight: bold;
+  color: rgb(var(--color-blue));
+}
+
+.Book-rating {
+  display: block;
+  margin: 0.5em 0;
+  position: relative;
+  font-size: 0.875rem;
+}
+
+.Book-rating::before {
+  content: "★★★★★";
+  position: absolute;
+  color: rgb(var(--color-muted));
+}
+
+.Book-rating::after {
+  content: attr(data-rating);
+  position: relative;
+  color: #FF9300;
+}
+
+.Book-author {
+  display: block;
+  margin: 0.5em 0 1em;
+  font-size: 0.875rem;
+}
+
+.Book-footer {
+  flex: 1 0 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1.5rem 0 0;
+  margin-top: 1.5rem;
+  border-top: 1px solid rgb(var(--color-divider));
+}
+
+.Book-retailers {
+  display: none;
+  font-size: 0.875rem;
+  color: rgb(var(--color-muted));
+}
+
+@media (min-width: 600px) {
+  .Book-retailers {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+  }
+}
+
+.Book-logotype {
+  display: block;
+  width: auto;
+  max-height: 0.9rem;
+  margin-left: 1rem;
+}

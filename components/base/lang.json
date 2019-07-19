@@ -44,5 +44,8 @@
   "Published by %s on %s": "Skrivet av %s den %s",
   "Show more": "Show more",
   "Related posts": "Fler insikter",
-  "Play %s": "Spela %s"
+  "Play %s": "Spela %s",
+  "Rating: %s of 5": "Betyg: %s av 5",
+  "Available at": "Finns hos",
+  "Written by %s": "Skriven av %s"
 }
