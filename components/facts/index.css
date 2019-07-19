@@ -6,15 +6,10 @@
   background-color: rgb(var(--color-gray));
 }
 
-@media (min-width: 1800px) {
-  .Facts {
-    padding: calc(var(--document-margin) * 2) calc(var(--document-margin) * 2);
-  }
-}
-
 .Facts-heading {
   font-size: 1.375rem;
   margin-bottom: 1rem;
+  font-weight: bold;
 }
 
 @media (min-width: 900px) {

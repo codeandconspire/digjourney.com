@@ -58,7 +58,7 @@ function product (props) {
         ` : null}
         ${props.action ? html`
           <div class="u-spaceT4">
-            ${button(Object.assign({ primary: true }, props.action))}
+            ${button(props.action)}
           </div>
         ` : null}
       </div>

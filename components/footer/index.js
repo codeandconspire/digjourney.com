@@ -2,6 +2,7 @@ var html = require('choo/html')
 var Component = require('choo/component')
 var { i18n } = require('../base')
 var symbol = require('../base/symbol')
+var button = require('../button')
 
 var text = i18n()
 
@@ -58,7 +59,7 @@ module.exports = class Footer extends Component {
                     <span class="u-hiddenVisually">${text`Fill in your e-mail address`}</span>
                     <input class="Footer-email" type="email" name="MERGE0" id="MERGE0" placeholder="${text`Fill in your e-mail address`}" disabled=${this.local.isLoading} required>
                   </label>
-                  <button class="Footer-button" type="submit" disabled=${this.local.isLoading}>${text`Subscribe`}</button>
+                  ${button({ class: 'Footer-button', theme: 'pink', text: text`Subscribe`, type: 'submit', disabled: this.local.isLoading })}
                   ${self.local.message ? html`<span class="Footer-message">${this.local.message}</span>` : null}
                 </form>
               </div>
@@ -70,7 +71,7 @@ module.exports = class Footer extends Component {
             <nav>
               <ul class="Footer-menu">
                 ${menu.map(({ label, href, children, onclick }, index, list) => html`
-                  <li class="Footer-section ${alt ? 'u-slideDown' : ''} u-size1of${Math.floor(list.length / 2)} u-lg-size1of${list.length}" style="animation-delay: ${alt ? index * 150 : 0}ms">
+                  <li class="Footer-section ${alt ? 'u-slideDown' : ''} u-size1of${Math.floor(list.length / 2)} u-lg-size1of${list.length}" style="animation-delay: ${alt ? index * 100 : 0}ms">
                     <div class="Footer-item">
                       ${href ? html`
                         <a class="Footer-link Footer-link--primary" href="${href}" onclick=${onclick}>${symbol.arrow(label)}</a>

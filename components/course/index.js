@@ -42,7 +42,7 @@ function course (props) {
           </div>
         `),
         grid.cell({ size: { md: '1of2', lg: '1of3' } }, html`
-          <div class="Course-panel">
+          <div class="Course-panel u-sm-expand">
             <h4 class="Course-heading">${text`The course includes`}</h4>
             <ul class="Course-features">
               ${props.features.map((text) => html`
@@ -52,7 +52,7 @@ function course (props) {
           </div>
         `),
         grid.cell({ size: { md: '1of2', lg: '1of3' } }, html`
-          <div class="Course-panel">
+          <div class="Course-panel u-sm-expand">
             <h4 class="Course-heading">${text`Kursledare`}</h4>
             ${props.teachers.map((props, index) => html`
               <div class="${index > 0 ? 'u-spaceT2' : ''}">
@@ -65,7 +65,7 @@ function course (props) {
       ${props.dates ? html`
         <div class="Course-dates">
           <h4>${text`Upcoming course dates`}</h4>
-          <ol>
+          <ol class="u-sm-expand">
             ${props.dates.map((item) => html`
               <li>${date(item)}</li>
             `)}
@@ -87,7 +87,7 @@ function loading () {
           </div>
         `),
         grid.cell({ size: { md: '1of2', lg: '1of3' } }, html`
-          <div class="Course-panel">
+          <div class="Course-panel u-sm-expand">
             <h4 class="Course-heading">${loader(4)}</h4>
             <ul class="Course-features">
               <li class="Course-feature">${loader(12)}</li>
@@ -98,7 +98,7 @@ function loading () {
           </div>
         `),
         grid.cell({ size: { md: '1of2', lg: '1of3' } }, html`
-          <div class="Course-panel">
+          <div class="Course-panel u-sm-expand">
             <h4 class="Course-heading">${loader(4)}</h4>
             ${person.loading({ small: true })}
             <div class="u-spaceT2">

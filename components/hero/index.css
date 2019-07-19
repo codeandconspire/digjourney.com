@@ -7,12 +7,13 @@
   padding: 5rem 0 8rem;
   color: #fff;
   background-color: rgb(var(--color-blue));
+  margin-bottom: 10vh;
 }
 
 .Hero::before {
   flex: 0 1 auto;
   content: "";
-  height: 10vh;
+  height: 25vh;
 }
 
 @media (min-width: 600px) {
@@ -23,25 +24,21 @@
 
 .Hero-body {
   font-weight: bold;
-  font-size: 1.3rem;
-  line-height: 1.4;
+  font-size: 1.33rem;
+  line-height: 1.35;
+  max-width: 75rem;
 }
 
 @media (min-width: 600px) {
   .Hero-body {
-    font-size: 2rem;
-  }
-}
-
-@media (min-width: 900px) {
-  .Hero-body {
-    font-size: 2.4rem;
+    font-size: 1.8rem;
   }
 }
 
 @media (min-width: 1400px) {
   .Hero-body {
-    font-size: 3rem;
+    font-size: 2.5rem;
+    line-height: 1.25;
   }
 }
 
@@ -50,15 +47,44 @@
   font-weight: normal;
 }
 
-.Hero-body h1 {
-  margin-bottom: 1.2em;
-  font-size: 1.6em;
-}
-
 .Hero-body a:not([class]) {
   color: rgb(var(--color-pink));
   white-space: nowrap;
-  border-bottom: 1px solid currentColor;
+  border-bottom: 2px solid currentColor;
+}
+
+.Hero-body a:not([class]):active {
+  opacity: 0.5;
+}
+
+.Hero-body h1 {
+  margin-bottom: 1.3rem;
+  font-size: 2.6rem;
+  line-height: 1.15;
+}
+
+@media (min-width: 600px) {
+  .Hero-body h1 {
+    font-size: 3.3rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .Hero-body h1 {
+    font-size: 4rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .Hero-body a:not([class]) {
+    border-bottom-width: 4px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .Hero-body h1 {
+    font-size: 5rem;
+    margin-bottom: 3.3rem;
+  }
 }
 
 /**

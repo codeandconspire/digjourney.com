@@ -16,7 +16,7 @@ function callout (props) {
   })
 
   return html`
-    <article class="${classes} u-expand u-xl-expand">
+    <article class="${classes} u-expand">
       ${props.image ? html`
         <figure class="Callout-figure">
           ${getImage(props.image)}
@@ -55,7 +55,7 @@ function loading (opts = {}) {
     'Callout--image': opts.image
   })
   return html`
-    <article class="${classes} is-loading u-expand u-xl-expand">
+    <article class="${classes} is-loading u-expand">
       ${opts.image ? html`
         <figure class="Callout-figure">
           <div class="Callout-image u-loading"></div>

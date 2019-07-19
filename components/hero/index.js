@@ -15,8 +15,8 @@ module.exports = class Hero extends Component {
       <div class="${className('Hero is-loading', { 'Hero--small': opts.small, [`Hero--${opts.theme}`]: opts.theme })}">
         <div class="Hero-body u-container">
           ${opts.label ? html`<span class="Hero-label">${loader(18)}</span>` : null}
-          <h1 class="Hero-title">${loader(18)}</h1>
-          <p class="Hero-text">${loader(32)}</p>
+          <h1 class="Hero-title">${loader(14)}</h1>
+          <p class="Hero-text">${loader(52)}</p>
         </div>
       </div>
     `

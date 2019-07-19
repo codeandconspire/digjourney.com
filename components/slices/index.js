@@ -22,7 +22,7 @@ function slices (slice, index, list, onclick) {
       if (!slice.primary.text.length) return null
       return html`
         <div class="u-container u-space1">
-          <div class="Text">
+          <div class="Text">      
             ${asElement(slice.primary.text, resolve, serialize)}
           </div>
         </div>
@@ -50,7 +50,7 @@ function slices (slice, index, list, onclick) {
       return html`
         <figure class="Text u-sizeFull u-space1">
           <div class="u-md-container">
-            <div class="u-lg-expand u-xl-expand">
+            <div class="u-lg-expand">
               <img ${attrs} src="${src(slice.primary.image.url, 800)}">
               <div class="u-container">
                 ${caption ? html`<figcaption class="Text-caption">${caption}</figcaption>` : null}
@@ -76,7 +76,7 @@ function slices (slice, index, list, onclick) {
       if (!children) return null
 
       return html`
-        <div class="u-md-container u-space1">
+        <div class="u-md-container u-space2">
           <figure class="Text u-sizeFull">
             <div class="u-space1">${children}</div>
           </div>
@@ -129,7 +129,7 @@ function slices (slice, index, list, onclick) {
       }
 
       return html`
-        <div class="u-container u-space1">${callout(props)}</div>
+        <div class="u-container u-space0">${callout(props)}</div>
       `
     }
     case 'people': {

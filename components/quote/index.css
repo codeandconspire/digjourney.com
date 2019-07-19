@@ -9,19 +9,27 @@
 
 .Quote-content {
   margin: 0 auto;
-  max-width: 39rem;
+  max-width: 46rem;
 }
 
 .Quote-body {
-  font-size: 1.5rem;
+  font-size: 1.33rem;
+  line-height: 1.35;
   font-weight: bold;
+  max-width: 75rem;
+}
+
+@media (min-width: 600px) {
+  .Quote-body {
+    font-size: 1.5rem;
+  }
 }
 
 .Quote-symbol {
   transform: translateY(-50%);
 }
 
-@media (min-width: 39rem) {
+@media (min-width: 1000px) {
   .Quote-symbol {
     transform: translateX(-100%);
   }

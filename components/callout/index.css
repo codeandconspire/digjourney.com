@@ -11,18 +11,12 @@
 
 .Callout-content {
   flex: 1 1 auto;
-  padding: 1rem 1rem 2rem;
+  padding: 3rem 1.5rem;
 }
 
 @media (min-width: 800px) and (min-height: 400px) {
   .Callout-content {
-    padding: 3rem 3rem 5rem;
-  }
-}
-
-@media (min-width: 1800px) {
-  .Callout-content {
-    padding: 5rem calc(var(--document-margin) * 2) 3rem;
+    padding: 5rem;
   }
 }
 
@@ -37,7 +31,7 @@
 }
 
 .Callout-title {
-  font-size: 1.55rem;
+  font-size: 2rem;
   font-weight: bold;
   line-height: 1.25;
 }
@@ -45,6 +39,7 @@
 @media (min-width: 800px) and (min-height: 400px) {
   .Callout-title {
     font-size: 2.75rem;
+    line-height: 1.2;
   }
 }
 
@@ -75,6 +70,10 @@
   top: 0;
 }
 
+.Callout-link:active {
+  opacity: 0.5;
+}
+
 @media (min-width: 350px) {
   .Callout-link {
     font-size: 1.125rem;
@@ -93,7 +92,7 @@
   }
 
   .Callout-figure {
-    flex-basis: 30%;
+    flex-basis: 40%;
   }
 
   .Callout-image {
@@ -120,6 +119,7 @@
 
   .Callout:not(.Callout--image) .Callout-body {
     margin-left: 2rem;
+    margin-top: 0.5rem;
   }
 
   .Callout:not(.Callout--image) .Callout-text {
@@ -133,27 +133,28 @@
   }
 
   .Callout--image .Callout-content {
-    flex-basis: 70%;
+    flex-basis: 60%;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
+  
   .Callout--right .Callout-figure {
+    margin-left: 0.5rem;
     order: 1;
     flex-wrap: nowrap;
   }
 
-  .Callout--right .Callout-figure {
-    order: 1;
-    margin-left: 1.5rem;
-    margin-right: 0;
+  .Callout--left .Callout-figure {
+    margin-right: 0.5rem;
+    order: 0;
+    flex-wrap: nowrap;
   }
 }
 
-@media (min-width: 800px) {
+@media (min-width: 1000px) {
   .Callout-figure {
-    margin-right: 2.5rem;
     flex-basis: 50%;
   }
 
@@ -161,9 +162,9 @@
     flex-basis: 50%;
   }
 
-  .Callout--right .Callout-figure {
-    margin-left: 2.5rem;
-    margin-right: 0;
+  .Callout--right .Callout-figure,
+  .Callout--left .Callout-figure {
+    margin: 0
   }
 }
 

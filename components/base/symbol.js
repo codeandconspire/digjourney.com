@@ -19,7 +19,7 @@ module.exports = {
 
 function arrow (text, rotate) {
   var svg = html`
-    <svg class="u-arrow" style="${rotate ? 'transform: rotate(90deg)' : ''}" role="presentation" viewBox="0 0 7 11">
+    <svg class="u-arrow" style="${rotate ? 'transform: rotate(90deg); top: 0.05em; margin: 0 0.6rem' : ''}" role="presentation" viewBox="0 0 7 11">
       <path fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1.66 9.9L5.9 5.66 1.66 1.4"/>
     </svg>
   `

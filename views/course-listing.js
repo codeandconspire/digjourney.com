@@ -72,7 +72,7 @@ function courses (state, emit) {
           <div class="Text u-space2">
             ${asElement(doc.data.body, resolve, serialize)}
           </div>
-          <div class="u-space2 u-expand u-xl-expand">
+          <div class="u-space2 u-expand">
             ${featured.concat(courses)}
           </div>
         </div>

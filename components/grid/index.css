@@ -3,7 +3,7 @@
 /* @define Grid */
 :root {
   --Grid-gutter: 1.5rem;
-  --Grid-gutter-vertical: 2rem;
+  --Grid-gutter-vertical: 1.8rem;
 }
 
 @media (min-width: 800px), print {
@@ -23,7 +23,6 @@
 @media (min-width: 1200px), print {
   :root {
     --Grid-gutter: 2.8rem;
-    --Grid-gutter-vertical: 3.25rem;
   }
 }
 

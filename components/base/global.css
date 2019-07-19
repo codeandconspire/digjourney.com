@@ -1,11 +1,16 @@
 :root {
   --color-yellow: 255, 203, 132;
+  --color-yellow-dark: 218, 159, 79;
   --color-orange: 218, 101, 38;
+  --color-orange-dark: 180, 79, 24;
   --color-turquoise: 7, 170, 184;
+  --color-turquoise-dark: 4, 118, 128;
   --color-pink: 255, 179, 179;
-  --color-dark-pink: 241, 152, 152;
+  --color-pink-dark: 214, 128, 128;
   --color-blue: 17, 0, 70;
+  --color-blue-dark: 0, 0, 0;
   --color-gray: 244, 243, 246;
+  --color-gray-dark: 209, 208, 212;
   
   --color-divider: 223, 223, 223;
   --color-muted: 17, 0, 70, 0.5;
@@ -18,7 +23,7 @@
   --document-background: 255, 255, 255;
   --document-color: 0, 0, 0;
 
-  --document-width: 1500px;
+  --document-width: 1600px;
   --document-margin: 1.2rem;
 
   --container-large-width: var(--document-width);
@@ -57,5 +62,11 @@
 @media (min-width: 1000px) {
   :root {
     --document-margin: 3.5rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  :root {
+    --document-margin: 6rem;
   }
 }

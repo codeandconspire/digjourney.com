@@ -63,13 +63,13 @@
 
 @media (min-width: 1500px) {
   :root {
-    font-size: 110%;
+    font-size: 115%;
   }
 }
 
 @media (min-width: 1800px) {
   :root {
-    font-size: 120%;
+    font-size: 130%;
   }
 }
 
@@ -128,11 +128,6 @@ strong {
   color: inherit;
   text-decoration: none;
   cursor: pointer;
-}
-
-a:hover,
-a:active {
-  background-color: transparent; /* 1 */
 }
 
 a,

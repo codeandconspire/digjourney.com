@@ -27,7 +27,9 @@ function card (props = {}) {
 
   return html`
     <article ${attrs}>
-      ${image}
+      <div class="u-sm-expand">
+        ${image}
+      </div>
       <div class="Card-content">
         <div class="Card-body">
           ${props.date && props.date.text ? date(props.date) : null}
@@ -47,7 +49,9 @@ function card (props = {}) {
 function loading (opts = {}) {
   return html`
     <article class="${className('Card', { 'Card--background': opts.background })}">
-      ${opts.image ? figure.loading() : null}
+      <div class="u-sm-expand">
+        ${opts.image ? figure.loading() : null}
+      </div>
       <div class="Card-content">
         <div class="Card-body">
           ${opts.date ? html`<time class="Card-meta">${loader(6)}</time>` : null}

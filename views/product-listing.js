@@ -54,7 +54,7 @@ function products (state, emit) {
                     <h2 class="Text-h1">${asText(slice.primary.heading)}</h2>
                   </div>
                 </div>
-                <div class="u-expand u-xl-expand u-spaceB8">
+                <div class="u-expand u-spaceB8">
                   ${slice.items.map(function ({ link }) {
                     if (!link.id || link.isBroken) return null
                     return state.prismic.getByID(link.id, function (err, doc) {

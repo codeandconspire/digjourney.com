@@ -13,6 +13,6 @@ function button (props) {
     [`Button--${props.theme}`]: props.theme
   })
 
-  if (attrs.href) return html`<a ${attrs}>${props.text}</a>`
-  return html`<button ${attrs}>${props.text}</button>`
+  if (attrs.href) return html`<a ${attrs}><span>${props.text}</span></a>`
+  return html`<button ${attrs}><span>${props.text}</span></button>`
 }

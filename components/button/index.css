@@ -3,6 +3,8 @@
 /* @define Button */
 .Button {
   display: inline-block;
+  position: relative;
+  overflow: hidden;
   padding: 1em 2rem;
   border: 0;
   font-size: 1rem;
@@ -11,48 +13,98 @@
   white-space: nowrap;
   border-radius: 0.1875rem;
   text-decoration: none;
+  cursor: pointer;
+  color: rgb(var(--color-blue));
+  background: rgb(var(--color-gray));
+  transition: background 100ms var(--ease-out);
 }
 
-.Button,
-.Button:hover {
-  color: rgb(var(--color-blue));
-  background-color: rgb(var(--color-pink));
+.Button::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+  transition: opacity 300ms;
+  background: rgb(var(--color-gray-dark));
+  opacity: 0;
+}
+
+.Button:hover::before,
+.Button:active::before {
+  opacity: 1;
+}
+
+.Button:active::before {
+  transition-duration: 50ms;
+}
+
+.Button span {
+  position: relative;
+  z-index: 1;
 }
 
 .Button[disabled] {
   opacity: 0.6;
-  cursor: not-allowed;
+  pointer-events: none;
 }
 
-.Button--yellow,
-.Button--yellow:hover {
-  background-color: rgb(var(--color-yellow));
+/**
+ * Themes
+ */
+
+.Button--gray {
+  color: rgb(var(--color-blue));
+  background: rgb(var(--color-gray));
 }
 
-.Button--orange,
-.Button--orange:hover {
+.Button--gray::before {
+  background: rgb(var(--color-gray-dark));
+}
+
+.Button--yellow {
+  color: rgb(var(--color-blue));
+  background: rgb(var(--color-yellow));
+}
+
+.Button--yellow::before {
+  background: rgb(var(--color-yellow-dark));
+}
+
+.Button--orange {
   color: #fff;
-  background-color: rgb(var(--color-orange));
+  background: rgb(var(--color-orange));
 }
 
-.Button--turquoise,
-.Button--turquoise:hover {
+.Button--orange::before {
+  background: rgb(var(--color-orange-dark));
+}
+
+.Button--turquoise {
   color: #fff;
-  background-color: rgb(var(--color-turquoise));
+  background: rgb(var(--color-turquoise));
 }
 
-.Button--pink,
-.Button--pink:hover {
-  background-color: rgb(var(--color-pink));
+.Button--turquoise::before {
+  background: rgb(var(--color-turquoise-dark));
 }
 
-.Button--blue,
-.Button--blue:hover {
+.Button--pink {
+  color: rgb(var(--color-blue));
+  background: rgb(var(--color-pink));
+}
+
+.Button--pink::before {
+  background: rgb(var(--color-pink-dark));
+}
+
+.Button--blue {
   color: #fff;
-  background-color: rgb(var(--color-blue));
+  background: rgb(var(--color-blue));
 }
 
-.Button--gray,
-.Button--gray:hover {
-  background-color: rgb(var(--color-gray));
+.Button--blue::before {
+  background: rgb(var(--color-blue-dark));
 }
+

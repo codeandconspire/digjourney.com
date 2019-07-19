@@ -6,6 +6,11 @@
  * Dynamic
  */
 
+.u-space0 {
+  margin-top: 1.25rem !important;
+  margin-bottom: 1.25rem !important;
+}
+
 .u-space1 {
   margin-top: 2.6rem !important;
   margin-bottom: 2.6rem !important;

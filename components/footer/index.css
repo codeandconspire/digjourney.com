@@ -6,6 +6,19 @@
   border-top: 1px solid rgb(var(--color-divider));
 }
 
+@media (min-width: 700px) {
+  .Footer {
+    padding-top: 4rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .Footer {
+    padding-top: 6rem;
+  }
+}
+
+
 .Footer-navigation {
   background: rgb(var(--color-gray));
   padding: 3rem 0 2.5rem;
@@ -52,7 +65,7 @@
   display: inline-block;
   padding: 0.1rem 0.3rem;
   margin: -0.1rem -0.3rem;
-  border-radius: 2px;
+  border-radius: 0.1875rem;
   transition: background 400ms var(--ease-out);
 }
 
@@ -100,7 +113,7 @@
 
 .Footer-newsletter {
   padding: 3rem 1.5rem 2rem;
-  margin: -7.5rem 0.5rem 0;
+  margin: -7.5rem 0 0;
   border-radius: 0.375rem;
   color: #fff;
   background-color: rgb(var(--color-blue));
@@ -144,39 +157,18 @@
   border: 0 !important;
 }
 
-.Footer-button {
-  display: block;
-  width: 100%;
-  padding: 1em;
-  margin-top: 0.5em;
-  border: 0;
-  font-size: 1rem;
-  line-height: 1;
-  color: rgb(var(--color-blue));
-  background: rgb(var(--color-pink));
-  border-radius: 0.1875rem;
-  transition: background 100ms var(--ease-out);
-}
-
-.Footer-button:hover,
-.Footer-button:active {
-  background: rgb(var(--color-dark-pink));
-}
-
-.Footer-button:active {
-  opacity: 0.7;
-}
-
-.Footer-button:disabled {
-  opacity: 0.4;
-}
-
 .Footer-message {
   display: block;
   width: 100%;
   margin-top: 1rem;
   font-weight: bold;
   position: absolute;
+}
+
+.Footer-button {
+  display: block;
+  width: 100%;
+  margin-top: 0.5em;
 }
 
 @media (min-width: 800px) {
@@ -197,6 +189,12 @@
     margin-left: auto;
     margin-right: auto;
   }
+}
+
+.Footer-contact p {
+  max-width: 34rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /**
