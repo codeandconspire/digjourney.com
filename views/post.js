@@ -80,7 +80,7 @@ function post (state, emit) {
             <h1>${asText(doc.data.title)}</h1>
           `
         })}
-        <div class="u-container u-space1">
+        <div class="u-container u-spaceB4">
           <div class="Text">
             ${asElement(doc.data.description, resolve)}
           </div>
