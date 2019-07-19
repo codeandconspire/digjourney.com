@@ -180,6 +180,8 @@
   }
 
   .Header-link:hover + .Header-dropdown,
+  .Header-link:focus + .Header-dropdown,
+  .Header-dropdown:focus-within,
   .Header-dropdown:hover {
     opacity: 1;
     transform: translateY(0);
