@@ -24,19 +24,17 @@ function page (state, emit) {
       `
     }
 
-    var { title, description, body } = doc.data
-
     return html`
       <main class="View-main">
         ${state.cache(Hero, `hero-${doc.id}`).render({
           theme: doc.data.theme.toLowerCase(),
           body: html`
-            <h1>${asText(title)}</h1>
-            ${asElement(description, resolve)}
+            <h1>${asText(doc.data.title)}</h1>
+            ${asElement(doc.data.description, resolve)}
           `
         })}
         <div class="u-spaceB8">
-          ${body ? body.map((slice, index, list) => slices(slice, index, list, onclick)) : null}
+          ${doc.data.body.map((slice, index, list) => slices(slice, index, list, onclick))}
         </div>
       </main>
     `

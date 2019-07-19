@@ -30,6 +30,12 @@
   margin: 1rem 0 0 0;
 }
 
+.Callout-label {
+  display: block;
+  margin-bottom: 0.5em;
+  color: rgb(var(--color-muted));
+}
+
 .Callout-title {
   font-size: 1.55rem;
   font-weight: bold;

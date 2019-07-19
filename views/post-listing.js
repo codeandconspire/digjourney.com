@@ -1,169 +1,179 @@
 var html = require('choo/html')
 var parse = require('date-fns/parse')
+var sv = require('date-fns/locale/sv')
 var format = require('date-fns/format')
 var asElement = require('prismic-element')
 var { Predicates } = require('prismic-javascript')
 var view = require('../components/view')
 var Hero = require('../components/hero')
 var grid = require('../components/grid')
-var Card = require('../components/card')
+var card = require('../components/card')
+var button = require('../components/button')
 var callout = require('../components/callout')
-var { i18n, asText, srcset, HTTPError, memo, resolve, metaKey } = require('../components/base')
+var { i18n, asText, srcset, src, HTTPError, memo, resolve, metaKey } = require('../components/base')
+
+var PAGE_SIZE = 8
 
 var text = i18n()
 
-module.exports = view(home, meta)
+module.exports = view(posts, meta)
 
-function home (state, emit) {
-  return html`
-    <main class="View-main">
-      ${state.prismic.getSingle('discover', function (err, doc) {
-        if (err) throw HTTPError(404, err)
-        if (!doc) {
-          let items = []
-          for (let i = 0; i < 6; i++) items.push(Card.loading({ date: true }))
-          return html`
-            <div>
-              ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
-                title: asText(state.partial.data.title),
-                image: memo(function (url, sizes) {
-                  if (!url) return null
-                  return Object.assign({
-                    alt: state.partial.data.image.alt || '',
-                    src: srcset(state.partial.data.image.url, sizes).split(' ')[0]
-                  }, state.partial.data.image.dimensions)
-                }, [state.partial.data.image && state.partial.data.image.url, [150]])
-              }) : Hero.loading({ center: true, image: true })}
-              <div class="u-container">
-                ${callout.loading()}
-                <div class="u-space2">
-                  ${grid({ size: { md: '1of2', lg: '1of3' } }, items)}
-                </div>
-              </div>
+function posts (state, emit) {
+  return state.prismic.getSingle('post_listing', function (err, doc) {
+    if (err) throw HTTPError(404, err)
+    if (!doc) {
+      let items = []
+      for (let i = 0; i < 6; i++) {
+        items.push(card.loading({ date: true, link: true }))
+      }
+
+      return html`
+        <main class="View-main">
+          ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
+            theme: 'gray',
+            body: html`
+              <h1>${asText(state.partial.data.title)}</h1>
+              ${asElement(state.partial.data.description, resolve)}
+            `
+          }) : Hero.loading({ theme: 'gray' })}
+          <div class="u-container u-space2">
+            ${callout.loading({ image: true })}
+            <div class="u-space2">
+              ${grid({ divided: true, size: { md: '1of2' } }, items)}
             </div>
-          `
-        }
-
-        var image = memo(function (url, sizes) {
-          if (!url) return null
-          var sources = srcset(url, sizes)
-          return Object.assign({
-            sizes: '100vw',
-            srcset: sources,
-            alt: doc.data.image.alt || '',
-            src: sources.split(' ')[0]
-          }, doc.data.image.dimensions)
-        }, [doc.data.image && doc.data.image.url, [640, 750, 1125, 1440, [2880, 'q_50'], [3840, 'q_50']]])
-
-        var featured = doc.data.featured_articles.map(function (item, index) {
-          let title = asText(item.heading)
-          if (!title && item.link.id) title = asText(item.link.data.title)
-
-          let body = null
-          if (item.body.length) body = asElement(item.body)
-          else if (item.link.id) body = asElement(item.link.data.description)
-
-          let image = item.image
-          if (!image || (!image.url && item.link.id)) {
-            image = item.link.data.featured_image
-            if (!image || !image.url) image = item.link.data.image
-          }
-
-          let props = {
-            title: title,
-            body: body,
-            direction: index % 2 ? 'right' : 'left',
-            action: (item.link.url || item.link.id) && !item.link.isBroken ? {
-              href: resolve(item.link),
-              onclick: item.link.id ? partial(item.link) : null,
-              text: item.link.type === 'Document' ? item.link.data.cta : text`Read more`
-            } : null,
-            image: memo(function (url, sizes) {
-              if (!url) return null
-              var sources = srcset(url, sizes, {
-                transforms: 'c_thumb,g_face',
-                aspect: 10 / 12
-              })
-              return {
-                src: sources.split(' ')[0],
-                sizes: '(min-width: 1000px) 35vw, (min-width: 600px) 200px, 100vw',
-                srcset: sources,
-                alt: image.alt || '',
-                width: image.dimensions.width,
-                height: image.dimensions.width * 10 / 12
-              }
-            }, [image && image.url, [400, 800, 1200, [1500, 'q_50']]])
-          }
-
-          return callout(props)
-        }).filter(Boolean)
-
-        var opts = {
-          pageSize: 100,
-          orderings: '[document.first_publication_date desc]'
-        }
-        var predicates = [Predicates.at('document.type', 'article')]
-        doc.data.featured_articles.forEach(function (item) {
-          if (item.link.id) {
-            predicates.push(Predicates.not('document.id', item.link.id))
-          }
-        })
-        var articles = state.prismic.get(predicates, opts, function (err, response) {
-          if (err) return null
-          if (!response) {
-            let items = []
-            for (let i = 0; i < 6; i++) items.push(Card.loading({ date: true }))
-            return articles
-          }
-          return response.results.map(function (article) {
-            var image = article.data.featured_image
-            if (!image.url) image = article.data.image
-            var date = parse(article.first_publication_date)
-
-            return state.cache(Card, `${doc.id}-${article.id}`).render({
-              image: memo(function (url, sizes) {
-                if (!url) return null
-                var sources = srcset(url, sizes, {
-                  transforms: 'c_thumb,g_face'
-                })
-                return Object.assign({
-                  srcset: sources,
-                  sizes: '(min-midth: 600px) 33vw, (min-midth: 400px) 50vw, 100vw',
-                  alt: image.alt || '',
-                  src: sources.split(' ')[0]
-                }, image.dimensions)
-              }, [image && image.url, [520, 700, 900]]),
-              title: asText(article.data.title),
-              date: {
-                datetime: date,
-                text: html`<span class="u-textBold u-textUppercase">${format(date, 'MMM D, YYYY')}</span>`
-              },
-              link: {
-                onclick: partial(article),
-                href: resolve(article),
-                visible: false
-              }
-            })
-          })
-        })
-
-        return html`
-          <div>
-            ${state.cache(Hero, `hero-${doc.id}`).render({
-              title: asText(doc.data.title),
-              image: image
-            })}
-            <div class="u-container">
-              ${featured}
-              <div class="u-space2">
-                ${articles ? grid({ size: { md: '1of2', lg: '1of3' } }, articles) : null}
-              </div>
-            </section>
           </div>
-        `
-      })}
-    </main>
-  `
+        </main>
+      `
+    }
+
+    var featured = doc.data.featured.map(function ({ link }) {
+      if (!link.id || link.isBroken) return null
+      return state.prismic.getByUID('post', link.uid, function (err, doc) {
+        if (err) return null
+        return doc
+      })
+    }).filter((doc) => doc !== null)
+
+    var page = parseInt(state.query.page)
+    if (isNaN(page)) page = 1
+    var defaults = {
+      pageSize: PAGE_SIZE,
+      orderings: '[document.first_publication_date, my.post.alternative_publication_date desc]'
+    }
+    var predicates = [Predicates.at('document.type', 'post')]
+    doc.data.featured.forEach(function ({ link }) {
+      predicates.push(Predicates.not('document.id', link.id))
+    })
+
+    var posts = []
+    var hasMore = true
+    for (let i = 1; i <= page; i++) {
+      let opts = Object.assign({ page: i }, defaults)
+      posts.push(...state.prismic.get(predicates, opts, function (err, response) {
+        if (err) return []
+        if (!response) return new Array(PAGE_SIZE).fill()
+        hasMore = i < response.total_pages
+        return response.results
+      }))
+    }
+
+    return html`
+      <main class="View-main">
+        ${state.cache(Hero, `hero-${doc.id}`).render({
+          theme: 'gray',
+          body: html`
+            <h1>${asText(doc.data.title)}</h1>
+            ${asElement(doc.data.description, resolve)}
+          `
+        })}
+        <div class="u-container u-space2">
+          ${featured.map(function (doc, index) {
+            if (!doc) return callout.loading({ label: true, image: true })
+
+            var date = doc.data.alternative_publication_date
+            if (!date) date = doc.first_publication_date
+            date = parse(date)
+
+            return html`
+              <div class="u-space1">
+                ${callout({
+                  label: html`
+                    <time class="Card-meta" datetime="${JSON.stringify(date).replace(/"/g, '')}">
+                      ${format(date, 'D MMMM YYYY', { locale: sv })}
+                    </time>
+                  `,
+                  title: asText(doc.data.title),
+                  body: asText(doc.data.description),
+                  theme: 'gray',
+                  direction: index % 2 === 0 ? 'left' : 'right',
+                  link: {
+                    href: resolve(doc),
+                    onclick: partial(doc),
+                    text: text`Read more`
+                  },
+                  image: memo(function (url, sizes) {
+                    if (!url) return null
+                    return {
+                      src: src(url, 720),
+                      sizes: '(min-width: 1000px) 35vw, (min-width: 600px) 200px, 100vw',
+                      srcset: srcset(url, sizes, {
+                        aspect: 3 / 4,
+                        transforms: 'c_thumb,g_face'
+                      }),
+                      alt: doc.data.featured_image.alt || '',
+                      width: doc.data.featured_image.dimensions.width,
+                      height: doc.data.featured_image.dimensions.width * 10 / 12
+                    }
+                  }, [doc.data.featured_image && doc.data.featured_image.url, [720, 400, 800, 1200]])
+                })}
+              </div>
+            `
+          })}
+          <div class="u-space2">
+            ${grid({ divided: true, size: { md: '1of2' } }, posts.map(function (doc, index, list) {
+              if (!doc) return grid.cell({ appear: true }, card.loading({ date: true }))
+
+              var date = doc.data.alternative_publication_date
+              if (!date) date = doc.first_publication_date
+              date = parse(date)
+
+              var opts = {}
+              if (list.length > PAGE_SIZE) {
+                if (index >= page * PAGE_SIZE - PAGE_SIZE) {
+                  opts.appear = PAGE_SIZE - (page * PAGE_SIZE - index)
+                }
+              }
+
+              return grid.cell(opts, card({
+                title: asText(doc.data.title),
+                body: asText(doc.data.description),
+                date: {
+                  datetime: date,
+                  text: format(date, 'D MMMM YYYY', { locale: sv })
+                },
+                link: {
+                  href: resolve(doc),
+                  text: text`Read more`
+                }
+              }))
+            }))}
+          </div>
+          ${hasMore ? html`
+            <div class="u-textCenter">
+              ${button({ text: text`Show more`, href: `${resolve(doc)}?page=${page + 1}`, onclick: onclick })}
+            </div>
+          ` : null}
+        </div>
+      </main>
+    `
+  })
+
+  // prevent scroll to top on pagination
+  // obj -> void
+  function onclick (event) {
+    emit('pushState', event.target.href, { persistScroll: true })
+    event.preventDefault()
+  }
 
   // create onclick handler which emits pushState w/ partial info
   // obj -> fn
@@ -177,22 +187,21 @@ function home (state, emit) {
 }
 
 function meta (state) {
-  return state.prismic.getSingle('discover', function (err, doc) {
+  return state.prismic.getSingle('post_listing', function (err, doc) {
     if (err) throw err
-    if (!doc) return { 'theme': 'blue' }
+    if (!doc) return { 'theme': 'gray' }
     var props = {
-      theme: 'blue',
+      theme: 'gray',
       title: asText(doc.data.title),
       description: asText(doc.data.description)
     }
 
     var image = doc.data.featured_image
-    if (!image.url) image = doc.data.image
-    if (image.url) {
+    if (image && image.url) {
       Object.assign(props, {
-        'og:image': image.url,
-        'og:image:width': image.dimensions.width,
-        'og:image:height': image.dimensions.height
+        'og:image': src(image.url, 1200),
+        'og:image:width': 1200,
+        'og:image:height': 1200 * image.dimensions.height / image.dimensions.width
       })
     }
 

@@ -16,7 +16,7 @@ function callout (props) {
   })
 
   return html`
-    <section class="${classes} u-expand u-xl-expand">
+    <article class="${classes} u-expand u-xl-expand">
       ${props.image ? html`
         <figure class="Callout-figure">
           ${getImage(props.image)}
@@ -24,6 +24,7 @@ function callout (props) {
       ` : null}
       <div class="Callout-content">
         <div class="Callout-text">
+          ${props.label ? html`<span class="Callout-label">${props.label}</span>` : null}
           ${props.title ? html`<h2 class="Callout-title">${props.title}</h2>` : null}
           <div class="Callout-body">
             <div class="Text">
@@ -35,7 +36,7 @@ function callout (props) {
           <a class="Callout-link" ${link}>${props.link.text || text`Read more`}</a>
         ` : null}
       </div>
-    </section>
+    </article>
   `
 }
 
@@ -50,14 +51,28 @@ function getImage (props) {
 }
 
 function loading (opts = {}) {
+  var classes = className(`Callout Callout--${opts.direction || 'left'}`, {
+    'Callout--image': opts.image
+  })
   return html`
-    <section class="Callout Callout--${opts.direction || 'left'} is-loading">
-      <div class="Callout-body">
-        <div class="Text Callout-text">
-          <h2>${loader(12)}</h2>
-          <p>${loader(48)}</p>
+    <article class="${classes} is-loading u-expand u-xl-expand">
+      ${opts.image ? html`
+        <figure class="Callout-figure">
+          <div class="Callout-image u-loading"></div>
+        </figure>
+      ` : null}
+      <div class="Callout-content">
+        <div class="Callout-text">
+          ${opts.label ? html`<span class="Callout-label">${loader(4)}</span>` : null}
+          <h2 class="Callout-title">${loader(12)}</h2>
+          <div class="Callout-body">
+            <div class="Text">
+              <p>${loader(48)}</p>
+            </div>
+          </div>
         </div>
+        ${opts.link ? html`<span class="Callout-link">${loader(4)}</a>` : null}
       </div>
-    </section>
+    </article>
   `
 }

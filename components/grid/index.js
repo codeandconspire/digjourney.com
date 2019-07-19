@@ -33,9 +33,14 @@ function grid (opts, children) {
     var size = props.size || opts.size
     if (size) attrs.class += ' ' + sizes(size)
 
-    if (opts.appear || props.appear) {
+    var appear = props.appear
+    if (!appear && typeof appear !== 'number') {
+      appear = opts.appear
+    }
+    if (appear || typeof appear === 'number') {
+      let order = typeof appear === 'number' ? appear : index
       attrs.class += ' Grid-cell--appear'
-      attrs.style = `animation-delay: ${index * 100}ms`
+      attrs.style = `animation-delay: ${order * 100}ms`
     }
 
     if (opts.ordered) return html`<li ${attrs}>${children}</li>`

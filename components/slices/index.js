@@ -1,6 +1,6 @@
 var html = require('choo/html')
 var asElement = require('prismic-element')
-var Card = require('../card')
+var card = require('../card')
 var grid = require('../grid')
 var facts = require('../facts')
 var embed = require('../embed')
@@ -86,8 +86,8 @@ function slices (slice, index, list, onclick) {
       let link = slice.primary.link
       let title = asText(slice.primary.heading)
       if (!title && link.id) title = asText(link.data.title)
-      let body = asElement(slice.primary.text)
-      if (!text.length && link.id) body = asElement(link.data.description)
+      let body = asText(slice.primary.text)
+      if (!text.length && link.id) body = asText(link.data.description)
 
       let image = slice.primary.image
       if (!image || (!image.url && link.id)) {
@@ -116,7 +116,10 @@ function slices (slice, index, list, onclick) {
           return {
             src: src(url, 720),
             sizes: '(min-width: 1000px) 35vw, (min-width: 600px) 200px, 100vw',
-            srcset: srcset(url, sizes, { aspect: 10 / 12 }),
+            srcset: srcset(url, sizes, {
+              aspect: 10 / 12,
+              transforms: 'c_thumb,g_face'
+            }),
             alt: image.alt || '',
             width: image.dimensions.width,
             height: image.dimensions.width * 10 / 12
@@ -242,7 +245,7 @@ function slices (slice, index, list, onclick) {
               onclick: item.link.id ? onclick(item.link) : null
             } : null
 
-            return Card({ title, body, image, link })
+            return card({ title, body, image, link })
           }))}
         </section>
       `
