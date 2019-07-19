@@ -5,6 +5,7 @@ var grid = require('../grid')
 var facts = require('../facts')
 var embed = require('../embed')
 var quote = require('../quote')
+var partners = require('../partners')
 var person = require('../person')
 var callout = require('../callout')
 var symbols = require('../symbols')
@@ -283,20 +284,26 @@ function slices (slice, index, list, onclick) {
       `
     }
     case 'logos': {
-      let items = slice.items.filter((item) => item.image.url)
+      let items = slice.items.map(function (item) {
+        return memo(function (url, sizes) {
+          if (!url) return null
+          return {
+            alt: item.image.alt,
+            sizes: '180px',
+            srcset: srcset(url, sizes),
+            src: src(url, 180)
+          }
+        }, [item.image.url, [180, 30, 600]])
+      }).filter(Boolean)
+
       if (!items.length) return null
       let heading = asText(slice.primary.heading)
-
       return html`
         <div class="u-container u-space2">
           <div class="Text u-sizeFull u-textCenter">
             ${heading ? html`<h2 class="u-spaceB4">${asText(slice.primary.heading)}</h2>` : null}
-            <div class="u-flex u-flexWrap u-justifyCenter u-alignCenter">
-              ${items.map((item, index) => html`
-                <img class="u-spaceA4" style="width: auto;" width="${item.image.dimensions.width}" height="${item.image.dimensions.height}" alt="${item.image.alt || ''}" src="${item.image.url}">
-              `)}
-            </div>
           </div>
+          ${partners(items)}
         </div>
       `
     }
