@@ -2,7 +2,8 @@ var html = require('choo/html')
 var asElement = require('prismic-element')
 var view = require('../components/view')
 var Hero = require('../components/hero')
-var { asText, HTTPError, src, resolve } = require('../components/base')
+var callout = require('../components/callout')
+var { asText, loader, HTTPError, src, resolve } = require('../components/base')
 
 module.exports = view(home, meta)
 
@@ -12,10 +13,15 @@ function home (state, emit) {
     if (!doc) {
       return html`
         <main class="View-main">
-          ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
-            theme: 'blue',
-            body: asElement(state.partial.data.intro, resolve)
-          }) : Hero.loading({ theme: 'blue' })}
+          ${Hero.loading({ theme: 'blue' })}
+          <div class="u-container u-space1">
+            ${callout.loading()}
+          </div>
+          <div class="u-container u-space1">
+            <div class="Text">
+              ${loader(65)}
+            </div>
+          </div>
         </main>
       `
     }

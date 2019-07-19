@@ -30,6 +30,11 @@ function post (state, emit) {
               <h1>${asText(state.partial.data.title)}</h1>
             `
           }) : Hero.loading({ theme: 'gray' })}
+          <div class="u-container u-space2 u-spaceB0">
+            <div class="Text">
+              <p>${loader(65)}</p>
+            </div>
+          </div>
         </main>
       `
     }
@@ -80,7 +85,7 @@ function post (state, emit) {
             <h1>${asText(doc.data.title)}</h1>
           `
         })}
-        <div class="u-container u-space1">
+        <div class="u-container u-space2 u-spaceB0">
           <div class="Text">
             ${asElement(doc.data.description, resolve)}
           </div>

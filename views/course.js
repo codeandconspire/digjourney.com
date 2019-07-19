@@ -27,6 +27,11 @@ function course (state, emit) {
               <h1>${asText(state.partial.data.title)}</h1>
             `
           }) : Hero.loading({ theme: 'yellow' })}
+          <div class="u-container">
+            <div class="Text u-space1">
+              <p>${loader(65)}</p>
+            </div>
+          </div>
         </main>
       `
     }
@@ -41,6 +46,7 @@ function course (state, emit) {
             ${button(memo(function (link) {
               if ((!link.url && !link.id) || link.isBroken) return null
               var attrs = {
+                theme: 'blue',
                 text: text`Go to application`,
                 href: resolve(doc.data.apply)
               }
@@ -52,83 +58,81 @@ function course (state, emit) {
             }, [doc.data.apply, 'apply']))}
           `
         })}
-        <div class="u-spaceB8">
-          ${doc.data.body.map(function (slice, index, list) {
-            switch (slice.slice_type) {
-              case 'course_details': {
-                return html`
-                  <div class="u-container u-space1">
-                    ${grid([
-                      grid.cell({ size: { lg: '1of3' } }, [html`
+        ${doc.data.body.map(function (slice, index, list) {
+          switch (slice.slice_type) {
+            case 'course_details': {
+              return html`
+                <div class="u-container u-space1">
+                  ${grid([
+                    grid.cell({ size: { lg: '1of3' } }, [html`
+                      <div class="Text">
+                        <h4>${text`Location`}</h4>
+                        ${asElement(doc.data.location, resolve)}
+                      </div>
+                    `]),
+                    grid.cell({ size: { lg: '2of3' } }, html`
+                      <div>
                         <div class="Text">
-                          <h4>${text`Location`}</h4>
-                          ${asElement(doc.data.location, resolve)}
+                          <h4>${text`Teachers`}</h4>
+                          <span><!-- Maintain equal spacing --></span>
                         </div>
-                      `]),
-                      grid.cell({ size: { lg: '2of3' } }, html`
-                        <div>
-                          <div class="Text">
-                            <h4>${text`Teachers`}</h4>
-                            <span><!-- Maintain equal spacing --></span>
-                          </div>
-                          ${grid(
-                            { size: { lg: '1of2' } },
-                            doc.data.teachers.map((item) => person({
-                              small: true,
-                              image: memo(function (url) {
-                                if (!url) return null
-                                return Object.assign({
-                                  alt: item.image.alt || '',
-                                  sizes: '60px',
-                                  srcset: srcset(url, [60, 120]),
-                                  src: src(url, [60])
-                                }, item.image.dimensions)
-                              }, [item.image.url, 'small']),
-                              title: asText(item.name),
-                              body: asElement(item.description)
-                            }))
-                          )}
-                        </div>
-                      `)
-                    ])}
-                  </div>
-                `
-              }
-              case 'course_schedule': {
-                let now = new Date()
-                let valid = doc.data.schedule.filter(function (item) {
-                  return parse(item.deadline) > now
-                })
-                if (!valid.length) return null
-                return html`
-                  <div class="u-container u-space2">
-                    <div class="Text">
-                      <h4>${text`Upcoming course dates`}</h4>
-                      <span><!-- Maintain equal spacing --></span>
-                    </div>
-                    <ol>
-                      ${valid.map((item) => html`
-                        <li>
-                          ${date({
-                            title: item.title,
-                            label: item.label,
-                            link: (item.link.id || item.link.url) && !item.link.isBroken ? {
-                              primary: true,
-                              href: resolve(item.link),
-                              text: text`Go to application`,
-                              external: item.link.target === '_blank'
-                            } : null
-                          })}
-                        </li>
-                      `)}
-                    </ol>
-                  </div>
-                `
-              }
-              default: return slices(slice, index, list, link)
+                        ${grid(
+                          { size: { lg: '1of2' } },
+                          doc.data.teachers.map((item) => person({
+                            small: true,
+                            image: memo(function (url) {
+                              if (!url) return null
+                              return Object.assign({
+                                alt: item.image.alt || '',
+                                sizes: '60px',
+                                srcset: srcset(url, [60, 120]),
+                                src: src(url, [60])
+                              }, item.image.dimensions)
+                            }, [item.image.url, 'small']),
+                            title: asText(item.name),
+                            body: asElement(item.description)
+                          }))
+                        )}
+                      </div>
+                    `)
+                  ])}
+                </div>
+              `
             }
-          })}
-        </div>
+            case 'course_schedule': {
+              let now = new Date()
+              let valid = doc.data.schedule.filter(function (item) {
+                return parse(item.deadline) > now
+              })
+              if (!valid.length) return null
+              return html`
+                <div class="u-container u-space2">
+                  <div class="Text">
+                    <h4>${text`Upcoming course dates`}</h4>
+                    <span><!-- Maintain equal spacing --></span>
+                  </div>
+                  <ol>
+                    ${valid.map((item) => html`
+                      <li>
+                        ${date({
+                          title: item.title,
+                          label: item.label,
+                          link: (item.link.id || item.link.url) && !item.link.isBroken ? {
+                            theme: 'blue',
+                            href: resolve(item.link),
+                            text: text`Go to application`,
+                            external: item.link.target === '_blank'
+                          } : null
+                        })}
+                      </li>
+                    `)}
+                  </ol>
+                </div>
+              `
+            }
+            default: return slices(slice, index, list, link)
+          }
+        })}
       </main>
     `
   })
