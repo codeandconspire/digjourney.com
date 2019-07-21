@@ -22,7 +22,7 @@ function slices (slice, index, list, onclick) {
       if (!slice.primary.text.length) return null
       return html`
         <div class="u-container u-space1">
-          <div class="Text">      
+          <div class="Text">
             ${asElement(slice.primary.text, resolve, serialize)}
           </div>
         </div>
@@ -91,7 +91,7 @@ function slices (slice, index, list, onclick) {
       if (!text.length && link.id) body = asText(link.data.description)
 
       let image = slice.primary.image
-      if (!image || (!image.url && link.id)) {
+      if ((!image || !image.url) && link.id && !link.isBroken) {
         image = link.data.featured_image
         if (!image || !image.url) image = link.data.image
       }

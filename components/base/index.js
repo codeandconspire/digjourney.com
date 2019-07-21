@@ -28,8 +28,7 @@ function resolve (doc) {
     case 'product_listing': return '/radgivning'
     case 'course_listing': return '/utbildning'
     case 'course': return `/utbildning/${doc.uid}`
-    case 'page':
-    case 'contact': return `${root}/${doc.uid}`
+    case 'page': return `${root}/${doc.uid}`
     case 'Web':
     case 'Media': return doc.url
     default: {
