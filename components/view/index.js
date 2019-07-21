@@ -6,7 +6,7 @@ var Header = require('../header')
 var Footer = require('../footer')
 var Player = require('../embed/player')
 var PrismicToolbar = require('../prismic-toolbar')
-var { i18n, asText, memo, resolve, metaKey } = require('../base')
+var { i18n, asText, memo, resolve, metaKey, themeColor } = require('../base')
 
 var text = i18n()
 
@@ -17,13 +17,12 @@ module.exports = createView
 function createView (view, getMeta) {
   return function (state, emit) {
     return state.prismic.getSingle('website', function (err, doc) {
-      var children
-      var meta = { theme: 'blue' }
+      var children, meta
 
       try {
         if (err) throw err
         children = view(state, emit)
-        meta = meta ? getMeta(state) : {}
+        meta = getMeta(state)
 
         if (meta && meta.title && meta.title !== DEFAULT_TITLE) {
           meta.title = `${meta.title} – ${DEFAULT_TITLE}`
@@ -32,6 +31,10 @@ function createView (view, getMeta) {
         let defaults = {
           title: doc ? asText(doc.data.title) : `${text`Loading`} – ${DEFAULT_TITLE}`,
           description: doc ? asText(doc.data.description) : null
+        }
+
+        if (state.ui.theme) {
+          defaults['theme-color'] = themeColor(state.ui.theme)
         }
 
         if (doc && doc.data.featured_image && doc.data.featured_image.url) {
@@ -68,7 +71,7 @@ function createView (view, getMeta) {
       return html`
         <body class="View ${state.ui.openNavigation ? 'is-overlayed' : ''}" id="view">
           <script type="application/ld+json">${raw(JSON.stringify(linkedData(state)))}</script>
-          ${state.cache(Header, 'header').render(state.href, menu, meta.theme)}
+          ${state.cache(Header, 'header').render(state.href, menu, state.ui.theme)}
           ${children}
           ${state.cache(Footer, 'footer').render(footer, doc ? asElement(doc.data.newsletter) : null, doc ? asElement(doc.data.contact_blurb) : null)}
           ${Player.render()}

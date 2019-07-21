@@ -2,8 +2,13 @@ module.exports = ui
 
 function ui (state, emitter) {
   state.ui = state.ui || {}
+  state.ui.theme = 'blue'
   state.ui.isLoading = false
   state.ui.openNavigation = false
+
+  emitter.on('theme', function (theme) {
+    state.ui.theme = theme
+  })
 
   emitter.on('header:toggle', function (toggle) {
     state.ui.openNavigation = toggle

@@ -10,6 +10,21 @@ if (typeof window !== 'undefined') {
   require('smoothscroll-polyfill').polyfill()
 }
 
+// get hex color code for theme
+// str -> str
+exports.themeColor = themeColor
+function themeColor (name) {
+  switch (name) {
+    case 'gray': return '#F4F3F6'
+    case 'yellow': return '#FFCB84'
+    case 'orange': return '#DA6526'
+    case 'turquoise': return '#07AAB8'
+    case 'pink': return '#FFB3B3'
+    case 'blue':
+    default: return '#110046'
+  }
+}
+
 // resolve prismic document url
 // obj -> str
 exports.resolve = resolve

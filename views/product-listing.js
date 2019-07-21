@@ -11,6 +11,7 @@ var text = i18n()
 module.exports = view(products, meta)
 
 function products (state, emit) {
+  emit('theme', 'pink')
   return state.prismic.getSingle('product_listing', function (err, doc) {
     if (err) throw HTTPError(404, err)
     if (!doc) {
@@ -124,9 +125,8 @@ function products (state, emit) {
 function meta (state) {
   return state.prismic.getSingle('product_listing', function (err, doc) {
     if (err) throw err
-    if (!doc) return { 'theme': 'pink' }
+    if (!doc) return null
     var props = {
-      theme: 'pink',
       title: asText(doc.data.title),
       description: asText(doc.data.description)
     }

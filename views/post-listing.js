@@ -19,6 +19,7 @@ var text = i18n()
 module.exports = view(posts, meta)
 
 function posts (state, emit) {
+  emit('theme', 'gray')
   return state.prismic.getSingle('post_listing', function (err, doc) {
     if (err) throw HTTPError(404, err)
     if (!doc) {
@@ -189,9 +190,8 @@ function posts (state, emit) {
 function meta (state) {
   return state.prismic.getSingle('post_listing', function (err, doc) {
     if (err) throw err
-    if (!doc) return { 'theme': 'gray' }
+    if (!doc) return null
     var props = {
-      theme: 'gray',
       title: asText(doc.data.title),
       description: asText(doc.data.description)
     }

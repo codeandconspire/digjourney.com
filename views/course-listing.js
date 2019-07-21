@@ -13,6 +13,7 @@ var text = i18n()
 module.exports = view(courses, meta)
 
 function courses (state, emit) {
+  emit('theme', 'turquoise')
   return state.prismic.getSingle('course_listing', function (err, doc) {
     if (err) throw HTTPError(404, err)
     if (!doc) {
@@ -137,9 +138,8 @@ function courses (state, emit) {
 function meta (state) {
   return state.prismic.getSingle('course_listing', function (err, doc) {
     if (err) throw err
-    if (!doc) return { 'theme': 'turquoise' }
+    if (!doc) return null
     var props = {
-      theme: 'turquoise',
       title: asText(doc.data.title),
       description: asText(doc.data.description)
     }

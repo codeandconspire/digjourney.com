@@ -11,15 +11,19 @@ function page (state, emit) {
   return state.prismic.getByUID('page', state.params.slug, function (err, doc) {
     if (err) throw HTTPError(404, err)
     if (!doc) {
+      if (state.partial && state.partial.theme) {
+        emit('theme', state.partial.data.theme.toLowerCase())
+      }
+
       return html`
         <main class="View-main">
           ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
-            theme: state.partial.data.theme,
+            theme: state.partial.data.theme.toLowerCase(),
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
               ${asElement(state.partial.data.description, resolve)}
             `
-          }) : Hero.loading({ theme: 'gray' })}
+          }) : Hero.loading({ theme: state.ui.theme })}
           <div class="u-container u-space1">
             <div class="Text">
               ${loader(65)}
@@ -28,6 +32,8 @@ function page (state, emit) {
         </main>
       `
     }
+
+    emit('theme', doc.data.theme.toLowerCase() || 'gray')
 
     return html`
       <main class="View-main">
@@ -57,9 +63,8 @@ function page (state, emit) {
 function meta (state) {
   return state.prismic.getByUID('page', state.params.slug, (err, doc) => {
     if (err) throw err
-    if (!doc) return { 'theme': 'gray' }
+    if (!doc) return null
     var props = {
-      theme: doc.data.theme.toLowerCase(),
       title: asText(doc.data.title),
       description: asText(doc.data.description)
     }

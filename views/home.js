@@ -12,6 +12,7 @@ var text = i18n()
 module.exports = view(home, meta)
 
 function home (state, emit) {
+  emit('theme', 'blue')
   return state.prismic.getSingle('homepage', function (err, doc) {
     if (err) throw HTTPError(404, err)
     if (!doc) {
@@ -87,9 +88,8 @@ function home (state, emit) {
 function meta (state) {
   return state.prismic.getSingle('homepage', function (err, doc) {
     if (err) throw HTTPError(404, err)
-    if (!doc) return { 'theme': 'blue' }
+    if (!doc) return null
     var props = {
-      theme: 'blue',
       title: asText(doc.data.title),
       description: asText(doc.data.description)
     }

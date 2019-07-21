@@ -35,10 +35,14 @@ module.exports = class Hero extends Component {
   }
 
   update (props) {
+    if (this.local.theme !== props.theme) return true
+    if (this.local.label !== props.label) return true
     return false
   }
 
   createElement (props) {
+    this.local.label = props.label
+    this.local.theme = props.theme
     return html`
       <div class="${className('Hero', { 'Hero--small': props.small, [`Hero--${props.theme}`]: props.theme })}" tabindex="-1" id="${this.local.id}">
         <div class="Hero-body u-container">
