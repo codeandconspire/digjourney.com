@@ -179,10 +179,10 @@
     font-size: 0.875rem;
   }
 
-  .Header-link:hover + .Header-dropdown,
-  .Header-link:focus + .Header-dropdown,
-  .Header-dropdown:focus-within,
-  .Header-dropdown:hover {
+  .Header:not(.is-navigating) .Header-link:hover + .Header-dropdown,
+  .Header:not(.is-navigating) .Header-link:focus + .Header-dropdown,
+  .Header:not(.is-navigating) .Header-dropdown:focus-within,
+  .Header:not(.is-navigating) .Header-dropdown:hover {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
@@ -282,7 +282,7 @@
     background: #fff;
     transform: none !important;
   }
-  
+
   .Header.is-open .Header-logo {
     display: none;
   }

@@ -3,11 +3,13 @@ var Component = require('choo/component')
 var { className, loader } = require('../base')
 
 module.exports = class Hero extends Component {
-  constructor (id, state, emit) {
+  constructor (id, state, emit, opts) {
     super(id)
-    this.local = state.components[id] = {
-      id
-    }
+    this.local = state.components[id] = Object.assign({
+      id,
+      focus: true,
+      prerendered: typeof window !== 'undefined' && document.getElementById(id)
+    }, opts)
   }
 
   static loading (opts = {}) {
@@ -22,13 +24,23 @@ module.exports = class Hero extends Component {
     `
   }
 
+  load (el) {
+    if (this.local.focus && !this.local.prerendered) {
+      el.focus()
+    }
+  }
+
+  unload () {
+    this.local.prerendered = false
+  }
+
   update (props) {
     return false
   }
 
   createElement (props) {
     return html`
-      <div class="${className('Hero', { 'Hero--small': props.small, [`Hero--${props.theme}`]: props.theme })}" id="${this.local.id}">
+      <div class="${className('Hero', { 'Hero--small': props.small, [`Hero--${props.theme}`]: props.theme })}" tabindex="-1" id="${this.local.id}">
         <div class="Hero-body u-container">
           ${props.label ? html`<span class="Hero-label">${props.label}</span>` : null}
           ${props.body}

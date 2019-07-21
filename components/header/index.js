@@ -17,7 +17,24 @@ module.exports = class Header extends Component {
   }
 
   update (href, props, theme) {
-    return href !== this.local.href || props.isOpen !== this.local.isOpen || theme !== this.local.theme
+    var shouldUpdate = false
+    if (props.isOpen !== this.local.isOpen) shouldUpdate = true
+    if (theme !== this.local.theme) shouldUpdate = true
+    if (href !== this.local.href) {
+      shouldUpdate = true
+      this.local.isNavigating = true
+      window.requestAnimationFrame(() => {
+        var ontransitionend = () => {
+          clearTimeout(timeout)
+          this.element.removeEventListener('transitionend', ontransitionend)
+          this.local.isNavigating = false
+          this.rerender()
+        }
+        var timeout = setTimeout(ontransitionend, 500)
+        this.element.addEventListener('transitionend', ontransitionend)
+      })
+    }
+    return shouldUpdate
   }
 
   createElement (href, props, theme) {
@@ -31,8 +48,14 @@ module.exports = class Header extends Component {
       home.onclick = props.homepage.onclick
     }
 
+    var classes = className('Header', {
+      'is-navigating': this.local.isNavigating,
+      [`Header--${theme}`]: theme,
+      'is-open': props.isOpen
+    })
+
     return html`
-      <header class="${className('Header', { 'is-open': props.isOpen, [`Header--${theme}`]: theme })}" id="${id}">
+      <header class="${classes}" id="${id}">
         <svg class="Header-illustration" height="311" viewBox="0 0 208 311" width="208">
           <g fill="#06c0c9" fill-rule="evenodd" transform="translate(-98 -8)">
             <path d="m212.785393 498c79.862731 0 185.548535-53.647976 220.5896-125.576267 17.236706-35.381539 49.16709-107.644559-2.709626-155.535106-51.876715-47.890547-121.663432-33.747289-160.350876 10.765405-44.10678 50.748032-124.010196 16.955094-168.101664 40.596338-37.1139767 19.900009-53.9797444 55.49772-53.1861059 94.974339 1.611426 80.154433 83.8959399 134.775291 163.7586719 134.775291z" transform="matrix(-.89100652 .4539905 -.4539905 -.89100652 635.807403 532.356148)"/>
