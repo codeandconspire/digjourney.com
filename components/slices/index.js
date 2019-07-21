@@ -87,7 +87,7 @@ function slices (slice, index, list, onclick) {
       let link = slice.primary.link
       let title = asText(slice.primary.heading)
       if (!title && link.id) title = asText(link.data.title)
-      let body = asText(slice.primary.text)
+      let body = asElement(slice.primary.text)
       if (!text.length && link.id) body = asText(link.data.description)
 
       let image = slice.primary.image
