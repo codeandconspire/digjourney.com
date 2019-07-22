@@ -58,7 +58,7 @@ function product (props) {
         ` : null}
         ${props.action ? html`
           <div class="u-spaceT4">
-            ${button(props.action)}
+            ${button(Object.assign({ theme: 'blue' }, props.action))}
           </div>
         ` : null}
       </div>
