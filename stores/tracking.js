@@ -13,4 +13,9 @@ function tracking (state, emitter) {
       'page_path': href
     })
   })
+
+  emitter.on('track', function (action, data) {
+    if (typeof gtag !== 'function') return
+    gtag.apply(undefined, ['event', action, data].filter(Boolean))
+  })
 }

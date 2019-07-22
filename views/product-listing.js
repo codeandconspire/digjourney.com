@@ -33,12 +33,15 @@ function products (state, emit) {
       `
     }
 
+    var title = asText(doc.data.title)
+    emit('track', 'view_item_list', { event_label: title })
+
     return html`
       <main class="View-main">
         ${state.cache(Hero, `hero-${doc.id}`).render({
           theme: 'pink',
           body: html`
-            <h1>${asText(doc.data.title)}</h1>
+            <h1>${title}</h1>
             ${asElement(doc.data.description, resolve)}
           `
         })}
@@ -75,8 +78,9 @@ function products (state, emit) {
 
   function asProduct (doc) {
     var contact = asText(doc.data.contact_name)
+    var title = asText(doc.data.title)
     return {
-      title: asText(doc.data.title),
+      title: title,
       body: asElement(doc.data.description, resolve, serialize),
       duration: doc.data.duration,
       target: doc.data.target,
@@ -108,7 +112,10 @@ function products (state, emit) {
         if ((!link.id && !link.url) || link.isBroken) return null
         var props = {
           href: resolve(link),
-          text: doc.data.action_text || text`Read more`
+          text: doc.data.action_text || text`Read more`,
+          onclick () {
+            emit('track', 'generate_lead', { event_label: title })
+          }
         }
 
         if (link.target === '_blank') {

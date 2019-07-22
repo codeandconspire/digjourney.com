@@ -9,6 +9,7 @@ var text = i18n()
 module.exports = class Footer extends Component {
   constructor (id, state, emit) {
     super(id)
+    this.emit = emit
     this.state = state
     this.local = state.components[id] = {
       id: id,
@@ -115,6 +116,8 @@ module.exports = class Footer extends Component {
         event.preventDefault()
         return
       }
+
+      self.emit('track', 'sign_up', { method: 'email' })
 
       self.local.message = null
       self.local.isLoading = true

@@ -35,6 +35,9 @@ function courses (state, emit) {
       `
     }
 
+    var title = asText(doc.data.title)
+    emit('track', 'view_item_list', { event_label: title })
+
     var featured = doc.data.featured.map(function ({ link }) {
       if (!link.id || link.isBroken) return null
       return state.prismic.getByUID('course', link.uid, function (err, doc) {
@@ -65,7 +68,7 @@ function courses (state, emit) {
         ${state.cache(Hero, `hero-${doc.id}`).render({
           theme: 'turquoise',
           body: html`
-            <h1>${asText(doc.data.title)}</h1>
+            <h1>${title}</h1>
             ${asElement(doc.data.description, resolve)}
           `
         })}
@@ -83,13 +86,19 @@ function courses (state, emit) {
 
   function asCourse (doc) {
     var now = new Date()
+    var title = asText(doc.data.title)
     return {
+      title: title,
       tags: doc.tags,
-      href: resolve(doc),
-      onclick: partial(doc),
-      title: asText(doc.data.title),
       description: asElement(doc.data.description, resolve),
       features: doc.data.features.map(({ text }) => text).filter(Boolean),
+      link: {
+        href: resolve(doc),
+        onclick (event) {
+          partial(doc)(event)
+          emit('track', 'select_content', { event_label: title })
+        }
+      },
       teachers: doc.data.teachers.map(function (item) {
         var name = asText(item.name)
         if (!name) return null
@@ -117,7 +126,10 @@ function courses (state, emit) {
             theme: 'turquoise',
             href: resolve(item.link),
             text: text`Go to application`,
-            external: item.link.target === '_blank'
+            external: item.link.target === '_blank',
+            onclick () {
+              emit('track', 'generate_lead', { event_label: title })
+            }
           } : null
         }
       }).filter(Boolean)

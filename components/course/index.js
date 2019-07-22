@@ -38,7 +38,9 @@ function course (props) {
             ` : null}
             <h3 class="Course-title">${props.title}</h3>
             ${props.description}
-            <a class="Course-link" href="${props.href}" onclick=${props.onclick}>${text`Read more about the course`}</a>
+            ${props.link ? html`
+              <a class="Course-link" ${props.link}>${text`Read more about the course`}</a>
+            ` : null}
           </div>
         `),
         grid.cell({ size: { md: '1of2', lg: '1of3' } }, html`

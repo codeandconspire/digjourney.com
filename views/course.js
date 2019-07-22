@@ -38,6 +38,9 @@ function course (state, emit) {
       `
     }
 
+    var title = asText(doc.data.title)
+    emit('track', 'view_item', { event_label: title })
+
     return html`
       <main class="View-main">
         ${state.cache(Hero, `hero-${doc.id}`).render({
@@ -45,13 +48,14 @@ function course (state, emit) {
           theme: 'yellow',
           label: doc.data.label,
           body: html`
-            <h1 class="u-spaceB3">${asText(doc.data.title)}</h1>
+            <h1 class="u-spaceB3">${title}</h1>
             ${button(memo(function (link) {
               if ((!link.url && !link.id) || link.isBroken) return null
               var attrs = {
                 theme: 'blue',
                 text: text`Go to application`,
-                href: resolve(doc.data.apply)
+                href: resolve(doc.data.apply),
+                onclick: track
               }
               if (link.target === '_blank') {
                 attrs.target = '_blank'
@@ -124,7 +128,8 @@ function course (state, emit) {
                             theme: 'blue',
                             href: resolve(item.link),
                             text: text`Go to application`,
-                            external: item.link.target === '_blank'
+                            external: item.link.target === '_blank',
+                            onclick: track
                           } : null
                         })}
                       </li>
@@ -138,6 +143,12 @@ function course (state, emit) {
         })}
       </main>
     `
+
+    // track generated lead
+    // obj -> void
+    function track () {
+      emit('track', 'generate_lead', { event_label: title })
+    }
   })
 
   // create link handler, emitting pushState w/ partial info
