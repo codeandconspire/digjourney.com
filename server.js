@@ -43,7 +43,7 @@ app.use(post('/api/prismic-hook', compose([body(), function (ctx) {
   var secret = ctx.request.body && ctx.request.body.secret
   ctx.assert(secret === process.env.PRISMIC_SECRET, 403, 'Secret mismatch')
   return new Promise(function (resolve, reject) {
-    purge(function (err, response) {
+    purge(app.entry, function (err, response) {
       if (err) return reject(err)
       ctx.type = 'application/json'
       ctx.body = {}
@@ -154,7 +154,7 @@ app.use(function (ctx, next) {
  * Purge Cloudflare cache when starting production server
  */
 if (process.env.NOW && app.env === 'production') {
-  purge(['/sw.js'], function (err) {
+  purge(app.entry, ['/sw.js'], function (err) {
     if (err) app.emit('error', err)
     else app.listen(process.env.PORT || 8080)
   })

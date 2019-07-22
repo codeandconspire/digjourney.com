@@ -6,6 +6,7 @@
   "scripts": {
     "build": "jalla build index.js --sw sw.js",
     "start": "node server.js",
+    "purge": "node -r dotenv/config -e \"require('./lib/purge')('../index.js', ['/sw.js'], console.log)\"",
     "deploy": "npx now -T codeandconspire && npx now alias -T codeandconspire",
     "test": "standard"
   },
@@ -32,11 +33,11 @@
       "NODE_ENV": "production",
       "CLOUDINARY_KEY": "@cloudinary-key",
       "CLOUDINARY_SECRET": "@cloudinary-secret",
-      "PRISMIC_SECRET": "@prismic-bomaglobal-secret",
-      "CLOUDFLARE_ZONE": "@cloudflare-bomaglobal-zone",
-      "CLOUDFLARE_EMAIL": "@cloudflare-bomaglobal-email",
-      "CLOUDFLARE_KEY": "@cloudflare-bomaglobal-key",
-      "POLYFILL_FEATURES": "default-3.3,Array.prototype.find,Array.prototype.findIndex,Array.prototype.includes"
+      "PRISMIC_SECRET": "@prismic-digjourney-secret",
+      "CLOUDFLARE_ZONE": "@cloudflare-digjourney-zone",
+      "CLOUDFLARE_EMAIL": "@cloudflare-codeandconspire-email",
+      "CLOUDFLARE_KEY": "@cloudflare-codeandconspire-key",
+      "POLYFILL_FEATURES": "es2015,es2016,es2017"
     }
   },
   "author": "code and conspire",
