@@ -31,6 +31,7 @@ function posts (state, emit) {
       return html`
         <main class="View-main">
           ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
+            blobs: false,
             theme: 'gray',
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
@@ -81,6 +82,7 @@ function posts (state, emit) {
     return html`
       <main class="View-main">
         ${state.cache(Hero, `hero-${doc.id}`).render({
+          blobs: false,
           theme: 'gray',
           body: html`
             <h1>${asText(doc.data.title)}</h1>

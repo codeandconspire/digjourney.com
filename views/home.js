@@ -12,13 +12,13 @@ var text = i18n()
 module.exports = view(home, meta)
 
 function home (state, emit) {
-  emit('theme', 'blue')
+  emit('theme', 'turquoise')
   return state.prismic.getSingle('homepage', function (err, doc) {
     if (err) throw HTTPError(404, err)
     if (!doc) {
       return html`
         <main class="View-main">
-          ${Hero.loading({ theme: 'blue' })}
+          ${Hero.loading({ theme: 'turquoise' })}
           <div class="u-container u-space1">
             ${callout.loading()}
           </div>
@@ -34,7 +34,7 @@ function home (state, emit) {
     return html`
       <main class="View-main">
         ${state.cache(Hero, `hero-${doc.id}`).render({
-          theme: 'blue',
+          theme: 'turquoise',
           body: asElement(doc.data.intro, resolve)
         })}
         ${doc.data.body.map(function (slice, index, list) {

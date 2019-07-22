@@ -26,6 +26,7 @@ function post (state, emit) {
         <main class="View-main">
           ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
             theme: 'gray',
+            blobs: false,
             label: loader(12),
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
@@ -80,6 +81,7 @@ function post (state, emit) {
     return html`
       <main class="View-main">
         ${state.cache(Hero, `hero-${doc.id}`).render({
+          blobs: false,
           theme: 'gray',
           label: doc.data.author ? text`Published by ${doc.data.author} on ${date}` : text`Published on ${date}`,
           body: html`
