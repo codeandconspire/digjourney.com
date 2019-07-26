@@ -94,32 +94,34 @@ function post (state, emit) {
           </div>
         </div>
         ${doc.data.body.map((slice, index, list) => slices(slice, index, list, link))}
-        <div class="u-container u-space2">
-          ${related.length ? html`
-            <div class="Text u-space1">
-              <h2>${text`Related posts`}</h2>
-            </div>
-          ` : null}
-          ${grid({ divided: true, size: { md: '1of2' } }, related.map(function (doc, index, list) {
-            if (!doc) return card.loading({ date: true })
+        <div class="u-borderB u-space2">
+          <div class="u-container u-space2">
+            ${related.length ? html`
+              <div class="Text u-space1">
+                <h2>${text`Related posts`}</h2>
+              </div>
+            ` : null}
+            ${grid({ divided: true, size: { md: '1of2' } }, related.map(function (doc, index, list) {
+              if (!doc) return card.loading({ date: true })
 
-            var date = doc.data.alternative_publication_date
-            if (!date) date = doc.first_publication_date
-            date = parse(date)
+              var date = doc.data.alternative_publication_date
+              if (!date) date = doc.first_publication_date
+              date = parse(date)
 
-            return card({
-              title: asText(doc.data.title),
-              body: asText(doc.data.description),
-              date: {
-                datetime: date,
-                text: format(date, 'D MMMM YYYY', { locale: sv })
-              },
-              link: {
-                href: resolve(doc),
-                text: text`Read more`
-              }
-            })
-          }))}
+              return card({
+                title: asText(doc.data.title),
+                body: asText(doc.data.description),
+                date: {
+                  datetime: date,
+                  text: format(date, 'D MMMM YYYY', { locale: sv })
+                },
+                link: {
+                  href: resolve(doc),
+                  text: text`Read more`
+                }
+              })
+            }))}
+          </div>
         </div>
       </main>
     `

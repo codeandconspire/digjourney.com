@@ -8,6 +8,10 @@
   background-color: rgb(var(--color-gray));
 }
 
+.Course + .Course {
+  margin-top: 1.5rem;
+}
+
 @media (min-width: 800px) and (min-height: 400px) {
   .Course {
     padding: 5rem;

@@ -39,35 +39,39 @@ function home (state, emit) {
         })}
         ${doc.data.body.map(function (slice, index, list) {
           switch (slice.slice_type) {
-            case 'book': return book({
-              rating: slice.primary.rating,
-              author: slice.primary.author,
-              title: asText(slice.primary.title),
-              body: asElement(slice.primary.description, resolve),
-              image: memo(function (url) {
-                if (!url) return null
-                return Object.assign({
-                  src: src(url, [900]),
-                  alt: slice.primary.image.alt || '',
-                  sizes: '(min-width: 1000px) 50vw, 100vw',
-                  srcset: srcset(url, [400, 600, 900, 1200, 1800])
-                }, slice.primary.image.dimensions)
-              }, [slice.primary.image.url]),
-              link: slice.primary.link.id && !slice.primary.link.isBroken ? {
-                href: resolve(slice.primary.link),
-                text: slice.primary.link_text || text`Read more`
-              } : null,
-              action: memo(function (link, str) {
-                if (!str) return null
-                if ((!link.id && !link.url) || link.isBroken) return null
-                var attrs = { href: resolve(link), text: str }
-                if (link.target === '_blank') {
-                  attrs.target = '_blank'
-                  attrs.rel = 'noopenere nofererrer'
-                }
-                return attrs
-              }, [slice.primary.cta, slice.primary.cta_text])
-            })
+            case 'book': return html`
+              <div class="u-space2">
+                ${book({
+                  rating: slice.primary.rating,
+                  author: slice.primary.author,
+                  title: asText(slice.primary.title),
+                  body: asElement(slice.primary.description, resolve),
+                  image: memo(function (url) {
+                    if (!url) return null
+                    return Object.assign({
+                      src: src(url, [900]),
+                      alt: slice.primary.image.alt || '',
+                      sizes: '(min-width: 1000px) 50vw, 100vw',
+                      srcset: srcset(url, [400, 600, 900, 1200, 1800])
+                    }, slice.primary.image.dimensions)
+                  }, [slice.primary.image.url]),
+                  link: slice.primary.link.id && !slice.primary.link.isBroken ? {
+                    href: resolve(slice.primary.link),
+                    text: slice.primary.link_text || text`Read more`
+                  } : null,
+                  action: memo(function (link, str) {
+                    if (!str) return null
+                    if ((!link.id && !link.url) || link.isBroken) return null
+                    var attrs = { href: resolve(link), text: str }
+                    if (link.target === '_blank') {
+                      attrs.target = '_blank'
+                      attrs.rel = 'noopenere nofererrer'
+                    }
+                    return attrs
+                  }, [slice.primary.cta, slice.primary.cta_text])
+                })}
+              </div>
+            `
             default: return slices(slice, index, list, partial)
           }
         })}

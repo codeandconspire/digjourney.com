@@ -19,7 +19,7 @@
 }
 
 .Person--small .Person-figure {
-  max-width: 60px;
+  max-width: 4rem;
   margin-right: 1.5rem;
 }
 
@@ -38,6 +38,7 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  background: rgb(var(--color-gray));
 }
 
 @supports (object-fit: cover) {
@@ -61,7 +62,10 @@
 
 .Person-title {
   font-size: 1.25rem;
+  line-height: 1.2;
   font-weight: bold;
+  margin-bottom: 0.2em;
+  margin-top: 0.1em;
 }
 
 .Person--small .Person-title {
@@ -80,13 +84,11 @@
 }
 
 .Person-info a:not(.Person-link) {
-  color: rgb(var(--color-link));
   border-bottom: 1px solid transparent;
 }
 
 .Person-info a:hover {
-  border-bottom-color: currentColor;
-  color: rgb(var(--color-link));
+  color: rgb(var(--document-color));
 }
 
 .Person-link {

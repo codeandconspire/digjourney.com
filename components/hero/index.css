@@ -8,7 +8,29 @@
   position: relative;
   color: rgb(var(--color-blue));
   margin-bottom: 10vh;
+  padding-bottom: 10vh;
 }
+
+.Hero::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  z-index: -1;
+  left: 0;
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+  margin-left: var(--document-margin) !important;
+  margin-right: var(--document-margin) !important;
+  max-width: 75rem;
+}
+
+ @supports (padding-left: constant(safe-area-inset-left)) {
+  .u-container {
+    margin-left: calc(var(--document-margin) + constant(safe-area-inset-left)) !important;
+    margin-right: calc(var(--document-margin) + constant(safe-area-inset-right)) !important;
+  }
+ }
 
 .Hero::before {
   flex: 0 1 auto;
@@ -23,6 +45,8 @@
 }
 
 .Hero-body {
+  position: relative;
+  z-index: 1;
   font-weight: bold;
   font-size: 1.33rem;
   line-height: 1.35;
@@ -48,7 +72,6 @@
 }
 
 .Hero-body a:not([class]) {
-  color: rgb(var(--color-pink));
   white-space: nowrap;
   border-bottom: 2px solid currentColor;
 }
@@ -62,6 +85,7 @@
   font-size: 2.2rem;
   line-height: 1.15;
 }
+
 @media (min-width: 400px) {
   .Hero-body h1 {
     font-size: 2.6rem;
@@ -99,7 +123,6 @@
 
 .Hero-blob {
   position: absolute;
-  z-index: -1;
   color: rgb(var(--color-pink));
 }
 
@@ -135,7 +158,14 @@
 
 .Hero--gray {
   background-color: rgb(var(--color-gray));
-  padding-bottom: 15vh;
+}
+
+.Hero--gray::after {
+  content: none;
+}
+
+.Hero--gray .Hero-blob {
+  display: none;
 }
 
 .Hero--yellow .Hero-blob {
@@ -153,4 +183,3 @@
 .Hero--pink .Hero-blob {
   color: rgb(var(--color-pink));
 }
-

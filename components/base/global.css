@@ -13,7 +13,7 @@
   --color-gray-dark: 209, 208, 212;
 
   --color-muted: 17, 0, 70, 0.5;
-  --color-link: 71, 21, 231;
+  --color-link: var(--color-turquoise);
 
   --document-font-family: "Basier Circle", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --document-font-size: 1rem;

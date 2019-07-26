@@ -38,7 +38,7 @@ function posts (state, emit) {
               ${asElement(state.partial.data.description, resolve)}
             `
           }) : Hero.loading({ theme: 'gray' })}
-          <div class="u-container u-space2">
+          <div class="u-container u-space2 u-borderB">
             ${callout.loading({ image: true })}
             <div class="u-space2">
               ${grid({ divided: true, size: { md: '1of2' } }, items)}
@@ -89,7 +89,7 @@ function posts (state, emit) {
             ${asElement(doc.data.description, resolve)}
           `
         })}
-        <div class="u-container u-space2">
+        <div class="u-container u-space2 u-borderB">
           ${featured.map(function (doc, index) {
             if (!doc) return callout.loading({ label: true, image: true })
 

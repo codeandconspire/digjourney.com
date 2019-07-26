@@ -8,6 +8,10 @@
   background: rgb(var(--document-background));
 }
 
+.View.is-overlayed {
+  background: rgb(var(--color-gray));
+}
+
 /**
  * Header
  */

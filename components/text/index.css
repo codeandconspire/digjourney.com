@@ -22,7 +22,7 @@
 
 .Text--small,
 .Text-small {
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 
 @media (min-width: 350px) {
@@ -111,7 +111,13 @@
   width: 100%;
   height: auto;
   margin: 2.2em 0;
-  border-radius: 0.375rem;
+  border-radius: 0;
+}
+
+@media (min-width: 600px) {
+  .Text img:not(.Embed-image) {
+    border-radius: 0.375rem;
+  }
 }
 
 .Text-caption {
@@ -222,14 +228,35 @@
 
 .Text h2,
 .Text .Text-h2 {
-  font-size: 1.33em;
+  font-size: 1.33rem;
+  line-height: 1.35;
   margin-top: 2em;
 }
 
 .Text h3,
 .Text .Text-h3 {
-  font-size: 1.1em;
-  margin-top: 1.4em;
+  margin: 0 0 -0.4em 0;
+}
+
+@media (min-width: 600px) {
+  .Text h2,
+  .Text .Text-h2 {
+    font-size: 1.8rem;
+  }
+
+  .Text h3,
+  .Text .Text-h3 {
+    margin: 0.8em 0;
+    font-size: 1.1em;
+  }
+}
+
+@media (min-width: 1400px) {
+  .Text h2,
+  .Text .Text-h2 {
+    font-size: 2.5rem;
+    line-height: 1.25;
+  }
 }
 
 .Text h4,
@@ -256,10 +283,5 @@
   .Text h1,
   .Text .Text-h1 {
     font-size: 2.1em;
-  }
-
-  .Text h2,
-  .Text .Text-h2 {
-    font-size: 1.6em;
   }
 }

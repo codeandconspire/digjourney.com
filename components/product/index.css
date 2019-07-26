@@ -10,6 +10,10 @@
   border-radius: 0.375rem;
 }
 
+.Product + .Product {
+  margin-top: 1.5rem;
+}
+
 @media (min-width: 600px) and (min-height: 350px) {
   .Product {
     padding: 3rem 1.5rem;
@@ -51,6 +55,7 @@
   max-height: 100%;
   width: auto;
   transform: translate(-50%, -50%);
+  background: rgb(var(--color-gray));
 }
 
 .Product.is-loading .Product-image {

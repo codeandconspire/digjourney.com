@@ -33,6 +33,14 @@
   overflow: hidden !important;
 }
 
+.u-calloutFix + .u-calloutFix {
+  margin-top: -8vh !important;
+}
+
+.u-borderB {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.13) !important;
+}
+
 /**
  * Display
  */

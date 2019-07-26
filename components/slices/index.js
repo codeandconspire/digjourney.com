@@ -129,7 +129,7 @@ function slices (slice, index, list, onclick) {
       }
 
       return html`
-        <div class="u-container u-space0">${callout(props)}</div>
+        <div class="u-calloutFix u-container u-space2">${callout(props)}</div>
       `
     }
     case 'people': {
@@ -198,57 +198,63 @@ function slices (slice, index, list, onclick) {
       })
       if (!blurbs.length) return null
 
+      var last = index === (list.length - 1)
+
+      console.log(last, index, (list.length - 1))
+
       return html`
-        <section class="u-container u-space2">
-          ${slice.primary.heading.length ? html`
-            <header class="Text u-space2 u-textCenter">
-              <h2>${asText(slice.primary.heading)}</h2>
-            </header>
-          ` : null}
-          ${grid({ divided: true, size: { md: '1of2' } }, blurbs.map(function (item, i) {
-            var title = asText(item.heading)
-            if (!title && item.link.id) title = asText(item.link.data.title)
+        <div class="${last ? 'u-borderB u-space2end' : ''}">
+          <section class="u-container u-space2">
+            ${slice.primary.heading.length ? html`
+              <header class="Text u-space2 u-textCenter">
+                <h2>${asText(slice.primary.heading)}</h2>
+              </header>
+            ` : null}
+            ${grid({ divided: true, size: { md: '1of2' } }, blurbs.map(function (item, i) {
+              var title = asText(item.heading)
+              if (!title && item.link.id) title = asText(item.link.data.title)
 
-            var body = item.text.length ? asElement(item.text, resolve, serialize) : null
+              var body = item.text.length ? asElement(item.text, resolve, serialize) : null
 
-            if (!body && item.link.id) {
-              body = asElement(item.link.data.description, resolve, serialize)
-            }
-
-            var image = item.image
-            if (!image.url && item.link.id) image = item.link.data.featured_image
-            if (!image || (!image.url && item.link.id)) image = item.link.data.image
-            image = memo(function (url, sizes) {
-              if (!url) return null
-              var sources = srcset(url, sizes, {
-                aspect: 9 / 16,
-                transforms: 'c_thumb,g_face'
-              })
-              return {
-                srcset: sources,
-                sizes: '(min-width: 600px) 50vw, 100vw',
-                alt: image.alt || title,
-                src: sources.split(' ')[0],
-                width: image.dimensions.width,
-                height: image.dimensions.width * 9 / 16
+              if (!body && item.link.id) {
+                body = asElement(item.link.data.description, resolve, serialize)
               }
-            }, [image && image.url, [[520, 'q_50'], [700, 'q_50'], [900, 'q_50']]])
 
-            var linkText = item.link_text
-            if (!linkText) {
-              if (item.link.id) linkText = item.link.data.cta
-              else if (item.link.url) linkText = text`Read more`
-            }
-            var link = item.link.id || item.link.url ? {
-              href: resolve(item.link),
-              text: linkText,
-              external: item.link.target === '_blank',
-              onclick: item.link.id ? onclick(item.link) : null
-            } : null
+              var image = item.image
+              if (!image.url && item.link.id) image = item.link.data.featured_image
+              if (!image || (!image.url && item.link.id)) image = item.link.data.image
+              image = memo(function (url, sizes) {
+                if (!url) return null
+                var sources = srcset(url, sizes, {
+                  aspect: 9 / 16,
+                  transforms: 'c_thumb,g_face'
+                })
+                return {
+                  srcset: sources,
+                  sizes: '(min-width: 600px) 50vw, 100vw',
+                  alt: image.alt || title,
+                  src: sources.split(' ')[0],
+                  width: image.dimensions.width,
+                  height: image.dimensions.width * 9 / 16
+                }
+              }, [image && image.url, [[520, 'q_50'], [700, 'q_50'], [900, 'q_50']]])
 
-            return card({ title, body, image, link })
-          }))}
-        </section>
+              var linkText = item.link_text
+              if (!linkText) {
+                if (item.link.id) linkText = item.link.data.cta
+                else if (item.link.url) linkText = text`Read more`
+              }
+              var link = item.link.id || item.link.url ? {
+                href: resolve(item.link),
+                text: linkText,
+                external: item.link.target === '_blank',
+                onclick: item.link.id ? onclick(item.link) : null
+              } : null
+
+              return card({ title, body, image, link })
+            }))}
+          </section>
+        </div>
       `
     }
     case 'facts_box': {
@@ -271,7 +277,7 @@ function slices (slice, index, list, onclick) {
           ${grid({ size: { md: '1of2' } }, items.map(function (item) {
             var symbol = item.symbol && item.symbol.toLowerCase()
             return html`
-              <div class="Text">
+              <div class="Text Text-small">
                 ${symbol && symbol in symbols ? symbols[symbol]() : null}
                 <div class="${symbol in symbols ? 'u-spaceL3 u-spaceT3' : ''}">
                   ${asElement(item.heading)}
