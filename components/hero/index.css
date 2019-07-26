@@ -18,7 +18,7 @@
   z-index: -1;
   left: 0;
   display: block;
-  width: 100%;
+  width: calc(100% - (var(--document-margin) * 2));
   border-bottom: 1px solid rgba(0, 0, 0, 0.13);
   margin-left: var(--document-margin) !important;
   margin-right: var(--document-margin) !important;

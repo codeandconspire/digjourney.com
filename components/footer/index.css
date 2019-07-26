@@ -259,7 +259,7 @@
 
 @media (max-width: 799px) {
   .Footer--alt .Footer-navigation {
-    padding-top: 2.5rem;
+    padding-top: 5rem;
     background: rgb(var(--color-gray));
     text-align: center;
     line-height: 1.35;

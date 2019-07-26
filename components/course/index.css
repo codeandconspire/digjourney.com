@@ -34,10 +34,17 @@
 }
 
 .Course-title {
-  font-size: 2.25rem;
-  line-height: 1.25;
-  font-weight: bold;
   margin-bottom: 0.5em;
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 1.25;
+}
+
+@media (min-width: 800px) and (min-height: 400px) {
+  .Course-title {
+    font-size: 2.75rem;
+    line-height: 1.2;
+  }
 }
 
 .Course-title:not(:first-child) {

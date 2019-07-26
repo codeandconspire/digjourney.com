@@ -271,6 +271,7 @@
     color: #000;
     background: rgb(var(--color-gray));
     transform: none !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
 
   .Header.is-open .Header-logo {
