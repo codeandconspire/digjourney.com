@@ -36,7 +36,6 @@
  */
 
 .Card-body {
-  flex-grow: 1;
   position: relative; /* 1 */
   width: 100%;
   max-width: 36rem;

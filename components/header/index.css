@@ -15,7 +15,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  color: #fff;
+  color: rgb(var(--color-blue));
   user-select: none;
 }
 
@@ -38,10 +38,6 @@
   }
 }
 
-.Header-illustration {
-  display: none;
-}
-
 /**
  * Logo
  */
@@ -59,12 +55,7 @@
 }
 
 .Header-logo {
-  display: none;
   width: 8.5rem;
-}
-
-.Header-logo--onDark {
-  display: block
 }
 
 @media (min-width: 800px) {
@@ -87,10 +78,6 @@
 }
 
 @media (min-width: 800px) {
-  .Header {
-    color: #fff;
-  }
-
   .Header-list {
     display: flex;
     height: 100%;
@@ -278,29 +265,12 @@
     top: 0;
     left: 0;
     color: #000;
-    border-bottom: 1px solid #F4F3F6;
-    background: #fff;
+    background: rgb(var(--color-gray));
     transform: none !important;
   }
 
   .Header.is-open .Header-logo {
-    display: none;
-  }
-
-  .Header.is-open .Header-logo--onWhite {
-    display: block;
-  }
-
-  .Header.is-open .Header-illustration {
-    display: block;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 50%;
-    max-width: 330px;
-    height: auto;
-    max-height: calc(100% - 6rem);
-    pointer-events: none;
+    color: transparent;
   }
 
   .Header.is-open .Header-lines {
@@ -320,57 +290,4 @@
     transition: bottom 200ms ease, transform 200ms cubic-bezier(0.215, 0.61, 0.355, 1) 0.12s;
     transform: rotate(-90deg);
   }
-}
-
-/**
- * Themes
- */
-
-.Header--gray {
-  color: rgb(var(--color-blue));
-}
-
-.Header--yellow {
-  color: rgb(var(--color-blue));
-}
-
-.Header--yellow {
-  color: #fff;
-}
-
-.Header--turquoise {
-  color: #fff;
-}
-
-.Header--pink {
-  color: rgb(var(--color-blue));
-}
-
-.Header--blue {
-  color: #fff;
-}
-
-.Header--pink .Header-logo--onDark,
-.Header--yellow .Header-logo--onDark,
-.Header--orange .Header-logo--onDark {
-  display: none
-}
-
-.Header--pink .Header-logo--onLight,
-.Header--yellow .Header-logo--onLight,
-.Header--orange .Header-logo--onLight {
-  display: block
-}
-
-.Header--turquoise .Header-logo--onLight,
-.Header--turquoise .Header-logo--onDark,
-.Header--gray .Header-logo--onLight,
-.Header--gray .Header-logo--onDark {
-  display: none
-}
-
-.Header--turquoise .Header-logo--onWhite,
-.Header--turquoise .Header-logo--onWhite,
-.Header--gray .Header-logo--onWhite {
-  display: block
 }

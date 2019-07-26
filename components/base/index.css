@@ -180,7 +180,7 @@ hr {
   height: 1px;
   margin: 0;
   border: 0;
-  background: rgb(var(--color-divider));
+  background: rgba(0, 0, 0, 0.13);
 }
 
 /**
