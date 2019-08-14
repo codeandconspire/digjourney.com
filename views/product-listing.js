@@ -103,7 +103,10 @@ function products (state, emit) {
           return Object.assign({
             alt: doc.data.contact_image.alt || '',
             sizes: '60px',
-            srcset: srcset(url, [60, 120]),
+            srcset: srcset(url, [60, 120], {
+              transforms: 'q_100',
+              aspect: 1
+            }),
             src: src(url, [60])
           }, doc.data.contact_image.dimensions)
         }, [doc.data.contact_image.url, 'small'])

@@ -220,6 +220,9 @@ function reduce (list) {
   }, [])
 }
 
+var AUTO_TRANSFORM = /\?(?:.+)?auto=([^&]+)/
+var COMPRESS = /compress,?/
+
 // compose src attribute from url for a given size
 // (str, num, obj?) -> str
 exports.src = src
@@ -232,8 +235,9 @@ function src (uri, size, opts = {}) {
   if (!/q_/.test(transforms)) transforms += ',q_auto'
 
   // trim prismic domain from uri
-  var parts = uri.split('digjourney.cdn.prismic.io/digjourney/')
-  uri = parts[parts.length - 1]
+  if (AUTO_TRANSFORM.test(uri)) {
+    uri = uri.replace(AUTO_TRANSFORM, (match) => match.replace(COMPRESS, ''))
+  }
 
   return `/media/${type}/${transforms ? transforms + ',' : ''}w_${size}/${uri}`
 }
@@ -242,6 +246,10 @@ function src (uri, size, opts = {}) {
 // (str, arr, obj?) -> str
 exports.srcset = srcset
 function srcset (uri, sizes, opts = {}) {
+  if (AUTO_TRANSFORM.test(uri)) {
+    uri = uri.replace(AUTO_TRANSFORM, (match) => match.replace(COMPRESS, ''))
+  }
+
   return sizes.map(function (size) {
     opts = Object.assign({}, opts)
     if (Array.isArray(size)) {

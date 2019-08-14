@@ -180,7 +180,7 @@ function slices (slice, index, list, onclick) {
                   sizes: '180px',
                   srcset: srcset(url, sizes, {
                     aspect: 1,
-                    transforms: 'c_fill,g_face'
+                    transforms: 'q_100'
                   }),
                   src: src(url, 180)
                 }
@@ -199,8 +199,6 @@ function slices (slice, index, list, onclick) {
       if (!blurbs.length) return null
 
       var last = index === (list.length - 1)
-
-      console.log(last, index, (list.length - 1))
 
       return html`
         <div class="${last ? 'u-borderB u-space2end' : ''}">

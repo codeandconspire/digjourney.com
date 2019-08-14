@@ -4,6 +4,7 @@ var { className } = require('../base')
 module.exports = button
 
 function button (props) {
+  if (!props) return null
   var attrs = Object.assign({}, props)
   delete attrs.text
   delete attrs.theme

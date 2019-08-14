@@ -92,7 +92,10 @@ function course (state, emit) {
                               return Object.assign({
                                 alt: item.image.alt || '',
                                 sizes: '60px',
-                                srcset: srcset(url, [60, 120]),
+                                srcset: srcset(url, [60, 120], {
+                                  transforms: 'q_100',
+                                  aspect: 1
+                                }),
                                 src: src(url, [60])
                               }, item.image.dimensions)
                             }, [item.image.url, 'small']),
