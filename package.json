@@ -1,5 +1,5 @@
 {
-  "name": "digjourney.se",
+  "name": "digjourney.com",
   "version": "1.0.0",
   "description": "Official website of DigJourney",
   "main": "index.js",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codeandconspire/digjourney.se.git"
+    "url": "git+https://github.com/codeandconspire/digjourney.com.git"
   },
   "documentify": {
     "transform": [
