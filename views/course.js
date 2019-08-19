@@ -91,8 +91,8 @@ function course (state, emit) {
                               if (!url) return null
                               return Object.assign({
                                 alt: item.image.alt || '',
-                                sizes: '60px',
-                                srcset: srcset(url, [60, 120], {
+                                sizes: '90px',
+                                srcset: srcset(url, [90, 180], {
                                   transforms: 'q_100',
                                   aspect: 1
                                 }),

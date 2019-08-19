@@ -35,7 +35,7 @@ function posts (state, emit) {
             theme: 'gray',
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
-              ${asElement(state.partial.data.description, resolve)}
+              ${state.partial.data.description ? asElement(state.partial.data.description, resolve) : null}
             `
           }) : Hero.loading({ theme: 'gray' })}
           <div class="u-container u-space2 u-borderB">

@@ -14,7 +14,7 @@ function product (props) {
   delete attrs.src
 
   return html`
-    <article class="Product">
+    <article class="Product ${props.standalone ? 'Product--standalone' : ''}">
       ${props.image ? html`
         <figure class="Product-figure">
           <img class="Product-image" ${attrs} src="${props.image.src}">
@@ -22,24 +22,18 @@ function product (props) {
       ` : null}
       <div class="Product-header">
         ${props.duration ? html`<strong class="Product-label">${props.duration}</strong>` : null}
-        <h3 class="Product-title">${props.title}</h3>
+        ${props.title ? html`<h3 class="Product-title">${props.title}</h3>` : null}
         <dl class="Product-properties">
           ${props.target ? html`
-            <dt class="Product-prop">
-              <span class="u-hiddenVisually">${text`Target audience`}</span>
-            </dt>
+            <dt class="u-hiddenVisually">${text`Target audience`}</dt>
             <dd class="Product-value">${props.target}</dd>
           ` : null}
           ${props.duration ? html`
-            <dt class="Product-prop">
-              <span class="u-hiddenVisually">${text`Duration`}</span>
-            </dt>
+            <dt class="u-hiddenVisually">${text`Duration`}</dt>
             <dd class="Product-value">${props.duration}</dd>
           ` : null}
           ${props.location ? html`
-            <dt class="Product-prop">
-              <span class="u-hiddenVisually">${text`Location`}</span>
-            </dt>
+            <dt class="u-hiddenVisually">${text`Location`}</dt>
             <dd class="Product-value">${props.location}</dd>
           ` : null}
         </dl>

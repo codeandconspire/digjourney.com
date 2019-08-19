@@ -21,7 +21,7 @@ function page (state, emit) {
             theme: state.partial.data.theme.toLowerCase(),
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
-              ${asElement(state.partial.data.description, resolve)}
+              ${state.partial.data.description ? asElement(state.partial.data.description, resolve) : null}
             `
           }) : Hero.loading({ theme: state.ui.theme })}
           <div class="u-container u-space1">

@@ -23,7 +23,7 @@ function courses (state, emit) {
             theme: 'turquoise',
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
-              ${asElement(state.partial.data.description, resolve)}
+              ${state.partial.data.description ? asElement(state.partial.data.description, resolve) : null}
             `
           }) : Hero.loading({ theme: 'turquoise' })}
           <div class="u-container">
@@ -107,8 +107,8 @@ function courses (state, emit) {
             if (!url) return null
             return Object.assign({
               alt: item.image.alt || '',
-              sizes: '60px',
-              srcset: srcset(url, [60, 120], {
+              sizes: '90px',
+              srcset: srcset(url, [90, 180], {
                 transforms: 'q_100',
                 aspect: 1
               }),

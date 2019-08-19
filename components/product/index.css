@@ -26,6 +26,11 @@
   }
 }
 
+.Product--standalone {
+  border: 0;
+  padding: 0;
+}
+
 .Product-figure {
   flex: 0 0 100%;
   margin-bottom: 2rem;
@@ -107,7 +112,6 @@
   margin: 0 0 1rem;
 }
 
-.Product-prop,
 .Product-value {
   display: inline-block;
 }
