@@ -124,7 +124,6 @@ function courses (state, emit) {
         return {
           title: item.title,
           label: item.label,
-          meta: doc.data.price,
           link: (item.link.id || item.link.url) && !item.link.isBroken ? {
             theme: 'turquoise',
             href: resolve(item.link),

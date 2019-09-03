@@ -37,6 +37,10 @@
   margin-bottom: 22vh !important;
 }
 
+.u-spacePullUpHero {
+  margin-top: calc(-10vh - 1px);
+}
+
 /**
  * All
  */

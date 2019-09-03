@@ -39,14 +39,21 @@
   margin: 0.8rem 0;
 }
 
-.Footer-section {
+.Footer-section.Footer-section {
   flex-basis: 50%;
   margin-bottom: 1rem;
 }
 
+@media (max-width: 599px) {
+  .Footer-section.Footer-section {
+    flex-basis: 100% !important;
+    width: 100% !important;
+  }
+}
+
 .Footer-item {
   margin: 0.4rem;
-  white-space: nowrap;
+  /* white-space: nowrap; */
 }
 
 .Footer-link {
@@ -64,7 +71,7 @@
 }
 
 .Footer-link--primary {
-  font-weight: 600;
+  font-weight: bold;
 }
 
 @media (min-width: 800px) {
@@ -291,12 +298,17 @@
   }
 
   .Footer--alt .Footer-menu {
-    display: block;
     text-align: left;
   }
 
   .Footer--alt .Footer-meta {
     padding-top: 2rem;
     margin: 1.3rem 0;
+  }
+}
+
+@media (min-width: 600px) {
+  .Footer--alt .Footer-navigation {
+    padding-top: 7rem;
   }
 }

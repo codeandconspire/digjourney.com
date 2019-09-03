@@ -27,7 +27,7 @@
   font-size: 1.25rem;
   font-family: var(--heading-font-family);
   line-height: var(--heading-line-height);
-  font-weight: 600;
+  font-weight: bold;
   letter-spacing: -0.025em;
 }
 

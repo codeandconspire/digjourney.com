@@ -20,7 +20,7 @@
 
 .Person--small .Person-figure {
   max-width: 4rem;
-  margin-right: 1.5rem;
+  margin-right: 1rem;
 }
 
 .Person-figure::before {
@@ -75,7 +75,7 @@
 
 @media (min-width: 900px) {
   .Person-title {
-    margin-top: 1.5rem;
+    margin-top: 0.7rem;
   }
 }
 
@@ -83,23 +83,33 @@
   margin-top: 0;
 }
 
-.Person-info a:not(.Person-link) {
-  border-bottom: 1px solid transparent;
-}
-
-.Person-info a:hover {
+.Person-info a:not(.Person-link):hover {
   color: rgb(var(--document-color));
 }
 
 .Person-link {
   display: inline-block;
-  margin-bottom: 0.5em;
-  color: currentColor;
-  border-bottom: 1px solid transparent;
+  text-decoration: underline;
+  font-weight: bold;
+  padding: 0.1em 0.3em;
+  margin: 0 -0.3em;
+  border-radius: 0.1875rem;
+  color: rgb(var(--color-turquoise));
+  transition: background 400ms var(--ease-out);
+}
+
+.Person-link:hover {
+  background: rgba(var(--color-blue), 0.05);
+  transition: none;
+}
+
+.Person-link:active {
+  opacity: 0.5;
 }
 
 .Person-text {
   color: rgb(var(--color-muted));
+  margin: 0.3em 0;
 }
 
 .Person--small .Person-text {

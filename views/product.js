@@ -76,7 +76,7 @@ function productView (state, emit) {
                 alt: doc.data.image.alt || '',
                 src: src(url, [500]),
                 sizes: '(min-width: 1000px) 500px, 100vw',
-                srcset: srcset(url, [400, 600, [1000, 'q_70'], [1200, 'q_50']])
+                srcset: srcset(url, [400, 600, 1000, 1200])
               }, doc.data.image.dimensions)
             }, [doc.data.image.url, 'product-listing']),
             features: doc.data.features.map(({ text }) => text),

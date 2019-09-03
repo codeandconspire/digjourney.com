@@ -55,10 +55,13 @@
 .Callout-link {
   align-self: flex-start;
   display: inline-block;
-  margin-top: 2rem;
   font-weight: bold;
   color: rgb(var(--color-blue));
-  border-bottom: 1px solid currentColor;
+  padding: 0.1rem 0.3rem;
+  margin: 2rem -0.3rem -0.1rem -0.3rem;
+  border-radius: 0.1875rem;
+  transition: background 400ms var(--ease-out);
+  text-decoration: underline;
 }
 
 .Callout-link::before {
@@ -68,6 +71,11 @@
   position: absolute;
   left: 0;
   top: 0;
+}
+
+.Callout-link:hover {
+  background: rgba(var(--color-blue), 0.05);
+  transition: none;
 }
 
 .Callout-link:active {

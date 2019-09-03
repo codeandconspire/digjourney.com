@@ -16,7 +16,7 @@ function callout (props) {
   })
 
   return html`
-    <article class="${classes} u-expand">
+    <article class="${classes}">
       ${props.image ? html`
         <figure class="Callout-figure">
           ${getImage(props.image)}

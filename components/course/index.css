@@ -42,7 +42,7 @@
 
 @media (min-width: 800px) and (min-height: 400px) {
   .Course-title {
-    font-size: 2.75rem;
+    font-size: 2.35rem;
     line-height: 1.2;
   }
 }
@@ -54,8 +54,21 @@
 .Course-link {
   display: inline-block;
   margin-top: 1em;
-  border-bottom: 1px solid currentColor;
   font-weight: bold;
+  padding: 0.1em 0.3em;
+  margin: 2rem -0.3em -0.1em -0.3em;
+  border-radius: 0.1875rem;
+  transition: background 400ms var(--ease-out);
+  text-decoration: underline;
+}
+
+.Course-link:hover {
+  background: rgba(var(--color-blue), 0.05);
+  transition: none;
+}
+
+.Course-link:active {
+  opacity: 0.5;
 }
 
 .Course-heading {

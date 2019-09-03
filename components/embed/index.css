@@ -5,7 +5,7 @@
   width: 100%;
   position: relative;
   color: #fff;
-  background: rgb(var(--color-gray));
+  background: rgb(var(--color-blue));
   user-select: none;
 }
 
@@ -74,6 +74,7 @@
   display: block;
   width: 100%;
   height: auto;
+  border-radius: 0.375rem;
 }
 
 @supports (object-fit: cover) {
@@ -93,6 +94,7 @@
   bottom: 0;
   left: 0;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0.5));
+  border-radius: 0 0 0.375rem 0.375rem;
 }
 
 @media (min-width: 600px) {

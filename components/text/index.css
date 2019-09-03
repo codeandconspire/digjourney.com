@@ -57,9 +57,17 @@
 
 .Text a:not(.Embed-link) {
   color: rgb(var(--color-link));
-  border-bottom: 1px solid currentColor;
-  font-weight: 600;
-  transition: color 100ms var(--ease-out);
+  text-decoration: underline;
+  font-weight: bold;
+  padding: 0.1em 0.3em;
+  margin: -0.1em -0.3em;
+  border-radius: 0.1875rem;
+  transition: background 400ms var(--ease-out);
+}
+
+.Text a:not(.Embed-link):hover {
+  background: rgba(var(--color-blue), 0.05);
+  transition: none;
 }
 
 .Text a:not(.Embed-link):active {

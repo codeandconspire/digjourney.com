@@ -84,7 +84,7 @@
 
 .Principles-number {
   font-size: 4rem;
-  font-weight: 600;
+  font-weight: bold;
   line-height: 1;
   color: rgb(var(--color-turquoise));
 }
@@ -94,7 +94,7 @@
   max-width: 400px;
 
   font-size: 1.75rem;
-  font-weight: 600;
+  font-weight: bold;
   line-height: 1.1;
 }
 

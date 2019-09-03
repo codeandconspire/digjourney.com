@@ -3,7 +3,7 @@
 @import "../global";
 
 .u-textBold {
-  font-weight: 600 !important;
+  font-weight: bold !important;
 }
 
 .u-textRegular {

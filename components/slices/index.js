@@ -9,6 +9,7 @@ var partners = require('../partners')
 var person = require('../person')
 var callout = require('../callout')
 var symbols = require('../symbols')
+var book = require('../book')
 var serialize = require('../text/serialize')
 var { i18n, asText, resolve, srcset, src, memo } = require('../base')
 
@@ -17,6 +18,7 @@ var text = i18n()
 module.exports = slices
 
 function slices (slice, index, list, onclick) {
+  console.log(slice.slice_type)
   switch (slice.slice_type) {
     case 'text': {
       if (!slice.primary.text.length) return null
@@ -38,7 +40,7 @@ function slices (slice, index, list, onclick) {
           attrs.sizes = '100vw'
           attrs.srcset = srcset(
             image.url,
-            [640, 750, 1125, 1440, [2880, 'q_50'], [3840, 'q_50']]
+            [640, 750, 1125, 1440, [2880, 'q_80'], [3840, 'q_60']]
           )
         }
 
@@ -76,9 +78,9 @@ function slices (slice, index, list, onclick) {
       if (!children) return null
 
       return html`
-        <div class="u-md-container u-space2">
+        <div class="u-md-container ${index === 0 ? 'u-spacePullUpHero' : 'u-space2'}">
           <figure class="Text u-sizeFull">
-            <div class="u-space1">${children}</div>
+            <div class="${index === 0 ? '' : 'u-space1'}">${children}</div>
           </div>
         </div>
       `
@@ -125,11 +127,46 @@ function slices (slice, index, list, onclick) {
             width: image.dimensions.width,
             height: image.dimensions.width * 10 / 12
           }
-        }, [image && image.url, [720, 400, 800, 1200]])
+        }, [image && image.url, [720, 400, 800, 1200, 2000]])
       }
 
       return html`
         <div class="u-calloutFix u-container u-space2">${callout(props)}</div>
+      `
+    }
+    case 'book': {
+      return html`
+        <div class="u-space2">
+          ${book({
+            rating: slice.primary.rating,
+            author: slice.primary.author,
+            title: asText(slice.primary.title),
+            body: asElement(slice.primary.description, resolve),
+            image: memo(function (url) {
+              if (!url) return null
+              return Object.assign({
+                src: src(url, [900]),
+                alt: slice.primary.image.alt || '',
+                sizes: '(min-width: 1000px) 50vw, 100vw',
+                srcset: srcset(url, [400, 600, 900, 1200, 1800])
+              }, slice.primary.image.dimensions)
+            }, [slice.primary.image.url]),
+            link: slice.primary.link.id && !slice.primary.link.isBroken ? {
+              href: resolve(slice.primary.link),
+              text: slice.primary.link_text || text`Read more`
+            } : null,
+            action: memo(function (link, str) {
+              if (!str) return null
+              if ((!link.id && !link.url) || link.isBroken) return null
+              var attrs = { href: resolve(link), text: str }
+              if (link.target === '_blank') {
+                attrs.target = '_blank'
+                attrs.rel = 'noopenere nofererrer'
+              }
+              return attrs
+            }, [slice.primary.cta, slice.primary.cta_text])
+          })}
+        </div>
       `
     }
     case 'people': {
@@ -148,7 +185,7 @@ function slices (slice, index, list, onclick) {
           ` : null}
           ${grid({
             size: {
-              md: '1of2',
+              lg: '1of2',
               xl: '1of3'
             }
           }, people.map(function (item) {
@@ -164,6 +201,7 @@ function slices (slice, index, list, onclick) {
             }
             return person({
               title: title,
+              role: item.role,
               body: asElement(item.text, resolve, serialize),
               link: (link.id || link.url) && !link.isBroken ? {
                 href: resolve(link),
@@ -235,7 +273,7 @@ function slices (slice, index, list, onclick) {
                   width: image.dimensions.width,
                   height: image.dimensions.width * 9 / 16
                 }
-              }, [image && image.url, [[520, 'q_50'], [700, 'q_50'], [900, 'q_50']]])
+              }, [image && image.url, [520, 700, 900, 1280]])
 
               var linkText = item.link_text
               if (!linkText) {
@@ -340,6 +378,6 @@ function video (props) {
     width: props.thumbnail_width,
     height: props.thumbnail_height,
     sizes: '100vw',
-    srcset: srcset(id, [640, 750, 1125, 1440, [2880, 'q_50'], [3840, 'q_50']], { type: provider })
+    srcset: srcset(id, [640, 750, 1125, 1440, [2880, 'q_70'], [3840, 'q_60']], { type: provider })
   })
 }

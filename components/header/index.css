@@ -58,7 +58,7 @@
   width: 8.5rem;
 }
 
-@media (min-width: 850px) {
+@media (min-width: 800px) {
   .Header-home {
     font-size: 1.75rem;
   }
@@ -77,7 +77,7 @@
   white-space: nowrap;
 }
 
-@media (min-width: 850px) {
+@media (min-width: 800px) {
   .Header-menu {
     margin-top: 0.6rem;
   }
@@ -99,6 +99,15 @@
     height: 100%;
     padding: 0.6rem 1rem;
     border-radius: 0.1875rem;
+  }
+
+  .Header-link:hover .Header-label {
+    text-decoration: underline;
+  }
+
+  .Header-link:active .Header-label,
+  .Header-link:active .Header-title {
+    opacity: 0.5;
   }
 
   .Header-label {
@@ -171,7 +180,6 @@
   }
 
   .Header:not(.is-navigating) .Header-link:hover + .Header-dropdown,
-  .Header:not(.is-navigating) .Header-link:focus + .Header-dropdown,
   .Header:not(.is-navigating) .Header-dropdown:focus-within,
   .Header:not(.is-navigating) .Header-dropdown:hover {
     opacity: 1;
@@ -210,7 +218,7 @@
   background: rgba(0, 0, 0, 0.1);
 }
 
-@media (min-width: 850px) {
+@media (min-width: 800px) {
   .Header-toggle {
     display: none;
   }
@@ -262,7 +270,7 @@
 /**
  * Open state
  */
-@media (max-width: 849px) {
+@media (max-width: 799px) {
   .Header.is-open {
     width: 100%;
     position: fixed;

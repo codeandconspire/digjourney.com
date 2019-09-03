@@ -15,9 +15,9 @@ function person (props = {}) {
       ${image}
       <div class="Person-info">
         <h3 class="Person-title">${props.title}</h3>
-        ${props.link ? link(props.link) : null}
-        ${props.link && props.body ? html`<br>` : null}
+        ${props.role ? html`<span>${props.role}</span>` : null}
         ${props.body ? html`<div class="Person-text">${props.body}</div>` : null}
+        ${props.link ? link(props.link) : null}
       </div>
     </article>
   `

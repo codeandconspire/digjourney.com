@@ -71,7 +71,7 @@
 .Card-title {
   margin-bottom: 0.5em;
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: bold;
   line-height: 1.25;
   max-width: 28rem;
 }
@@ -150,11 +150,13 @@
 
 .Card-link {
   display: inline-block;
-  margin: 0.5rem 0 0;
   color: rgb(var(--color-turquoise));
-  border-bottom: 1px solid rgb(var(--color-turquoise));
-  font-weight: 600;
-  transition: color 100ms var(--ease-out);
+  font-weight: bold;
+  padding: 0.1em 0.3em;
+  margin: 0.5rem -0.3em -0.1em -0.3em;
+  border-radius: 0.1875rem;
+  transition: background 400ms var(--ease-out);
+  text-decoration: underline;
 }
 
 .Card-link::before {
@@ -168,4 +170,9 @@
 
 .Card-link:active {
   opacity: 0.5;
+}
+
+.Card-link:hover {
+  background: rgba(var(--color-blue), 0.05);
+  transition: none;
 }

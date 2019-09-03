@@ -16,13 +16,14 @@
   position: absolute;
   bottom: 0;
   z-index: -1;
-  left: 0;
+  left: 50%;
   display: block;
   width: calc(100% - (var(--document-margin) * 2));
   border-bottom: 1px solid rgba(0, 0, 0, 0.13);
   margin-left: var(--document-margin) !important;
   margin-right: var(--document-margin) !important;
-  max-width: 75rem;
+  max-width: 77rem;
+  transform: translateX(calc(-50% - var(--document-margin)));
 }
 
  @supports (padding-left: constant(safe-area-inset-left)) {
@@ -53,6 +54,10 @@
   max-width: 75rem;
 }
 
+.Hero-body p {
+  max-width: 32em;
+}
+
 @media (min-width: 600px) {
   .Hero-body {
     font-size: 1.8rem;
@@ -69,11 +74,21 @@
 .Hero-label {
   font-size: 1rem;
   font-weight: normal;
+  margin-bottom: 1.3rem;
+  display: inline-block;
 }
 
 .Hero-body a:not([class]) {
-  white-space: nowrap;
-  border-bottom: 2px solid currentColor;
+  text-decoration: underline;
+  padding: 0.08em 0.2em;
+  margin: -0.08em -0.2em;
+  border-radius: 0.1875rem;
+  transition: background 400ms var(--ease-out);
+}
+
+.Hero-body a:not([class]):hover {
+  background: rgba(var(--color-blue), 0.05);
+  transition: none;
 }
 
 .Hero-body a:not([class]):active {
