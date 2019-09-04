@@ -7,7 +7,7 @@
     "build": "jalla build index.js --sw sw.js",
     "start": "node server.js",
     "purge": "node -r dotenv/config -e \"require('./lib/purge')('../index.js', ['/sw.js'], console.log)\"",
-    "deploy": "npx now -T codeandconspire && npx now alias -T codeandconspire",
+    "deploy": "npx now --scope codeandconspire && npx now alias --scope codeandconspire",
     "test": "standard"
   },
   "repository": {
