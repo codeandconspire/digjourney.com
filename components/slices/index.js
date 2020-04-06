@@ -18,7 +18,6 @@ var text = i18n()
 module.exports = slices
 
 function slices (slice, index, list, onclick) {
-  console.log(slice.slice_type)
   switch (slice.slice_type) {
     case 'text': {
       if (!slice.primary.text.length) return null
