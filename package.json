@@ -7,7 +7,6 @@
     "build": "jalla build index.js --sw sw.js",
     "start": "node server.js",
     "purge": "node -r dotenv/config -e \"require('./lib/purge')('../index.js', ['/sw.js'], console.log)\"",
-    "deploy": "npx now --scope codeandconspire && npx now alias --scope codeandconspire",
     "test": "standard"
   },
   "repository": {
@@ -27,19 +26,6 @@
   "standard": {
     "parser": "babel-eslint"
   },
-  "now": {
-    "alias": "digjourney.conspire.dev",
-    "env": {
-      "NODE_ENV": "production",
-      "CLOUDINARY_KEY": "@cloudinary-key",
-      "CLOUDINARY_SECRET": "@cloudinary-secret",
-      "PRISMIC_SECRET": "@prismic-digjourney-secret",
-      "CLOUDFLARE_ZONE": "@cloudflare-digjourney-zone",
-      "CLOUDFLARE_EMAIL": "@cloudflare-codeandconspire-email",
-      "CLOUDFLARE_KEY": "@cloudflare-codeandconspire-key",
-      "POLYFILL_FEATURES": "es2015,es2016,es2017"
-    }
-  },
   "author": "code and conspire",
   "license": "CC-BY-SA-4.0",
   "bugs": {
@@ -47,21 +33,21 @@
   },
   "homepage": "https://github.com/codeandconspire/digjourney.se#readme",
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "choo-devtools": "^3.0.0",
+    "babel-eslint": "^10.1.0",
+    "choo-devtools": "^3.0.4",
     "standard": "^10.0.3"
   },
   "dependencies": {
     "cccpurge": "^2.0.0",
-    "choo": "^7.0.0",
-    "choo-lazy-view": "^1.0.2",
+    "choo": "^7.1.0",
+    "choo-lazy-view": "^1.0.3",
     "choo-meta": "^2.0.0",
     "choo-service-worker": "^3.0.0",
-    "cloudinary": "^1.13.2",
+    "cloudinary": "^1.21.0",
     "date-fns": "^1.30.1",
     "dotenv": "^6.2.0",
     "focus-visible": "^4.1.5",
-    "jalla": "^1.0.0-14",
+    "jalla": "^1.0.0-31",
     "koa-body": "^4.0.8",
     "koa-compose": "^4.1.0",
     "koa-route": "^3.2.0",
@@ -72,7 +58,7 @@
     "postcss-focus-visible": "^4.0.0",
     "postcss-url": "^8.0.0",
     "prismic-element": "^1.0.0",
-    "prismic-javascript": "^2.0.1",
+    "prismic-javascript": "^2.7.0",
     "prismic-richtext": "^0.4.2",
     "smoothscroll-polyfill": "^0.4.3"
   }

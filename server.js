@@ -1,4 +1,4 @@
-if (!process.env.NOW) require('dotenv/config')
+if (!process.env.HEROKU) require('dotenv/config')
 
 var jalla = require('jalla')
 var dedent = require('dedent')
@@ -16,8 +16,8 @@ var MAILCHIMP = 'https://digjourney.us3.list-manage.com/subscribe?u=da19434c486f
 
 var app = jalla('index.js', {
   sw: 'sw.js',
-  watch: !process.env.NOW,
-  serve: Boolean(process.env.NOW)
+  watch: !process.env.HEROKU,
+  serve: Boolean(process.env.HEROKU)
 })
 
 /**

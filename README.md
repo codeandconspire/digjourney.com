@@ -13,11 +13,6 @@ variables are used to configure these services. To set them up, copy
 Most of the external dependencies should be easy enough to switch out would the
 need arise.
 
-### Now ([link](http://now.sh))
-Hosting on now is effiencent, cheap and fast. Very little code is actually
-dependant on now. Only in a couple of places is the now environment detected
-when configuring the application.
-
 ### Prismic ([link](https://prismic.io))
 The content is managed on Prismic and fetched while rendering pages.
 
