@@ -81,6 +81,12 @@
   padding-left: 1.5em;
 }
 
+@media (min-width: 600px) and (max-width: 1200px) {
+  .Course-features {
+    font-size: 0.9rem;
+  }
+}
+
 .Course-feature {
   margin-bottom: 0.5em;
   position: relative;

@@ -64,6 +64,9 @@ function posts (state, emit) {
     }
     var predicates = [Predicates.at('document.type', 'post')]
     doc.data.featured.forEach(function ({ link }) {
+      if (!link || !link.id) {
+        return
+      }
       predicates.push(Predicates.not('document.id', link.id))
     })
 
@@ -162,7 +165,7 @@ function posts (state, emit) {
             }))}
           </div>
           ${hasMore ? html`
-            <div class="u-textCenter">
+            <div class="u-textCenter u-space2">
               ${button({ text: text`Show more`, href: `${resolve(doc)}?page=${page + 1}`, onclick: onclick })}
             </div>
           ` : null}

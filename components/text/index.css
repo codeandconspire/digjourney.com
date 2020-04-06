@@ -131,7 +131,8 @@
 .Text-caption {
   margin: -1.2em 0 1.6em;
   font-size: 1rem;
-  text-align: right;
+  text-align: center;
+  color: rgb(var(--color-muted));
 }
 
 .Text-caption:empty {

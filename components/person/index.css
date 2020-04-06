@@ -23,6 +23,12 @@
   margin-right: 1rem;
 }
 
+@media (min-width: 600px) and (max-width: 1200px) {
+  .Person--small .Person-figure {
+    max-width: 2rem;
+  }
+}
+
 .Person-figure::before {
   content: "";
   display: block;

@@ -11,7 +11,7 @@ function person (props = {}) {
   else if (image) image = figure(image)
 
   return html`
-    <article class="${className('Person', { 'Person--small': props.small })}">
+    <article class="${className('Person', { 'Person--small': props.small, 'Person--course': props.course })}">
       ${image}
       <div class="Person-info">
         <h3 class="Person-title">${props.title}</h3>

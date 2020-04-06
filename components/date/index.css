@@ -13,7 +13,7 @@
   color: rgb(var(--color-muted));
 }
 
-@media (min-width: 800px) {
+@media (min-width: 1000px) {
   .Date {
     flex-wrap: nowrap;
   }
@@ -23,6 +23,7 @@
   flex: 9 0 auto;
   padding-right: 1.5rem;
   margin-right: auto;
+  max-width: calc(100% + 1.5rem);
 }
 
 .Date-title {
@@ -35,6 +36,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  margin-top: 0.5rem;
 }
 
 .Date-meta {

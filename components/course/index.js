@@ -58,7 +58,7 @@ function course (props) {
             <h4 class="Course-heading">${text`Kursledare`}</h4>
             ${props.teachers.map((props, index) => html`
               <div class="${index > 0 ? 'u-spaceT2' : ''}">
-                ${person(Object.assign({ small: true }, props))}
+                ${person(Object.assign({ small: true, course: true }, props))}
               </div>
             `)}
           </div>

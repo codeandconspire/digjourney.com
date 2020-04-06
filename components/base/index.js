@@ -40,8 +40,8 @@ function resolve (doc) {
     case 'homepage': return '/'
     case 'post_listing': return '/insikter'
     case 'post': return `/insikter/${doc.uid}`
-    case 'product_listing': return '/radgivning'
-    case 'product': return `/radgivning/${doc.uid}`
+    case 'product_listing': return '/forelasning'
+    case 'product': return `/forelasning/${doc.uid}`
     case 'course_listing': return '/utbildning'
     case 'course': return `/utbildning/${doc.uid}`
     case 'page': return `${root}/${doc.uid}`
