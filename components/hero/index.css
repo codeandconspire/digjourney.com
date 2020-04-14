@@ -155,17 +155,96 @@
   width: 8%;
 }
 
-@media (min-width: 600px) {
-  .Hero-blob--2 {
-    /* display: block; */
-  }
-}
-
 @media (min-width: 1200px) {
   .Hero-blob--1 {
     width: 30%;
   }
 }
+
+@keyframes move-in {
+  0% {
+    opacity: 0;
+    transform: translateY(30%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.Hero-moving {
+  position: absolute;
+  height: auto;
+  overflow: visible;
+  color: rgb(var(--color-pink));
+  opacity: 0;
+  animation: move-in 600ms var(--ease-out) forwards;
+}
+
+.Hero-moving--small {
+  width: 20vw;
+  left: 4%;
+  top: 55%;
+  animation-delay: 300ms;
+}
+
+.Hero-moving--medium {
+  width: 34vw;
+  right: 10%;
+  top: 8%;
+  animation-delay: 500ms;
+}
+
+.Hero-moving--large {
+  width: auto;
+  height: 60%;
+  right: -7rem;
+  top: 16%;
+  animation-duration: 1000ms;
+}
+
+@media (min-width: 600px) {
+  .Hero-moving--small {
+    width: 8vw;
+    left: 13%;
+    bottom: 4%;
+  }
+
+  .Hero-moving--medium {
+    width: 18vw;
+    right: 27%;
+    top: 11%;
+  }
+
+  .Hero-moving--large {
+    height: 69%;
+    right: -5rem;
+    top: 20%;
+  }
+}
+
+@media (min-width: 1000px) {
+  .Hero-moving--small {
+    width: 4.5vw;
+    left: 12%;
+    bottom: 6%;
+  }
+
+  .Hero-moving--medium {
+    width: 8vw;
+    right: 30%;
+    top: 15%;
+  }
+
+  .Hero-moving--large {
+    width: auto;
+    height: 75%;
+    right: 0;
+    top: 17%;
+  }
+}
+
 
 /**
  * Themes
@@ -179,22 +258,27 @@
   content: none;
 }
 
-.Hero--gray .Hero-blob {
+.Hero--gray .Hero-blob,
+.Hero--gray .Hero-moving {
   display: none;
 }
 
-.Hero--yellow .Hero-blob {
+.Hero--yellow .Hero-blob,
+.Hero--yellow .Hero-moving {
   color: rgb(var(--color-yellow));
 }
 
-.Hero--orange .Hero-blob {
+.Hero--orange .Hero-blob,
+.Hero--orange .Hero-moving {
   color: rgb(var(--color-orange));
 }
 
-.Hero--turquoise .Hero-blob {
+.Hero--turquoise .Hero-blob,
+.Hero--turquoise .Hero-moving {
   color: rgb(var(--color-turquoise));
 }
 
-.Hero--pink .Hero-blob {
+.Hero--pink .Hero-blob,
+.Hero--pink .Hero-moving {
   color: rgb(var(--color-pink));
 }

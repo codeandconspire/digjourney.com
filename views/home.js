@@ -18,7 +18,7 @@ function home (state, emit) {
     if (!doc) {
       return html`
         <main class="View-main">
-          ${Hero.loading({ theme: 'pink' })}
+          ${Hero.loading({ theme: 'pink', moving: true })}
           <div class="u-container u-space1">
             ${callout.loading()}
           </div>
@@ -35,6 +35,7 @@ function home (state, emit) {
       <main class="View-main">
         ${state.cache(Hero, `hero-${doc.id}`).render({
           theme: 'pink',
+          moving: true,
           body: asElement(doc.data.intro, resolve)
         })}
         ${doc.data.body.map(function (slice, index, list) {
