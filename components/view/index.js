@@ -17,7 +17,7 @@ module.exports = createView
 function createView (view, getMeta) {
   return function (state, emit) {
     return state.prismic.getSingle('website', function (err, doc) {
-      var children, meta
+      var children, meta, contact
 
       try {
         if (err) throw err
@@ -53,6 +53,7 @@ function createView (view, getMeta) {
       var menu = memo(function () {
         if (!doc) return { menu: [] }
         var homepage = doc.data.homepage_link
+
         return {
           isOpen: state.ui.openNavigation,
           homepage: homepage.id && !homepage.isBroken ? {
@@ -68,12 +69,22 @@ function createView (view, getMeta) {
         return doc.data.footer_menu.map(branch).filter(Boolean)
       }, [doc && doc.id, 'footer'])
 
+      if (meta && meta.contact.blurb && asText(meta.contact.blurb) && asText(meta.contact.blurb).length > 1) {
+        contact = asElement(meta.contact.blurb, resolve)
+      } else {
+        if (doc) {
+          contact = asElement(doc.data.contact_blurb, resolve)
+        } else {
+          contact = null
+        }
+      }
+
       return html`
         <body class="View ${state.ui.openNavigation ? 'is-overlayed' : ''}" id="view">
           <script type="application/ld+json">${raw(JSON.stringify(linkedData(state)))}</script>
           ${state.cache(Header, 'header').render(state.href, menu, state.ui.theme)}
           ${children}
-          ${state.cache(Footer, 'footer').render(footer, doc ? asElement(doc.data.newsletter) : null, doc ? asElement(doc.data.contact_blurb) : null)}
+          ${state.cache(Footer, 'footer').render(footer, doc ? asElement(doc.data.newsletter) : null, doc ? contact : null)}
           ${Player.render()}
           ${state.cache(PrismicToolbar, 'prismic-toolbar').placeholder(state.href)}
         </body>

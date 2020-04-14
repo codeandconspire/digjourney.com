@@ -132,7 +132,10 @@ function meta (state) {
     if (!doc) return null
     var props = {
       title: asText(doc.data.title),
-      description: asText(doc.data.description)
+      description: asText(doc.data.description),
+      contact: {
+        blurb: doc.data.contact_blurb ? doc.data.contact_blurb : null
+      }
     }
 
     var image = doc.data.featured_image
