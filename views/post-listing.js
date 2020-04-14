@@ -60,7 +60,7 @@ function posts (state, emit) {
     if (isNaN(page)) page = 1
     var defaults = {
       pageSize: PAGE_SIZE,
-      orderings: '[document.first_publication_date, my.post.alternative_publication_date desc]'
+      orderings: '[my.post.alternative_publication_date desc, document.first_publication_date desc]'
     }
     var predicates = [Predicates.at('document.type', 'post')]
     doc.data.featured.forEach(function ({ link }) {
@@ -82,6 +82,17 @@ function posts (state, emit) {
       }))
     }
 
+    if (typeof posts.sort === 'function') {
+      posts = posts.map(function (item) {
+        if (item) {
+          item.date = item.data.alternative_publication_date ? item.data.alternative_publication_date : item.first_publication_date
+        }
+        return item
+      }).sort(function (a, b) {
+        return new Date(b.date) - new Date(a.date)
+      })
+    }
+
     return html`
       <main class="View-main">
         ${state.cache(Hero, `hero-${doc.id}`).render({
@@ -95,10 +106,7 @@ function posts (state, emit) {
         <div class="u-container u-space2 u-borderB">
           ${featured.map(function (doc, index) {
             if (!doc) return callout.loading({ label: true, image: true })
-
-            var date = doc.data.alternative_publication_date
-            if (!date) date = doc.first_publication_date
-            date = parse(date)
+            date = parse(doc.date)
 
             return html`
               <div class="u-space1">
@@ -177,8 +185,8 @@ function posts (state, emit) {
   // prevent scroll to top on pagination
   // obj -> void
   function onclick (event) {
-    emit('pushState', event.target.href, { persistScroll: true })
     event.preventDefault()
+    emit('pushState', event.currentTarget.href, { persistScroll: true })
   }
 
   // create onclick handler which emits pushState w/ partial info

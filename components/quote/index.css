@@ -10,7 +10,7 @@
 .Quote-content {
   margin: 0 auto;
   max-width: 46rem;
-  color: rgb(var(--color-yellow));
+  color: rgb(var(--color-orange));
 }
 
 .Quote-body {
