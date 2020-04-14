@@ -100,7 +100,7 @@ function course (state, emit) {
                               }, item.image.dimensions)
                             }, [item.image.url, 'small']),
                             title: asText(item.name),
-                            body: asElement(item.description)
+                            body: asElement(item.description, resolve)
                           }))
                         )}
                       </div>

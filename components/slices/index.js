@@ -88,7 +88,7 @@ function slices (slice, index, list, onclick) {
       let link = slice.primary.link
       let title = asText(slice.primary.heading)
       if (!title && link.id) title = asText(link.data.title)
-      let body = asElement(slice.primary.text)
+      let body = asElement(slice.primary.text, resolve, serialize)
       if (!text.length && link.id) body = asText(link.data.description)
 
       let image = slice.primary.image
@@ -140,7 +140,7 @@ function slices (slice, index, list, onclick) {
             rating: slice.primary.rating,
             author: slice.primary.author,
             title: asText(slice.primary.title),
-            body: asElement(slice.primary.description, resolve),
+            body: asElement(slice.primary.description, resolve, serialize),
             image: memo(function (url) {
               if (!url) return null
               return Object.assign({
@@ -298,7 +298,7 @@ function slices (slice, index, list, onclick) {
         <section class="u-md-container u-space1">
           ${facts({
             heading: heading.length ? asText(heading) : null,
-            body: asElement(slice.primary.body)
+            body: asElement(slice.primary.body, resolve, serialize)
           })}
         </section>
       `
@@ -315,8 +315,8 @@ function slices (slice, index, list, onclick) {
               <div class="Text Text-small">
                 ${symbol && symbol in symbols ? symbols[symbol]() : null}
                 <div class="${symbol in symbols ? 'u-spaceL3 u-spaceT3' : ''}">
-                  ${asElement(item.heading)}
-                  ${asElement(item.text, resolve)}
+                  ${asElement(item.heading, resolve, serialize)}
+                  ${asElement(item.text, resolve, serialize)}
                 </div>
               </div>
             `
@@ -352,7 +352,7 @@ function slices (slice, index, list, onclick) {
       return html`
         <div class="u-space2">
           ${quote({
-            body: asElement(slice.primary.body),
+            body: asElement(slice.primary.body, resolve, serialize),
             label: slice.primary.label,
             name: slice.primary.name
           })}

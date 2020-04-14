@@ -23,7 +23,7 @@ function courses (state, emit) {
             theme: 'turquoise',
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
-              ${state.partial.data.description ? asElement(state.partial.data.description, resolve) : null}
+              ${state.partial.data.description ? asElement(state.partial.data.description, resolve, serialize) : null}
             `
           }) : Hero.loading({ theme: 'turquoise' })}
           <div class="u-container">
@@ -69,7 +69,7 @@ function courses (state, emit) {
           theme: 'turquoise',
           body: html`
             <h1>${title}</h1>
-            ${asElement(doc.data.description, resolve)}
+            ${asElement(doc.data.description, resolve, serialize)}
           `
         })}
         <div class="u-container">
@@ -90,7 +90,7 @@ function courses (state, emit) {
     return {
       title: title,
       tags: doc.tags,
-      description: asElement(doc.data.description, resolve),
+      description: asElement(doc.data.description, resolve, serialize),
       features: doc.data.features.map(({ text }) => text).filter(Boolean),
       link: {
         href: resolve(doc),
@@ -116,7 +116,7 @@ function courses (state, emit) {
             }, item.image.dimensions)
           }, [item.image.url, 'small']),
           title: name,
-          body: asElement(item.description)
+          body: asElement(item.description, resolve, serialize)
         }
       }).filter(Boolean),
       dates: doc.data.schedule.map(function (item) {
