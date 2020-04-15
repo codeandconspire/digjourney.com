@@ -313,7 +313,7 @@ function slices (slice, index, list, onclick) {
             var symbol = item.symbol && item.symbol.toLowerCase()
             return html`
               <div class="Text Text-small">
-                ${symbol && symbol in symbols ? symbols[symbol]() : (symbol.length === 1) ? html`<span class="Text-number">${symbol}</span>` : null}
+                ${symbol && symbol in symbols ? symbols[symbol]() : (symbol && symbol.length === 1) ? html`<span class="Text-number">${symbol}</span>` : null}
                 <div>
                   ${asElement(item.heading, resolve, serialize)}
                   ${asElement(item.text, resolve, serialize)}
