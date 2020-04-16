@@ -119,8 +119,7 @@ function slices (slice, index, list, onclick) {
             src: src(url, 720),
             sizes: '(min-width: 1000px) 35vw, (min-width: 600px) 200px, 100vw',
             srcset: srcset(url, sizes, {
-              aspect: 10 / 12,
-              transforms: 'c_thumb,g_face'
+              aspect: 10 / 12
             }),
             alt: image.alt || '',
             width: image.dimensions.width,
@@ -261,8 +260,7 @@ function slices (slice, index, list, onclick) {
               image = memo(function (url, sizes) {
                 if (!url) return null
                 var sources = srcset(url, sizes, {
-                  aspect: 9 / 16,
-                  transforms: 'c_thumb,g_face'
+                  aspect: 9 / 16
                 })
                 return {
                   srcset: sources,
@@ -342,7 +340,7 @@ function slices (slice, index, list, onclick) {
       return html`
         <div class="u-container u-space2">
           <div class="Text u-sizeFull u-textCenter">
-            ${heading ? html`<h2 class="u-spaceB4">${asText(slice.primary.heading)}</h2>` : null}
+            ${heading ? html`<h3 style="max-width: 20em; margin: 0 auto;" class="u-spaceB4">${asText(slice.primary.heading)}</h3>` : null}
           </div>
           ${partners(items)}
         </div>

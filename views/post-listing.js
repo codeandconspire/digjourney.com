@@ -131,8 +131,7 @@ function posts (state, emit) {
                       src: src(url, 720),
                       sizes: '(min-width: 1000px) 35vw, (min-width: 600px) 200px, 100vw',
                       srcset: srcset(url, sizes, {
-                        aspect: 3 / 4,
-                        transforms: 'c_thumb,g_face'
+                        aspect: 3 / 4
                       }),
                       alt: doc.data.featured_image.alt || '',
                       width: doc.data.featured_image.dimensions.width,

@@ -34,11 +34,12 @@ function page (state, emit) {
     }
 
     emit('theme', doc.data.theme.toLowerCase() || 'gray')
-
+    
     return html`
       <main class="View-main">
         ${state.cache(Hero, `hero-${doc.id}`).render({
           theme: doc.data.theme.toLowerCase(),
+          pull: doc.data.body && doc.data.body.length && (doc.data.body[0].slice_type === 'image' || doc.data.body[0].slice_type === 'video'),
           body: html`
             <h1>${asText(doc.data.title)}</h1>
             ${asElement(doc.data.description, resolve)}

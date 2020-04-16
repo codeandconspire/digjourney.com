@@ -26,6 +26,20 @@
   transform: translateX(calc(-50% - var(--document-margin)));
 }
 
+.Hero--pull {
+  margin-bottom: -2.6rem;  
+}
+
+.Hero--pull::after {
+  border-bottom: 0;
+}
+
+@media (min-width: 800px) and (min-height: 400px) {
+  .Hero--pull {
+    margin-bottom: -4rem !important;
+  }
+}
+
  @supports (padding-left: constant(safe-area-inset-left)) {
   .u-container {
     margin-left: calc(var(--document-margin) + constant(safe-area-inset-left)) !important;

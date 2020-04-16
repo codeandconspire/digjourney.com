@@ -33,7 +33,7 @@ module.exports = class Hero extends Component {
 
   static loading (opts = {}) {
     return html`
-      <div class="${className('Hero is-loading', { 'Hero--small': opts.small, [`Hero--${opts.theme}`]: opts.theme })}">
+      <div class="${className('Hero is-loading', { 'Hero--small': opts.small, 'Hero--pull': opts.pull, [`Hero--${opts.theme}`]: opts.theme })}">
         <div class="Hero-body u-container">
           ${opts.label ? html`<span class="Hero-label">${loader(12)}</span>` : null}
           <h1 class="Hero-title">${loader(10)}</h1>
@@ -63,7 +63,7 @@ module.exports = class Hero extends Component {
     this.local.label = props.label
     this.local.theme = props.theme
     return html`
-      <div class="${className('Hero', { 'Hero--small': props.small, [`Hero--${props.theme}`]: props.theme })}" id="${this.local.id}">
+      <div class="${className('Hero', { 'Hero--small': props.small, 'Hero--pull': props.pull, [`Hero--${props.theme}`]: props.theme })}" id="${this.local.id}">
         ${typeof props.blobs === 'undefined' && !props.moving || (props.blobs && !props.moving) ? html`
         <svg class="Hero-blob Hero-blob--1" viewBox="0 0 383 718">
           <path fill="currentColor" fill-rule="evenodd" d="M383 718a337.8 337.8 0 0 1-53.7-165.4C319 363.3 82.3 299.3 25.1 170.2A274.4 274.4 0 0 1 5.8 0H383v718z"/>
