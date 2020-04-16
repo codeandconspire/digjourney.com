@@ -13,19 +13,19 @@ var text = i18n()
 module.exports = view(courses, meta)
 
 function courses (state, emit) {
-  emit('theme', 'turquoise')
+  emit('theme', 'yellow')
   return state.prismic.getSingle('course_listing', function (err, doc) {
     if (err) throw HTTPError(404, err)
     if (!doc) {
       return html`
         <main class="View-main">
           ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
-            theme: 'turquoise',
+            theme: 'yellow',
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
               ${state.partial.data.description ? asElement(state.partial.data.description, resolve, serialize) : null}
             `
-          }) : Hero.loading({ theme: 'turquoise' })}
+          }) : Hero.loading({ theme: 'yellow' })}
           <div class="u-container">
             <div class="Text u-space2">
               <p>${loader(65)}</p>
@@ -66,7 +66,7 @@ function courses (state, emit) {
     return html`
       <main class="View-main">
         ${state.cache(Hero, `hero-${doc.id}`).render({
-          theme: 'turquoise',
+          theme: 'yellow',
           body: html`
             <h1>${title}</h1>
             ${asElement(doc.data.description, resolve, serialize)}
@@ -125,7 +125,7 @@ function courses (state, emit) {
           title: item.title,
           label: item.label,
           link: (item.link.id || item.link.url) && !item.link.isBroken ? {
-            theme: 'turquoise',
+            theme: 'yellow',
             href: resolve(item.link),
             text: text`Go to application`,
             external: item.link.target === '_blank',

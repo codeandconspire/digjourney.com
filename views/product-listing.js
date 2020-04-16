@@ -11,19 +11,19 @@ var text = i18n()
 module.exports = view(products, meta)
 
 function products (state, emit) {
-  emit('theme', 'pink')
+  emit('theme', 'yellow')
   return state.prismic.getSingle('product_listing', function (err, doc) {
     if (err) throw HTTPError(404, err)
     if (!doc) {
       return html`
         <main class="View-main">
           ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
-            theme: 'pink',
+            theme: 'yellow',
             body: html`
               <h1>${asText(state.partial.data.title)}</h1>
               ${state.partial.data.description ? asElement(state.partial.data.description, resolve) : null}
             `
-          }) : Hero.loading({ theme: 'pink' })}
+          }) : Hero.loading({ theme: 'yellow' })}
           <div class="u-container">
             <div class="Text u-space2">
               <p>${loader(65)}</p>
@@ -39,7 +39,7 @@ function products (state, emit) {
     return html`
       <main class="View-main">
         ${state.cache(Hero, `hero-${doc.id}`).render({
-          theme: 'pink',
+          theme: 'yellow',
           body: html`
             <h1>${title}</h1>
             ${asElement(doc.data.description, resolve)}
