@@ -106,7 +106,10 @@ function posts (state, emit) {
         <div class="u-container u-space2 u-borderB">
           ${featured.map(function (doc, index) {
             if (!doc) return callout.loading({ label: true, image: true })
-            date = parse(doc.date)
+
+            var date = doc.data.alternative_publication_date
+            if (!date) date = doc.first_publication_date
+            date = date ? parse(date) : null
 
             return html`
               <div class="u-space1">
@@ -148,7 +151,7 @@ function posts (state, emit) {
 
               var date = doc.data.alternative_publication_date
               if (!date) date = doc.first_publication_date
-              date = parse(date)
+              date = date ? parse(date) : null
 
               var opts = {}
               if (list.length > PAGE_SIZE) {
