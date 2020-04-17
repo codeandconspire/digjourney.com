@@ -5,7 +5,7 @@ var splitRequire = require('split-require')
 var middleware = require('./lib/prismic-middleware')
 
 var app = choo()
-var page = lazy(() => import('./views/page'), prefetch('page'))
+var page = lazy(() => splitRequire('./views/page'), prefetch('page'))
 
 var REPOSITORY = 'https://digjourney.cdn.prismic.io/api/v2'
 
