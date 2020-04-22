@@ -5,7 +5,7 @@ var splitRequire = require('split-require')
 var middleware = require('./lib/prismic-middleware')
 
 var app = choo()
-var page = lazy(() => import('./views/page'), prefetch('page'))
+var page = lazy(() => splitRequire('./views/page'), prefetch('page'))
 
 var REPOSITORY = 'https://digjourney.cdn.prismic.io/api/v2'
 
@@ -26,13 +26,13 @@ app.use(require('./stores/prismic')({ repository: REPOSITORY, middleware }))
 app.use(require('choo-meta')({ origin: app.state.origin }))
 app.use(require('choo-service-worker')('/sw.js'))
 
-app.route('/', lazy(() => promisify((cb) => splitRequire('./views/home', cb)), prefetch('homepage', true)))
-app.route('/insikter', lazy(() => promisify((cb) => splitRequire('./views/post-listing', cb)), prefetch('posting_listing', true)))
-app.route('/insikter/:slug', lazy(() => promisify((cb) => splitRequire('./views/post', cb)), prefetch('post')))
-app.route('/forelasning', lazy(() => promisify((cb) => splitRequire('./views/product-listing', cb)), prefetch('product_listing', true)))
-app.route('/forelasning/:slug', lazy(() => promisify((cb) => splitRequire('./views/product', cb)), prefetch('product')))
-app.route('/utbildning', lazy(() => promisify((cb) => splitRequire('./views/course-listing', cb)), prefetch('course_listing', true)))
-app.route('/utbildning/:slug', lazy(() => promisify((cb) => splitRequire('./views/course', cb)), prefetch('course')))
+app.route('/', lazy(() => splitRequire('./views/home'), prefetch('homepage', true)))
+app.route('/insikter', lazy(() => splitRequire('./views/post-listing'), prefetch('posting_listing', true)))
+app.route('/insikter/:slug', lazy(() => splitRequire('./views/post'), prefetch('post')))
+app.route('/forelasning', lazy(() => splitRequire('./views/product-listing'), prefetch('product_listing', true)))
+app.route('/forelasning/:slug', lazy(() => splitRequire('./views/product'), prefetch('product')))
+app.route('/utbildning', lazy(() => splitRequire('./views/course-listing'), prefetch('course_listing', true)))
+app.route('/utbildning/:slug', lazy(() => splitRequire('./views/course'), prefetch('course')))
 app.route('/*', catchall)
 
 try {
@@ -44,17 +44,6 @@ try {
     document.documentElement.removeAttribute('scripting-enabled')
     document.documentElement.setAttribute('scripting-initial-only', '')
   }
-}
-
-// wrap callback function with promise
-// fn -> Promise
-function promisify (fn) {
-  return new Promise(function (resolve, reject) {
-    fn(function (err, res) {
-      if (err) return reject(err)
-      return resolve(res)
-    })
-  })
 }
 
 // custom view matching
