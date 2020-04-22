@@ -103,6 +103,8 @@ function slices (slice, index, list, onclick) {
         else action = text`Read more`
       }
 
+      console.log(link)
+
       let props = {
         title: title,
         body: body,
@@ -111,7 +113,9 @@ function slices (slice, index, list, onclick) {
         link: (link.url || link.id) && !link.isBroken ? {
           href: resolve(link),
           onclick: link.id ? onclick(link) : null,
-          text: action
+          text: action,
+          target: link.target,
+          rel: link.target === '_blank' ? 'noopenere nofererrer' : ''
         } : null,
         image: memo(function (url, sizes) {
           if (!url) return null
@@ -151,7 +155,9 @@ function slices (slice, index, list, onclick) {
             }, [slice.primary.image.url]),
             link: slice.primary.link.id && !slice.primary.link.isBroken ? {
               href: resolve(slice.primary.link),
-              text: slice.primary.link_text || text`Read more`
+              text: slice.primary.link_text || text`Read more`,
+              target: slice.primary.link.target,
+              rel: slice.primary.link.target === '_blank' ? 'noopenere nofererrer' : ''
             } : null,
             action: memo(function (link, str) {
               if (!str) return null
