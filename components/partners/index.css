@@ -21,7 +21,7 @@
   display: inline-block;
   width: auto;
   height: auto;
-  max-height: 2rem;
+  max-height: 2.7rem;
   max-width: 7.5rem;
   user-select: none;
 }
@@ -32,12 +32,12 @@
   }
 
   .Partners-item {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1.5rem;
   }
 
   .Partners-logo {
-    max-height: 3rem;
-    max-width: 10rem;
+    max-height: 4.5rem;
+    max-width: 12rem;
   }
 }
 
