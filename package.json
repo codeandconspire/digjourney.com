@@ -58,7 +58,7 @@
     "postcss-focus-visible": "^4.0.0",
     "postcss-url": "^8.0.0",
     "prismic-element": "^2.0.4",
-    "prismic-javascript": "^2.7.0",
+    "prismic-javascript": "^2.7.1",
     "prismic-richtext": "^1.0.3",
     "smoothscroll-polyfill": "^0.4.3"
   }

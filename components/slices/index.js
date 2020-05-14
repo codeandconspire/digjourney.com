@@ -103,8 +103,6 @@ function slices (slice, index, list, onclick) {
         else action = text`Read more`
       }
 
-      console.log(link)
-
       let props = {
         title: title,
         body: body,
