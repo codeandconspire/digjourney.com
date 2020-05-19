@@ -19,9 +19,8 @@ module.exports = class Footer extends Component {
     }
   }
 
-  update (menu) {
-    if (menu && !this.local.menu) return true
-    return this.state.ui.openNavigation !== this.local.alternative
+  update () {
+    return true
   }
 
   createElement (menu, newsletter, contact) {
