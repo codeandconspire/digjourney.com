@@ -35,7 +35,6 @@ function home (state, emit) {
       <main class="View-main">
         ${state.cache(Hero, `hero-${doc.id}`).render({
           theme: 'pink',
-          moving: true,
           body: asElement(doc.data.intro, resolve)
         })}
         ${doc.data.body.map(function (slice, index, list) {
