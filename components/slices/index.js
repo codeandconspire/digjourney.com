@@ -120,9 +120,7 @@ function slices (slice, index, list, onclick) {
           return {
             src: src(url, 720),
             sizes: '(min-width: 1000px) 35vw, (min-width: 600px) 200px, 100vw',
-            srcset: srcset(url, sizes, {
-              aspect: 10 / 12
-            }),
+            srcset: srcset(url, sizes),
             alt: image.alt || '',
             width: image.dimensions.width,
             height: image.dimensions.width * 10 / 12
