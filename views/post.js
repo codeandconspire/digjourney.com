@@ -11,7 +11,6 @@ var Hero = require('../components/hero')
 var slices = require('../components/slices')
 var { i18n, asText, loader, resolve, src, HTTPError, metaKey } = require('../components/base')
 
-var RELATED_SIZE = 2
 
 var text = i18n()
 
@@ -41,38 +40,11 @@ function post (state, emit) {
       `
     }
 
-    var opts = {
-      pageSize: 2,
-      orderings: '[document.first_publication_date, my.post.alternative_publication_date desc]'
-    }
-    var predicates = [
-      Predicates.at('document.type', 'post'),
-      Predicates.any('document.tags', doc.tags),
-      Predicates.not('document.id', doc.id)
-    ]
-    var related = state.prismic.get(predicates, opts, function (err, response) {
-      if (err) return []
-      if (!response) return new Array(RELATED_SIZE).fill()
+    var related = null
 
-      var result = response.results.filter(Boolean)
-      if (result.length < RELATED_SIZE) {
-        opts.pageSize = RELATED_SIZE - result.length
-        let predicates = [
-          Predicates.at('document.type', 'post'),
-          Predicates.not('document.id', doc.id)
-        ]
-        result.forEach(function (doc) {
-          if (!doc) return
-          predicates.push(Predicates.not('document.id', doc.id))
-        })
-        result.push(...state.prismic.get(predicates, opts, function (err, response) {
-          if (err) return []
-          if (!response) return new Array(RELATED_SIZE - result.length).fill()
-          return response.results
-        }))
-      }
-      return result
-    })
+    if (doc.data.related_posts && doc.data.related_posts.length) {
+      related = doc.data.related_posts
+    }
 
     var date = doc.data.alternative_publication_date
     if (!date) date = doc.first_publication_date
@@ -94,33 +66,37 @@ function post (state, emit) {
           </div>
         </div>
         ${doc.data.body.map((slice, index, list) => slices(slice, index, list, link))}
-        <div class="u-borderB u-space2">
+        <div class="${related && related.length ? 'u-borderB' : ''} u-space2">
           <div class="u-container u-space2">
-            ${related.length ? html`
+            ${related && related.length ? html`
               <div class="Text u-space1">
                 <h2>${text`Related posts`}</h2>
               </div>
-            ` : null}
-            ${grid({ divided: true, size: { md: '1of2' } }, related.map(function (doc, index, list) {
-              if (!doc) return card.loading({ date: true })
+              ${grid({ divided: true, size: { md: '1of2' } }, related.map(function (item) {
+                if (!item) return card.loading({ date: true })
+                if (item.post && item.post.isBroken) return card.loading({ date: true })
+                if (item.post && !item.post.title) return card.loading({ date: true })
 
-              var date = doc.data.alternative_publication_date
-              if (!date) date = doc.first_publication_date
-              date = parse(date)
-
-              return card({
-                title: asText(doc.data.title),
-                body: asText(doc.data.description),
-                date: {
-                  datetime: date,
-                  text: format(date, 'D MMMM YYYY', { locale: sv })
-                },
-                link: {
-                  href: resolve(doc),
-                  text: text`Read more`
+                var date = item.post.data && item.post.data.alternative_publication_date
+                if (!date) date = item.post.data && item.post.data.first_publication_date
+                if (date) {
+                  var dateData = {
+                    datetime: parse(date),
+                    text: format(parse(date), 'D MMMM YYYY', { locale: sv })
+                  }
                 }
-              })
-            }))}
+
+                return card({
+                  title: asText(item.post.data.title),
+                  body: asText(item.post.data.description),
+                  date: dateData,
+                  link: {
+                    href: resolve(item.post),
+                    text: text`Read more`
+                  }
+                })
+              }))}
+            ` : null}
           </div>
         </div>
       </main>
