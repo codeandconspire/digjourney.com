@@ -253,7 +253,7 @@ function slices (slice, index, list, onclick) {
               var body = item.text.length ? asElement(item.text, resolve, serialize) : null
 
               if (!body && item.link.id) {
-                body = asElement(item.link.data.description, resolve, serialize)
+                body = item.link.data.description ? asElement(item.link.data.description, resolve, serialize) : null
               }
 
               var image = item.image
