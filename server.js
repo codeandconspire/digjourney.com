@@ -34,6 +34,7 @@ var routeMap = {
   '/vad-vi-gor': '/',
   '/en': '/',
   'tag/konsultutbildning/': '/utbildning',
+  'tag/organisationsstruktur/': '/',
   '/about-methodology': '/metodik-arbetssatt',
   '/jul': '/boken-att-leda-digital-transformation',
   '/tag': '/insikter',
