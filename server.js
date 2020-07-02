@@ -53,7 +53,7 @@ var routeMap = {
   '/the-digital-maturity-matrix-digital-transformation-with-maximum-roi': '/kontakt',
   '/undersokningar': '/',
   '/verktyg-for-digital-transformation': '/digitalt-mognadstest',
-
+  '/fran-gammelgadda-till-mort-branschanalys-av-media-i-sagoform/': '/insikter/fran-gammelgadda-till-mort--branschanalys-av-media',
   '/skaraborgsdagen-30-januari-fokuserar-pa-kompetensforsorjning-och-digitalisering': '/insikter/skaraborgsdagen-30-januari-fokuserar-pa-kompetensforsorjning',
   '/certifieringskurs-i-ramverket-for-att-leda-digital-transformation-genomfors-i-umea': '/insikter/certifieringskurs-i-ramverket-for-att-leda-digital',
   '/yeah-our-tranformationday-at-internetdagarna-a-success': '/insikter/our-tranformationdaydigitalization--sustainability',
