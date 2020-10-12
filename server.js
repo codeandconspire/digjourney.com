@@ -151,6 +151,12 @@ app.use(compose([
         ctx.type = 'application/json'
       }
     } catch (err) {
+      console.log('-- err --')
+      console.log(err)
+      console.log('-- ctx.request.body --')
+      console.log(ctx.request.body)
+      console.log('-- MAILCHIMP --')
+      console.log(MAILCHIMP)
       if (ctx.accepts('html')) ctx.redirect('back')
       else ctx.throw(err.status || 400, 'Could not subscribe')
     }
