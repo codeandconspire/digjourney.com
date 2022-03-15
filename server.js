@@ -214,11 +214,11 @@ app.use(function (ctx, next) {
 /**
  * Purge Cloudflare cache when starting production server
  */
-// if (process.env.HEROKU && app.env === 'production') {
-//   purge(app.entry, ['/sw.js'], function (err) {
-//     if (err) app.emit('error', err)
-//     else app.listen(process.env.PORT || 8080)
-//   })
-// } else {
+if (process.env.HEROKU && app.env === 'production') {
+  purge(app.entry, ['/sw.js'], function (err) {
+    if (err) app.emit('error', err)
+    app.listen(process.env.PORT || 8080)
+  })
+} else {
   app.listen(process.env.PORT || 8080)
-// }
+}
