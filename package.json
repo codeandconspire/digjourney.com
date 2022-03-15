@@ -9,9 +9,6 @@
     "purge": "node -r dotenv/config -e \"require('./lib/purge')('../index.js', ['/sw.js'], console.log)\"",
     "test": "standard"
   },
-  "engines": {
-    "node": "14.x"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/codeandconspire/digjourney.com.git"
