@@ -62,6 +62,9 @@ function course(state, emit) {
             label: doc.data.label,
             body: html`
               <h1 class="u-spaceB3">${title}</h1>
+              ${doc.data.description
+                ? asElement(doc.data.description, resolve)
+                : null}
               ${button(
                 memo(
                   function (link) {
