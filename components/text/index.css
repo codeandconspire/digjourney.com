@@ -10,6 +10,7 @@
   max-width: var(--container-medium-width);
   margin-left: auto;
   margin-right: auto;
+  width: 100%;
 }
 
 .Text--muted,
@@ -20,6 +21,10 @@
 .Text--small,
 .Text-small {
   font-size: 1rem;
+}
+
+.Text--left {
+  margin: 0;
 }
 
 @media (min-width: 350px) {

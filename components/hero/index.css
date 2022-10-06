@@ -22,7 +22,6 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.13);
   margin-left: var(--document-margin) !important;
   margin-right: var(--document-margin) !important;
-  max-width: 77rem;
   transform: translateX(calc(-50% - var(--document-margin)));
 }
 

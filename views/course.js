@@ -101,7 +101,7 @@ function course(state, emit) {
                         { size: { lg: '2of3' } },
                         html`
                           <div>
-                            <div class="Text">
+                            <div class="Text Text--left">
                               <h4>${text`Teachers`}</h4>
                               <span><!-- Maintain equal spacing --></span>
                             </div>
@@ -149,7 +149,9 @@ function course(state, emit) {
                 return html`
                   <div class="u-container u-space2">
                     <div class="Text">
-                      <h4>${text`Upcoming course dates`}</h4>
+                      <h2 class="u-textCenter">
+                        ${text`Upcoming course dates`}
+                      </h2>
                       <span><!-- Maintain equal spacing --></span>
                     </div>
                     <ol>

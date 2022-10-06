@@ -227,7 +227,6 @@ function slices(slice, index, list, onclick) {
             {
               size: {
                 lg: '1of2',
-                xl: '1of3',
               },
             },
             people.map(function (item) {

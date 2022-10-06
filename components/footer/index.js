@@ -30,8 +30,6 @@ module.exports = class Footer extends Component {
     var self = this;
     var alt = (this.local.alternative = this.state.ui.openNavigation);
 
-    console.log(hubspot);
-
     return html`
       <footer
         class="Footer ${newsletter ? 'Footer--newsletter' : ''} ${alt
