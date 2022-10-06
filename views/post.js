@@ -80,7 +80,7 @@ function post(state, emit) {
             ${related && related.length
               ? html`
                   <div class="Text u-space1">
-                    <h2>${text`Related posts`}</h2>
+                    <h2 class="u-textCenter">${text`Related posts`}</h2>
                   </div>
                   ${grid(
                     { divided: true, size: { md: '1of2' } },
@@ -88,7 +88,7 @@ function post(state, emit) {
                       if (!item) return card.loading({ date: true });
                       if (item.post && item.post.isBroken)
                         return card.loading({ date: true });
-                      if (item.post && !item.post.title)
+                      if (item.post && !item.post.data.title)
                         return card.loading({ date: true });
 
                       var date =
