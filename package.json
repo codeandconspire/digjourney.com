@@ -4,9 +4,9 @@
   "description": "Official website of DigJourney",
   "main": "index.js",
   "scripts": {
-    "build": "jalla build index.js --sw sw.js",
+    "build": "jalla build index.js",
     "start": "node server.js",
-    "purge": "node -r dotenv/config -e \"require('./lib/purge')('../index.js', ['/sw.js'], console.log)\"",
+    "purge": "node -r dotenv/config -e \"require('./lib/purge')('../index.js', console.log)\"",
     "test": "standard"
   },
   "engines": {
