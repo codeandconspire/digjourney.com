@@ -174,7 +174,9 @@ module.exports = class Footer extends Component {
           ? html`
               <div id="my-messages-container"></div>
               <script>
-                function onConversationsAPIReady() {}
+                function onConversationsAPIReady() {
+                  window.HubSpotConversations.widget.open();
+                }
 
                 if (window.HubSpotConversations) {
                   onConversationsAPIReady();
