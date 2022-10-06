@@ -1,4 +1,4 @@
-@import "../base";
+@import '../base';
 
 /* @define Person */
 .Person {
@@ -30,7 +30,7 @@
 }
 
 .Person-figure::before {
-  content: "";
+  content: '';
   display: block;
   padding-top: 100%;
 }
@@ -96,6 +96,8 @@
 .Person-link {
   display: inline-block;
   text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.14em;
   font-weight: bold;
   padding: 0.1em 0.3em;
   margin: 0 -0.3em;
@@ -105,12 +107,12 @@
 }
 
 .Person-link:hover {
-  background: rgba(var(--color-blue), 0.05);
+  background: rgba(var(--color-turquoise), 0.05);
   transition: none;
 }
 
 .Person-link:active {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .Person-text {

@@ -1,4 +1,4 @@
-@import "../base";
+@import '../base';
 
 /* @define Footer */
 .Footer-navigation {
@@ -136,7 +136,7 @@
 .Footer-email {
   display: block;
   width: 100%;
-  padding: 1em;
+  padding: 1em 1.25em;
   border: 0;
   font-size: 1rem;
   line-height: 1;
@@ -161,9 +161,8 @@
 }
 
 .Footer-button {
-  display: block;
-  width: 100%;
   margin-top: 0.5em;
+  text-align: left;
 }
 
 @media (min-width: 800px) {
@@ -174,7 +173,7 @@
   }
 
   .Footer-form {
-    flex: 0 1 28em;
+    flex: 0 1 45em;
     margin-left: 3rem;
   }
 }
@@ -222,7 +221,7 @@
 
 @media (min-width: 600px) {
   .Footer-meta {
-    margin: 3rem 0 1rem;
+    margin: 2rem 0 1rem;
   }
 
   .Footer-copy {
@@ -234,7 +233,6 @@
   .Footer-meta {
     display: flex;
     flex-wrap: nowrap;
-    padding-top: 3rem;
   }
 
   .Footer-meta .Footer-logo {

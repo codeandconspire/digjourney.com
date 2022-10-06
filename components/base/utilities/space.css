@@ -1,6 +1,6 @@
 /* @define utilities */
 
-@import "../global";
+@import '../global';
 
 /**
  * Dynamic
@@ -24,12 +24,12 @@
 }
 
 .u-space2 {
-  margin-top: 10vh !important;
-  margin-bottom: 10vh !important;
+  margin-top: 8vh !important;
+  margin-bottom: 8vh !important;
 }
 
 .u-space2end {
-  margin-bottom: 10vh !important;
+  margin-bottom: 8vh !important;
 }
 
 .u-space3 {
@@ -38,7 +38,7 @@
 }
 
 .u-spacePullUpHero {
-  margin-top: calc(-10vh - 1px);
+  margin-top: calc(-8vh - 1px);
 }
 
 /**
@@ -189,7 +189,7 @@
  * Left
  */
 
- .u-spaceL0 {
+.u-spaceL0 {
   margin-left: 0 !important;
 }
 

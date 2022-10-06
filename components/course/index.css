@@ -1,5 +1,5 @@
-@import "../base";
-@import "../grid";
+@import '../base';
+@import '../grid';
 
 /* @define Course */
 .Course {
@@ -60,6 +60,8 @@
   border-radius: 0.1875rem;
   transition: background 400ms var(--ease-out);
   text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.14em;
 }
 
 .Course-link:hover {
@@ -68,7 +70,7 @@
 }
 
 .Course-link:active {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .Course-heading {
@@ -91,7 +93,7 @@
   margin-bottom: 0.5em;
   position: relative;
   list-style-position: outside;
-  list-style-image: url("./checkmark.svg");
+  list-style-image: url('./checkmark.svg');
 }
 
 .Course-dates {

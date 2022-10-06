@@ -1,52 +1,22 @@
-@import "../base";
+@import '../base';
 
 /* @define Quote */
 .Quote {
-  padding: 5rem 0;
   overflow: hidden;
-  background: rgb(var(--color-gray));
-}
-
-.Quote-content {
-  margin: 0 auto;
-  max-width: 46rem;
-  color: rgb(var(--color-orange));
-}
-
-.Quote-body {
-  font-size: 1.33rem;
-  line-height: 1.35;
-  font-weight: bold;
-  max-width: 75rem;
-  color: rgb(var(--color-turquoise));
-}
-
-@media (min-width: 600px) {
-  .Quote-body {
-    font-size: 1.5rem;
-  }
 }
 
 .Quote-symbol {
-  transform: translateY(-50%);
-}
-
-@media (min-width: 1000px) {
-  .Quote-symbol {
-    transform: translateX(-100%);
-  }
-}
-
-.Quote-label {
-  font-weight: bold;
-}
-
-.Quote-label,
-.Quote-name {
   display: block;
-  margin-top: 3rem;
+  color: rgb(var(--color-turquoise));
+  width: 3rem;
+  margin-bottom: 1rem;
 }
 
-.Quote-label + .Quote-name {
-  margin-top: 0;
+.Quote-content {
+  max-width: var(--container-medium-width);
+  margin: 0 auto;
+}
+
+.Quote figcaption {
+  margin-top: 1rem;
 }

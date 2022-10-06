@@ -1,4 +1,4 @@
-@import "../base";
+@import '../base';
 
 /** @define Text */
 .Text {
@@ -8,9 +8,6 @@
   font-size: 1rem;
   text-align: left;
   max-width: var(--container-medium-width);
-}
-
-.Text--center {
   margin-left: auto;
   margin-right: auto;
 }
@@ -58,20 +55,23 @@
 .Text a:not(.Embed-link) {
   color: rgb(var(--color-link));
   text-decoration: underline;
-  font-weight: bold;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.14em;
   padding: 0.1em 0.3em;
   margin: -0.1em -0.3em;
   border-radius: 0.1875rem;
   transition: background 400ms var(--ease-out);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.14em;
 }
 
 .Text a:not(.Embed-link):hover {
-  background: rgba(var(--color-blue), 0.05);
+  background: rgba(var(--color-link), 0.05);
   transition: none;
 }
 
 .Text a:not(.Embed-link):active {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 /**
@@ -196,7 +196,7 @@
 }
 
 .Text ul > li::before {
-  content: "";
+  content: '';
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -303,7 +303,7 @@
   position: absolute;
   margin: -0.55em 0 0 -0.15em;
   z-index: -1;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .Text-small .Symbol {

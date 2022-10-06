@@ -1,15 +1,15 @@
 {
   "SITE_NAME": "DigJourney",
   "Loading": "Laddar",
-  "the homepage": "hemsidan",
-  "There is no page at this address. Try finding your way using the menu or from %s.": "Det finns visst inget här. Se om du kan hitta det du söker i menyn eller från %s.",
+  "the homepage": "startsidan",
+  "There is no page at this address. Try finding your way using the menu or from %s.": "Se om du kan hitta det du söker i menyn eller från %s.",
   "try again": "prova igen",
   "You seem to be offline. Check your network connection.": "Du verkar inte ha någon uppkoppling. Vänligen kontrollera att du är ansluten till internet.",
   "We apologize, an error has occured on our site.": "Nu verkar något ha gått galet.",
   "Toggle navigation": "Visa menyn",
   "Submit": "Skicka",
   "Try again": "Prova igen",
-  "Oops": "Hoppsan",
+  "No page found": "Hoppsan",
   "Copyright": "Copyright",
   "Read more": "Läs mer",
   "website": "Hemsidan",
@@ -25,9 +25,9 @@
   "Media": "",
   "© %s DigJourney": "© %s DigJourney",
   "Fill in your e-mail address": "Fyll i din e-postadress",
-  "Subscribe": "Starta prenumeration",
+  "Subscribe": "Prenumerera",
   "Hooray! You'll hear from us soon.": "Hurra! Räkna med att höra från oss snart.",
-  "Oops! Something went wrong, please try again.": "Hoppsan! Något gick galet, prova igen.",
+  "Sorry, this page does not exist.": "Den här sidan finns inte.",
   "Apply": "Ansök",
   "Go to application": "Till anmälan",
   "Location": "Plats",
@@ -46,5 +46,6 @@
   "Play %s": "Spela %s",
   "Rating: %s of 5": "Betyg: %s av 5",
   "Available at": "Finns hos",
-  "Written by %s": "Skriven av %s"
+  "Written by %s": "Skriven av %s",
+  "Oops": "Inget här"
 }

@@ -15,7 +15,9 @@
   --color-muted: 17, 0, 70, 0.5;
   --color-link: var(--color-turquoise);
 
-  --document-font-family: "Basier Circle", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --document-font-family: 'Basier Circle', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol';
   --document-font-size: 1rem;
   --document-line-height: 1.5;
 
@@ -26,7 +28,7 @@
   --document-margin: 1.2rem;
 
   --container-large-width: var(--document-width);
-  --container-medium-width: 43rem;
+  --container-medium-width: 48rem;
   --container-small-width: 30rem;
 
   --loading-color: 17, 0, 70, 0.06;
