@@ -271,6 +271,12 @@
     font-size: 2.5rem;
     line-height: 1.25;
   }
+
+  .Text--small h2,
+  .Text--small .Text-h2 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+  }
 }
 
 .Text h4,
@@ -300,23 +306,31 @@
   }
 }
 
-.Text-number,
-.Text-small .Symbol {
-  font-size: 9em;
+.Text-number {
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: 2.25rem;
+  background: pink;
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #110046;
   font-weight: bold;
-  color: rgb(var(--color-pink));
-  position: absolute;
-  margin: -0.55em 0 0 -0.15em;
-  z-index: -1;
-  opacity: 0.6;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 1000px) {
+  .Text-number {
+    width: 4.5rem;
+    height: 4.5rem;
+    font-size: 3rem;
+  }
 }
 
 .Text-small .Symbol {
-  width: 6em;
-  font-size: inherit;
-  height: auto;
-  margin: -2rem 0 0 -1.6em;
-  opacity: 0.6;
+  display: none;
 }
 
 .Text .Embed {

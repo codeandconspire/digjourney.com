@@ -1,4 +1,4 @@
-@import "../base";
+@import '../base';
 
 /* @define Product */
 .Product {
@@ -22,7 +22,7 @@
 
 @media (min-width: 800px) and (min-height: 400px) {
   .Product {
-    padding: 5rem;
+    padding: 3.5rem;
   }
 }
 
@@ -46,7 +46,7 @@
 }
 
 .Product-figure::before {
-  content: "";
+  content: '';
   display: block;
   padding-top: 100%;
 }
@@ -137,7 +137,7 @@
   margin-bottom: 0.5em;
   position: relative;
   list-style-position: outside;
-  list-style-image: url("./checkmark.svg");
+  list-style-image: url('./checkmark.svg');
 }
 
 @media (min-width: 1000px) {

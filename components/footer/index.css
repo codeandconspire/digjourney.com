@@ -169,7 +169,11 @@
   .Footer-newsletter {
     display: flex;
     align-items: center;
-    padding: 3.5rem 5.5rem 3.5rem;
+    padding: 3.5rem;
+  }
+
+  .Footer-newsletter p {
+    max-width: 32em;
   }
 
   .Footer-form {

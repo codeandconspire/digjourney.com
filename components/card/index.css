@@ -75,12 +75,12 @@
   font-size: 1.5rem;
   font-weight: bold;
   line-height: 1.25;
-  max-width: 28rem;
+  max-width: 40rem;
 }
 
 @media (min-width: 1000px) {
   .Card-title {
-    font-size: 2.25rem;
+    font-size: 1.75rem;
   }
 }
 

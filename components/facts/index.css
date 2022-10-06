@@ -1,4 +1,4 @@
-@import "../base";
+@import '../base';
 
 /* @define Facts */
 .Facts {
@@ -28,7 +28,7 @@
 @media (min-width: 900px) {
   .Facts-body {
     column-count: 2;
-    column-gap: 1.5rem;
+    column-gap: 3rem;
   }
 }
 

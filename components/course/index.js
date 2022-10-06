@@ -97,7 +97,7 @@ function course(props) {
       ${props.dates
         ? html`
             <div class="Course-dates">
-              <h2 class="u-textCenter">${text`Upcoming course dates`}</h2>
+              <h2><strong>${text`Upcoming course dates`}</strong></h2>
               <ol class="u-sm-expand">
                 ${props.dates.map((item) => html` <li>${date(item)}</li> `)}
               </ol>

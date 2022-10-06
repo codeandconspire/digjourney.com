@@ -25,7 +25,7 @@
 
 @media (min-width: 600px) and (max-width: 1200px) {
   .Person--small .Person-figure {
-    max-width: 2rem;
+    max-width: 3rem;
   }
 }
 

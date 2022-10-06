@@ -92,7 +92,7 @@ function course(state, emit) {
                 return html`
                   <div class="u-container u-space1">
                     ${grid([
-                      grid.cell({ size: { lg: '1of3' } }, [
+                      grid.cell({ size: { md: '1of3' } }, [
                         html`
                           <div class="Text">
                             <h4>${text`Location`}</h4>
@@ -101,7 +101,7 @@ function course(state, emit) {
                         `,
                       ]),
                       grid.cell(
-                        { size: { lg: '2of3' } },
+                        { size: { md: '2of3' } },
                         html`
                           <div>
                             <div class="Text Text--left">

@@ -58,7 +58,7 @@ function slices(slice, index, list, onclick) {
       return html`
         <figure class="Text u-sizeFull u-space1">
           <div class="u-md-container">
-            <div class="u-lg-expand">
+            <div class="">
               <img ${attrs} src="${src(slice.primary.image.url, 800)}" />
               <div class="u-container">
                 ${caption
@@ -375,12 +375,17 @@ function slices(slice, index, list, onclick) {
 
       return html`
         <div class="u-container u-space1">
+          ${slice.primary.heading
+            ? html`<div class="Text Text--left u-spaceB6">
+                ${asElement(slice.primary.heading)}
+              </div>`
+            : null}
           ${grid(
             { size: { md: '1of2' } },
             items.map(function (item) {
               var symbol = item.symbol && item.symbol.toLowerCase();
               return html`
-                <div class="Text Text-small">
+                <div class="Text Text--small">
                   ${symbol && symbol in symbols
                     ? symbols[symbol]()
                     : symbol && symbol.length === 1
@@ -421,12 +426,12 @@ function slices(slice, index, list, onclick) {
         <div class="u-container u-space2">
           <div class="Text u-sizeFull u-textCenter">
             ${heading
-              ? html`<h3
+              ? html`<h2
                   style="max-width: 20em; margin: 0 auto;"
                   class="u-spaceB4"
                 >
                   ${asText(slice.primary.heading)}
-                </h3>`
+                </h2>`
               : null}
           </div>
           ${partners(items)}
