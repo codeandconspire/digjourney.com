@@ -172,14 +172,17 @@ module.exports = class Footer extends Component {
 
         ${hubspot
           ? html`
-              <!-- Start of HubSpot Embed Code -->
-              <script
-                type="text/javascript"
-                id="hs-script-loader"
-                async
-                defer
-                src="https://js-na1.hs-scripts.com/7723061.js"
-              ></script>
+              <div id="my-messages-container"></div>
+              <script>
+                <script type="text/javascript">
+                  window.hsConversationsSettings = {};
+                  if (window.HubSpotConversations) {
+                    onConversationsAPIReady();
+                  } else {
+                    window.hsConversationsOnReady = [onConversationsAPIReady];
+                  }
+                </script>
+              </script>
               <!-- End of HubSpot Embed Code -->
             `
           : null}
