@@ -173,22 +173,14 @@ module.exports = class Footer extends Component {
         ${hubspot
           ? html`
               <div id="my-messages-container"></div>
-              <script type="text/javascript">
-                function ready(fn) {
-                  if (document.readyState !== 'loading') {
-                    fn();
-                  } else {
-                    document.addEventListener('DOMContentLoaded', fn);
-                  }
+              <script>
+                function onConversationsAPIReady() {}
+
+                if (window.HubSpotConversations) {
+                  onConversationsAPIReady();
+                } else {
+                  window.hsConversationsOnReady = [onConversationsAPIReady];
                 }
-                ready(function () {
-                  window.hsConversationsSettings = {};
-                  if (window.HubSpotConversations) {
-                    onConversationsAPIReady();
-                  } else {
-                    window.hsConversationsOnReady = [onConversationsAPIReady];
-                  }
-                });
               </script>
               <!-- End of HubSpot Embed Code -->
             `
