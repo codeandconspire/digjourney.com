@@ -128,12 +128,16 @@
   }
 
   .Callout:not(.Callout--image) .Callout-body {
-    margin-left: 2rem;
     margin-top: 0.5rem;
+  }
+
+  .Callout:not(.Callout--image) .Callout-label {
+    width: 100%;
   }
 
   .Callout:not(.Callout--image) .Callout-text {
     display: flex;
+    flex-wrap: wrap;
   }
 
   .Callout:not(.Callout--image) .Callout-title,

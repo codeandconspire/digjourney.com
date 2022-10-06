@@ -20,3 +20,7 @@
 .Quote figcaption {
   margin-top: 1rem;
 }
+
+.Quote em {
+  font-style: normal;
+}

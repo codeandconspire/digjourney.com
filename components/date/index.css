@@ -1,4 +1,4 @@
-@import "../base";
+@import '../base';
 
 /* @define Date */
 .Date {
@@ -13,17 +13,16 @@
   color: rgb(var(--color-muted));
 }
 
-@media (min-width: 1000px) {
-  .Date {
-    flex-wrap: nowrap;
-  }
-}
-
 .Date-content {
-  flex: 9 0 auto;
+  width: 100%;
   padding-right: 1.5rem;
   margin-right: auto;
-  max-width: calc(100% + 1.5rem);
+}
+
+@media (min-width: 1000px) {
+  .Date-content {
+    max-width: calc(100% - 12rem);
+  }
 }
 
 .Date-title {

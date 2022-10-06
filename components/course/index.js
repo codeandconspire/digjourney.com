@@ -28,7 +28,7 @@ function course(props) {
     <article class="Course">
       ${grid([
         grid.cell(
-          { size: { lg: '1of3' } },
+          { size: { xl: '1of3' } },
           html`
             <div>
               ${props.tags
@@ -64,7 +64,7 @@ function course(props) {
           `
         ),
         grid.cell(
-          { size: { md: '1of2', lg: '1of3' } },
+          { size: { md: '1of2', xl: '1of3' } },
           html`
             <div class="Course-panel u-sm-expand">
               <h4 class="Course-heading">${text`The course includes`}</h4>
@@ -77,7 +77,7 @@ function course(props) {
           `
         ),
         grid.cell(
-          { size: { md: '1of2', lg: '1of3' } },
+          { size: { md: '1of2', xl: '1of3' } },
           html`
             <div class="Course-panel u-sm-expand">
               <h4 class="Course-heading">${text`Kursledare`}</h4>

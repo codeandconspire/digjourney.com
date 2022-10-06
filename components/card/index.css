@@ -161,6 +161,7 @@
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 0.14em;
+  max-width: 32rem;
 }
 
 .Card-link::before {

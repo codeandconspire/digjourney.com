@@ -178,7 +178,7 @@ module.exports = class Footer extends Component {
                 id="hs-script-loader"
                 async
                 defer
-                src="//js-na1.hs-scripts.com/7723061.js"
+                src="https://js-na1.hs-scripts.com/7723061.js"
               ></script>
               <!-- End of HubSpot Embed Code -->
             `

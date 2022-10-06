@@ -76,7 +76,7 @@ function post(state, emit) {
           slices(slice, index, list, link)
         )}
         <div class="${related && related.length ? 'u-borderB' : ''} u-space2">
-          <div class="u-container u-space2">
+          <div class="u-container u-space2 u-borderT">
             ${related && related.length
               ? html`
                   <div class="Text u-space1">
