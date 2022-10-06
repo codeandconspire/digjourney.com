@@ -64,6 +64,7 @@
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 0.14em;
+  max-width: 27em;
 }
 
 .Callout-link::before {
@@ -137,13 +138,14 @@
 
   .Callout:not(.Callout--image) .Callout-text {
     display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
   }
 
   .Callout:not(.Callout--image) .Callout-title,
   .Callout:not(.Callout--image) .Callout-body {
     flex: 0 1 auto;
-    width: 50%;
+    width: calc(50% - 1.5rem);
   }
 
   .Callout--image .Callout-content {

@@ -18,13 +18,17 @@ var text = i18n();
 module.exports = slices;
 
 function slices(slice, index, list, onclick) {
+  var last = index === list.length - 1;
+
   switch (slice.slice_type) {
     case 'text': {
       if (!slice.primary.text.length) return null;
       return html`
-        <div class="u-container u-space1">
-          <div class="Text">
-            ${asElement(slice.primary.text, resolve, serialize)}
+        <div class="${last ? 'u-borderB u-space2end' : ''}">
+          <div class="u-container u-space1">
+            <div class="Text Text--centerOnlyChildHeading">
+              ${asElement(slice.primary.text, resolve, serialize)}
+            </div>
           </div>
         </div>
       `;
@@ -284,8 +288,6 @@ function slices(slice, index, list, onclick) {
       });
       if (!blurbs.length) return null;
 
-      var last = index === list.length - 1;
-
       return html`
         <div class="${last ? 'u-borderB u-space2end' : ''}">
           <section class="u-container u-space2">
@@ -440,12 +442,14 @@ function slices(slice, index, list, onclick) {
     }
     case 'quote': {
       return html`
-        <div class="u-space1">
-          ${quote({
-            body: asElement(slice.primary.body, resolve, serialize),
-            label: slice.primary.label,
-            name: slice.primary.name,
-          })}
+        <div class="${last ? 'u-borderB u-space2end' : ''}">
+          <div class="u-space1">
+            ${quote({
+              body: asElement(slice.primary.body, resolve, serialize),
+              label: slice.primary.label,
+              name: slice.primary.name,
+            })}
+          </div>
         </div>
       `;
     }
