@@ -17,15 +17,17 @@ function quote(props) {
               />
             </g>
           </svg>
-          <div class="Text u-textBold">${props.body}</div>
+          <div class="Text">${props.body}</div>
           ${props.label || props.name
             ? html`
-                <figcaption class="Text Text--muted Text--small">
-                  ${props.label
-                    ? html`<p style="margin-bottom: 0;">${props.label}</p>`
-                    : null}
+                <figcaption class="Text Text--small Text--muted">
                   ${props.name
-                    ? html`<p style="margin-top: 0;">${props.name}</p>`
+                    ? html`<p style="margin-bottom: 0;">
+                        <strong>${props.name}</strong>>
+                      </p>`
+                    : null}
+                  ${props.label
+                    ? html`<p style="margin-top: 0;">${props.label}</p>`
                     : null}
                 </figcaption>
               `
