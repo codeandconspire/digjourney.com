@@ -38,7 +38,7 @@
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "choo-devtools": "^3.0.4",
-    "standard": "^10.0.3"
+    "standard": "^17.0.0"
   },
   "dependencies": {
     "cccpurge": "^2.0.0",
