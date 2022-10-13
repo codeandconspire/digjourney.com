@@ -1,11 +1,11 @@
 const choo = require('choo')
-const html = require('choo/html')
-const lazy = require('choo-lazy-view')
 const splitRequire = require('split-require')
 const middleware = require('./lib/prismic-middleware')
 
+const SELECTOR = 'body'
+
 const app = choo()
-const page = lazy(() => splitRequire('./views/page'), prefetch('page'))
+const page = lazy(() => splitRequire('./views/page'))
 
 const REPOSITORY = 'digjourney'
 
@@ -28,45 +28,36 @@ app.use(require('choo-meta')({ origin: app.state.origin }))
 
 app.route(
   '/',
-  lazy(() => splitRequire('./views/home'), prefetch('homepage', true))
+  lazy(() => splitRequire('./views/home'))
 )
 app.route(
   '/insikter',
-  lazy(
-    () => splitRequire('./views/post-listing'),
-    prefetch('posting_listing', true)
-  )
+  lazy(() => splitRequire('./views/post-listing'))
 )
 app.route(
   '/insikter/:slug',
-  lazy(() => splitRequire('./views/post'), prefetch('post'))
+  lazy(() => splitRequire('./views/post'))
 )
 app.route(
   '/forelasning',
-  lazy(
-    () => splitRequire('./views/product-listing'),
-    prefetch('product_listing', true)
-  )
+  lazy(() => splitRequire('./views/product-listing'))
 )
 app.route(
   '/forelasning/:slug',
-  lazy(() => splitRequire('./views/product'), prefetch('product'))
+  lazy(() => splitRequire('./views/product'))
 )
 app.route(
   '/utbildning',
-  lazy(
-    () => splitRequire('./views/course-listing'),
-    prefetch('course_listing', true)
-  )
+  lazy(() => splitRequire('./views/course-listing'))
 )
 app.route(
   '/utbildning/:slug',
-  lazy(() => splitRequire('./views/course'), prefetch('course'))
+  lazy(() => splitRequire('./views/course'))
 )
 app.route('/*', catchall)
 
 try {
-  module.exports = app.mount('body')
+  module.exports = app.mount(SELECTOR)
   // remove parse guard added in header
   window.onerror = null
 } catch (err) {
@@ -92,17 +83,39 @@ function catchall(state, emit) {
   return view(state, emit)
 }
 
-// prefetch document while loading view
-// (str, bool?) -> fn
-function prefetch(type, single) {
-  return function (state, emit) {
-    if (typeof window === 'undefined') {
-      return html`
-        <body></body>
-      `
+/**
+ * This is a subset of cho-lazy-view due to incompatabilities with node 16
+ * @param {Function} load Asynchronous view loading function
+ * @returns {Function}
+ */
+function lazy(load) {
+  let promise
+  let view
+
+  return function proxy(state, emit) {
+    if (view) return view(state, emit)
+
+    if (!promise) {
+      promise = load().then(function (_view) {
+        // asynchronously render view to account for nested prefetches
+        if (typeof window === 'undefined') _view(state, emit)
+        else emit('render')
+        view = _view
+      })
+      emit('prefetch', promise)
+    } else {
+      promise.then(function () {
+        emit('render')
+      })
     }
-    if (single) state.prismic.getSingle(type, { prefetch: true })
-    else state.prismic.getByUID(type, state.params.slug, { prefetch: true })
-    return document.body
+
+    // assuming app has been provided initialState by server side render
+    if (typeof window === 'undefined') {
+      // eslint-disable-next-line no-new-wrappers
+      const str = new String()
+      str.__encoded = true
+      return str
+    }
+    return document.querySelector(SELECTOR)
   }
 }

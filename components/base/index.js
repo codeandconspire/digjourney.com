@@ -308,18 +308,6 @@ function timestamp(date) {
   ].join('.')
 }
 
-// nullable text getter for Prismic text fields
-// (arr?) -> str
-exports.asText = asText
-function asText(richtext) {
-  if (!richtext || !richtext.length) return null
-  let text = ''
-  for (let i = 0, len = richtext.length; i < len; i++) {
-    text += (i > 0 ? ' ' : '') + richtext[i].text
-  }
-  return text
-}
-
 // create placeholder loading text of given length
 // (num, bool?) -> Element
 exports.loader = loader

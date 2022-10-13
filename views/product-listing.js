@@ -1,5 +1,6 @@
 const html = require('choo/html')
 const asElement = require('prismic-element')
+const { asText } = require('@prismicio/helpers')
 const view = require('../components/view')
 const Hero = require('../components/hero')
 const product = require('../components/product')
@@ -7,7 +8,6 @@ const serialize = require('../components/text/serialize')
 const {
   i18n,
   loader,
-  asText,
   src,
   HTTPError,
   memo,

@@ -3,6 +3,7 @@ const parse = require('date-fns/parse')
 const sv = require('date-fns/locale/sv')
 const format = require('date-fns/format')
 const asElement = require('prismic-element')
+const { asText } = require('@prismicio/helpers')
 const { predicate } = require('@prismicio/client')
 const view = require('../components/view')
 const Hero = require('../components/hero')
@@ -12,7 +13,6 @@ const button = require('../components/button')
 const callout = require('../components/callout')
 const {
   i18n,
-  asText,
   srcset,
   src,
   HTTPError,

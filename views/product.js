@@ -1,5 +1,6 @@
 const html = require('choo/html')
 const asElement = require('prismic-element')
+const { asText } = require('@prismicio/helpers')
 const view = require('../components/view')
 const Hero = require('../components/hero')
 const button = require('../components/button')
@@ -7,7 +8,6 @@ const product = require('../components/product')
 const serialize = require('../components/text/serialize')
 const {
   i18n,
-  asText,
   resolve,
   loader,
   src,
@@ -171,7 +171,7 @@ function meta(state) {
       title: asText(doc.data.title),
       description: asText(doc.data.description),
       contact: {
-        blurb: doc.data.contact_blurb ? asText(doc.data.contact_blurb) : null
+        blurb: doc.data.contact_blurb ? doc.data.contact_blurb : null
       }
     }
 

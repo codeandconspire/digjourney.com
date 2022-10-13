@@ -1,6 +1,7 @@
 const html = require('choo/html')
 const parse = require('date-fns/parse')
 const asElement = require('prismic-element')
+const { asText } = require('@prismicio/helpers')
 const { predicate } = require('@prismicio/client')
 const view = require('../components/view')
 const Hero = require('../components/hero')
@@ -9,7 +10,6 @@ const serialize = require('../components/text/serialize')
 const {
   i18n,
   loader,
-  asText,
   src,
   HTTPError,
   memo,

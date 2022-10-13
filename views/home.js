@@ -1,5 +1,6 @@
 const html = require('choo/html')
 const asElement = require('prismic-element')
+const { asText } = require('@prismicio/helpers')
 const view = require('../components/view')
 const Hero = require('../components/hero')
 const book = require('../components/book')
@@ -7,7 +8,6 @@ const slices = require('../components/slices')
 const callout = require('../components/callout')
 const {
   i18n,
-  asText,
   loader,
   HTTPError,
   src,
