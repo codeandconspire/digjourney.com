@@ -1,25 +1,34 @@
-var html = require('choo/html')
-var button = require('../button')
+const html = require('choo/html')
+const button = require('../button')
 
 module.exports = date
 
-function date (props) {
+function date(props) {
   return html`
     <div class="Date">
       <div class="Date-content">
         <strong class="Date-title">${props.title}</strong>
-        ${props.label ? html`<br><span class="Date-label">${props.label}</span>` : null}
+        ${props.label
+          ? html`
+              <br />
+              <span class="Date-label">${props.label}</span>
+            `
+          : null}
       </div>
       <div class="Date-action">
-        ${props.meta ? html`<span class="Date-meta">${props.meta}</span>` : null}
+        ${props.meta
+          ? html`
+              <span class="Date-meta">${props.meta}</span>
+            `
+          : null}
         ${props.link ? link(props.link) : null}
       </div>
     </div>
   `
 }
 
-function link (props) {
-  var attrs = Object.assign({}, props)
+function link(props) {
+  const attrs = Object.assign({}, props)
   if (attrs.external) {
     attrs.target = '_blank'
     attrs.rel = 'noopenere nofererrer'

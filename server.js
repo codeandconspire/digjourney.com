@@ -1,32 +1,32 @@
-if (!process.env.HEROKU) require('dotenv/config');
+if (!process.env.HEROKU) require('dotenv/config')
 
-var jalla = require('jalla');
-var dedent = require('dedent');
-var body = require('koa-body');
-var compose = require('koa-compose');
-var { get, post } = require('koa-route');
-var Prismic = require('prismic-javascript');
-var purge = require('./lib/purge');
-var { resolve } = require('./components/base');
-var subscribe = require('./lib/mailchimp-proxy');
-var imageproxy = require('./lib/cloudinary-proxy');
+const jalla = require('jalla')
+const dedent = require('dedent')
+const body = require('koa-body')
+const compose = require('koa-compose')
+const { get, post } = require('koa-route')
+const prismic = require('@prismicio/client')
+const purge = require('./lib/purge')
+const { resolve } = require('./components/base')
+const subscribe = require('./lib/mailchimp-proxy')
+const imageproxy = require('./lib/cloudinary-proxy')
 
-var REPOSITORY = 'https://digjourney.cdn.prismic.io/api/v2';
-var MAILCHIMP =
-  'https://digjourney.us3.list-manage.com/subscribe?u=da19434c486fcc616e3c247aa&id=efda908eed';
+const REPOSITORY = 'digjourney'
+const MAILCHIMP =
+  'https://digjourney.us3.list-manage.com/subscribe/post?u=da19434c486fcc616e3c247aa&id=efda908eed&v_id=4528&f_id=00ebbee2f0'
 
-var app = jalla('index.js', {
+const app = jalla('index.js', {
   watch: !process.env.HEROKU,
-  serve: Boolean(process.env.HEROKU),
-});
+  serve: Boolean(process.env.HEROKU)
+})
 
 /**
  * Redirects
  * Should be moved to a DNS layer…
  */
-var TRAILING_SLASH = '(/)?';
+const TRAILING_SLASH = '(/)?'
 
-var routeMap = {
+const routeMap = {
   '/contact': '/kontakt',
   '/om-boken': '/boken-att-leda-digital-transformation',
   '/om-boken/bestall-boken-att-leda-digital-transformation/':
@@ -81,17 +81,17 @@ var routeMap = {
   '/innovationens-manga-ansikten': '/',
   '/den-digitala-revolutionen-kan-drastiskt-forbattra-klimatarbetet':
     '/insikter/den-digitala-revolutionen-kan-drastiskt-forbattra-klimatarbetet',
-  '/dagensrosling': '/insikter/dagensrosling',
-};
+  '/dagensrosling': '/insikter/dagensrosling'
+}
 
 Object.keys(routeMap).forEach(function (route, index) {
   app.use(
     get(route + TRAILING_SLASH, function (ctx) {
-      ctx.status = 301;
-      ctx.redirect(routeMap[route]);
+      ctx.status = 301
+      ctx.redirect(routeMap[route])
     })
-  );
-});
+  )
+})
 
 /**
  * Proxy image transform requests to Cloudinary
@@ -104,15 +104,20 @@ app.use(
   get(
     '/media/:type/:transform/:uri(.+)',
     async function (ctx, type, transform, uri) {
-      if (ctx.querystring) uri += `?${ctx.querystring}`;
-      var stream = await imageproxy(type, transform, uri);
-      var headers = ['etag', 'last-modified', 'content-length', 'content-type'];
-      headers.forEach((header) => ctx.set(header, stream.headers[header]));
-      ctx.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 365}`);
-      ctx.body = stream;
+      if (ctx.querystring) uri += `?${ctx.querystring}`
+      const stream = await imageproxy(type, transform, uri)
+      const headers = [
+        'etag',
+        'last-modified',
+        'content-length',
+        'content-type'
+      ]
+      headers.forEach((header) => ctx.set(header, stream.headers[header]))
+      ctx.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 365}`)
+      ctx.body = stream
     }
   )
-);
+)
 
 /**
  * Purge Cloudflare cache whenever content is published to Prismic
@@ -123,24 +128,24 @@ app.use(
     compose([
       body(),
       function (ctx) {
-        var secret = ctx.request.body && ctx.request.body.secret;
+        const secret = ctx.request.body && ctx.request.body.secret
         ctx.assert(
           secret === process.env.PRISMIC_SECRET,
           403,
           'Secret mismatch'
-        );
+        )
         return new Promise(function (resolve, reject) {
           purge(app.entry, function (err, response) {
-            if (err) return reject(err);
-            ctx.type = 'application/json';
-            ctx.body = {};
-            resolve();
-          });
-        });
-      },
+            if (err) return reject(err)
+            ctx.type = 'application/json'
+            ctx.body = {}
+            resolve()
+          })
+        })
+      }
     ])
   )
-);
+)
 
 /**
  * Handle Prismic previews
@@ -150,23 +155,37 @@ app.use(
  */
 app.use(
   get('/api/prismic-preview', async function (ctx) {
-    var token = ctx.query.token;
-    var api = await Prismic.api(REPOSITORY, { req: ctx.req });
-    var href = await api.previewSession(token, resolve, '/');
-    var expires =
-      app.env === 'development'
-        ? new Date(Date.now() + 1000 * 60 * 60 * 12)
-        : new Date(Date.now() + 1000 * 60 * 30);
+    const { token, documentId } = ctx.query
+    const maxAge =
+      process.env.NODE_ENV === 'development'
+        ? Date.now() + 1000 * 60 * 60 * (24 - new Date().getHours())
+        : Date.now() + 1000 * 60 * 30
 
-    ctx.set('Cache-Control', 'no-cache, private, max-age=0');
-    ctx.cookies.set(Prismic.previewCookie, token, {
-      expires: expires,
+    // Get document preview url
+    const href = await ctx.prismic.resolvePreviewURL({
+      linkResolver(doc) {
+        const lang = doc.lang.substring(0, 2)
+        return resolve(
+          doc,
+          lang === process.env.DEFAULT_LANGUAGE ? '' : doc.lang.substring(0, 2)
+        )
+      },
+      defaultURL: '/',
+      documentID: documentId,
+      previewToken: token
+    })
+
+    ctx.set('Cache-Control', 'max-age=0, private, no-cache')
+    ctx.cookies.set(prismic.cookie.preview, token, {
+      maxAge,
+      overwrite: true,
       httpOnly: false,
-      path: '/',
-    });
-    ctx.redirect(href);
+      signed: false
+    })
+
+    ctx.redirect(href)
   })
-);
+)
 
 /**
  * Forward subscription requests to MailChimp
@@ -175,39 +194,33 @@ app.use(
   compose([
     // expose mailchimp endpoint on state
     function (ctx, next) {
-      ctx.state.mailchimp = MAILCHIMP;
-      return next();
+      ctx.state.mailchimp = MAILCHIMP
+      return next()
     },
     // newsletter subscription endpoint
     post(
       '/api/subscribe',
       compose([
-        body(),
+        body({ multipart: true }),
         async function (ctx, next) {
-          ctx.set('Cache-Control', 'private, no-cache');
+          ctx.set('Cache-Control', 'private, no-cache')
           try {
-            await subscribe(ctx.request.body, MAILCHIMP);
+            await subscribe(ctx.request.body, MAILCHIMP)
             if (ctx.accepts('html')) {
-              ctx.redirect('back');
+              ctx.redirect('back')
             } else {
-              ctx.body = {};
-              ctx.type = 'application/json';
+              ctx.body = {}
+              ctx.type = 'application/json'
             }
           } catch (err) {
-            console.log('-- err --');
-            console.log(err);
-            console.log('-- ctx.request.body --');
-            console.log(ctx.request.body);
-            console.log('-- MAILCHIMP --');
-            console.log(MAILCHIMP);
-            if (ctx.accepts('html')) ctx.redirect('back');
-            else ctx.throw(err.status || 400, 'Could not subscribe');
+            if (ctx.accepts('html')) ctx.redirect('back')
+            else ctx.throw(err.status || 400, 'Could not subscribe')
           }
-        },
+        }
       ])
-    ),
+    )
   ])
-);
+)
 
 /**
  * Capture requests for pages at the site root and redirect pages with a parent
@@ -215,30 +228,35 @@ app.use(
  */
 app.use(
   get('/:slug', async function (ctx, slug, next) {
-    if (!ctx.accepts('html')) return next();
-    var api = await Prismic.api(REPOSITORY, { req: ctx.req });
+    if (!ctx.accepts('html')) return next()
+
+    const endpoint = prismic.getEndpoint(REPOSITORY)
+    const client = prismic.createClient(endpoint, { fetch })
+
+    client.enableAutoPreviewsFromReq(ctx.req)
+
     try {
-      let doc = await api.getByUID('page', slug);
-      if (!doc.data.parent || !doc.data.parent.id) return next();
-      ctx.redirect(resolve(doc));
+      const doc = await client.getByUID('page', slug)
+      if (!doc.data.parent || !doc.data.parent.id) return next()
+      ctx.redirect(resolve(doc))
     } catch (err) {
-      return next();
+      return next()
     }
   })
-);
+)
 
 /**
  * Disallow robots anywhere but in production
  */
 app.use(
   get('/robots.txt', function (ctx, next) {
-    ctx.type = 'text/plain';
+    ctx.type = 'text/plain'
     ctx.body = dedent`
     User-agent: *
     Disallow: ${app.env === 'production' ? '' : '/'}
-  `;
+  `
   })
-);
+)
 
 /**
  * Set cache headers for HTML pages
@@ -248,27 +266,27 @@ app.use(
  * from caching the response
  */
 app.use(function (ctx, next) {
-  if (!ctx.accepts('html')) return next();
-  var previewCookie = ctx.cookies.get(Prismic.previewCookie);
+  if (!ctx.accepts('html')) return next()
+  const previewCookie = ctx.cookies.get(prismic.cookie.preview)
   if (previewCookie) {
-    ctx.set('Cache-Control', 'no-cache, private, max-age=0');
+    ctx.set('Cache-Control', 'no-cache, private, max-age=0')
   } else {
     if (app.env !== 'development') {
-      ctx.set('Cache-Control', `s-maxage=${60 * 60 * 24 * 7}, max-age=0`);
+      ctx.set('Cache-Control', `s-maxage=${60 * 60 * 24 * 7}, max-age=0`)
     }
   }
 
-  return next();
-});
+  return next()
+})
 
 /**
  * Purge Cloudflare cache when starting production server
  */
 if (process.env.HEROKU && app.env === 'production') {
   purge(app.entry, ['/sw.js'], function (err) {
-    if (err) app.emit('error', err);
-    app.listen(process.env.PORT || 8080);
-  });
+    if (err) app.emit('error', err)
+    app.listen(process.env.PORT || 8080)
+  })
 } else {
-  app.listen(process.env.PORT || 8080);
+  app.listen(process.env.PORT || 8080)
 }

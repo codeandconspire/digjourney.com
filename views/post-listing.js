@@ -1,16 +1,16 @@
-var html = require('choo/html');
-var parse = require('date-fns/parse');
-var sv = require('date-fns/locale/sv');
-var format = require('date-fns/format');
-var asElement = require('prismic-element');
-var { Predicates } = require('prismic-javascript');
-var view = require('../components/view');
-var Hero = require('../components/hero');
-var grid = require('../components/grid');
-var card = require('../components/card');
-var button = require('../components/button');
-var callout = require('../components/callout');
-var {
+const html = require('choo/html')
+const parse = require('date-fns/parse')
+const sv = require('date-fns/locale/sv')
+const format = require('date-fns/format')
+const asElement = require('prismic-element')
+const { predicate } = require('@prismicio/client')
+const view = require('../components/view')
+const Hero = require('../components/hero')
+const grid = require('../components/grid')
+const card = require('../components/card')
+const button = require('../components/button')
+const callout = require('../components/callout')
+const {
   i18n,
   asText,
   srcset,
@@ -18,23 +18,23 @@ var {
   HTTPError,
   memo,
   resolve,
-  metaKey,
-} = require('../components/base');
+  metaKey
+} = require('../components/base')
 
-var PAGE_SIZE = 8;
+const PAGE_SIZE = 8
 
-var text = i18n();
+const text = i18n()
 
-module.exports = view(posts, meta);
+module.exports = view(posts, meta)
 
 function posts(state, emit) {
-  emit('theme', 'gray');
+  emit('theme', 'gray')
   return state.prismic.getSingle('post_listing', function (err, doc) {
-    if (err) throw HTTPError(404, err);
+    if (err) throw HTTPError(404, err)
     if (!doc) {
-      let items = [];
+      const items = []
       for (let i = 0; i < 6; i++) {
-        items.push(card.loading({ date: true, link: true }));
+        items.push(card.loading({ date: true, link: true }))
       }
 
       return html`
@@ -48,7 +48,7 @@ function posts(state, emit) {
                   ${state.partial.data.description
                     ? asElement(state.partial.data.description, resolve)
                     : null}
-                `,
+                `
               })
             : Hero.loading({ theme: 'gray' })}
           <div class="u-container u-space2 u-borderB">
@@ -58,46 +58,46 @@ function posts(state, emit) {
             </div>
           </div>
         </main>
-      `;
+      `
     }
 
-    var featured = doc.data.featured
+    const featured = doc.data.featured
       .map(function ({ link }) {
-        if (!link.id || link.isBroken) return null;
+        if (!link.id || link.isBroken) return null
         return state.prismic.getByUID('post', link.uid, function (err, doc) {
-          if (err) return null;
-          return doc;
-        });
+          if (err) return null
+          return doc
+        })
       })
-      .filter((doc) => doc !== null);
+      .filter((doc) => doc !== null)
 
-    var page = parseInt(state.query.page);
-    if (isNaN(page)) page = 1;
-    var defaults = {
+    let page = parseInt(state.query.page)
+    if (isNaN(page)) page = 1
+    const defaults = {
       pageSize: PAGE_SIZE,
       orderings:
-        '[my.post.alternative_publication_date desc, document.first_publication_date desc]',
-    };
-    var predicates = [Predicates.at('document.type', 'post')];
+        '[my.post.alternative_publication_date desc, document.first_publication_date desc]'
+    }
+    const predicates = [predicate.at('document.type', 'post')]
     doc.data.featured.forEach(function ({ link }) {
       if (!link || !link.id) {
-        return;
+        return
       }
-      predicates.push(Predicates.not('document.id', link.id));
-    });
+      predicates.push(predicate.not('document.id', link.id))
+    })
 
-    var posts = [];
-    var hasMore = true;
+    let posts = []
+    let hasMore = true
     for (let i = 1; i <= page; i++) {
-      let opts = Object.assign({ page: i }, defaults);
+      const opts = Object.assign({ page: i }, defaults)
       posts.push(
         ...state.prismic.get(predicates, opts, function (err, response) {
-          if (err) return [];
-          if (!response) return new Array(PAGE_SIZE).fill();
-          hasMore = i < response.total_pages;
-          return response.results;
+          if (err) return []
+          if (!response) return new Array(PAGE_SIZE).fill()
+          hasMore = i < response.total_pages
+          return response.results
         })
-      );
+      )
     }
 
     if (typeof posts.sort === 'function') {
@@ -106,13 +106,13 @@ function posts(state, emit) {
           if (item) {
             item.date = item.data.alternative_publication_date
               ? item.data.alternative_publication_date
-              : item.first_publication_date;
+              : item.first_publication_date
           }
-          return item;
+          return item
         })
         .sort(function (a, b) {
-          return new Date(b.date) - new Date(a.date);
-        });
+          return new Date(b.date) - new Date(a.date)
+        })
     }
 
     return html`
@@ -123,15 +123,15 @@ function posts(state, emit) {
           body: html`
             <h1>${asText(doc.data.title)}</h1>
             ${asElement(doc.data.description, resolve)}
-          `,
+          `
         })}
         <div class="u-container u-space2 u-borderB">
           ${featured.map(function (doc, index) {
-            if (!doc) return callout.loading({ label: true, image: true });
+            if (!doc) return callout.loading({ label: true, image: true })
 
-            var date = doc.data.alternative_publication_date;
-            if (!date) date = doc.first_publication_date;
-            date = date ? parse(date) : null;
+            let date = doc.data.alternative_publication_date
+            if (!date) date = doc.first_publication_date
+            date = date ? parse(date) : null
 
             return html`
               <div class="u-space1">
@@ -139,8 +139,7 @@ function posts(state, emit) {
                   label: html`
                     <time
                       class="Card-meta"
-                      datetime="${JSON.stringify(date).replace(/"/g, '')}"
-                    >
+                      datetime="${JSON.stringify(date).replace(/"/g, '')}">
                       ${format(date, 'D MMMM YYYY', { locale: sv })}
                     </time>
                   `,
@@ -151,51 +150,52 @@ function posts(state, emit) {
                   link: {
                     href: resolve(doc),
                     onclick: partial(doc),
-                    text: text`Read more`,
+                    text: text`Read more`
                   },
                   image: memo(
                     function (url, sizes) {
-                      if (!url) return null;
+                      if (!url) return null
                       return {
                         src: src(url, 720),
                         sizes:
                           '(min-width: 1000px) 35vw, (min-width: 600px) 200px, 100vw',
                         srcset: srcset(url, sizes, {
-                          aspect: 3 / 4,
+                          aspect: 3 / 4
                         }),
                         alt: doc.data.featured_image.alt || '',
                         width: doc.data.featured_image.dimensions.width,
                         height:
-                          (doc.data.featured_image.dimensions.width * 10) / 12,
-                      };
+                          (doc.data.featured_image.dimensions.width * 10) / 12
+                      }
                     },
                     [
                       doc.data.featured_image && doc.data.featured_image.url,
-                      [720, 400, 800, 1200],
+                      [720, 400, 800, 1200]
                     ]
-                  ),
+                  )
                 })}
               </div>
-            `;
+            `
           })}
           <div class="u-space2">
             ${grid(
               { divided: true, size: { md: '1of2' } },
               posts.map(function (doc, index, list) {
-                if (!doc)
+                if (!doc) {
                   return grid.cell(
                     { appear: true },
                     card.loading({ date: true })
-                  );
+                  )
+                }
 
-                var date = doc.data.alternative_publication_date;
-                if (!date) date = doc.first_publication_date;
-                date = date ? parse(date) : null;
+                let date = doc.data.alternative_publication_date
+                if (!date) date = doc.first_publication_date
+                date = date ? parse(date) : null
 
-                var opts = {};
+                const opts = {}
                 if (list.length > PAGE_SIZE) {
                   if (index >= page * PAGE_SIZE - PAGE_SIZE) {
-                    opts.appear = PAGE_SIZE - (page * PAGE_SIZE - index);
+                    opts.appear = PAGE_SIZE - (page * PAGE_SIZE - index)
                   }
                 }
 
@@ -206,14 +206,14 @@ function posts(state, emit) {
                     body: asText(doc.data.description),
                     date: {
                       datetime: date,
-                      text: format(date, 'D MMMM YYYY', { locale: sv }),
+                      text: format(date, 'D MMMM YYYY', { locale: sv })
                     },
                     link: {
                       href: resolve(doc),
-                      text: text`Read more`,
-                    },
+                      text: text`Read more`
+                    }
                   })
-                );
+                )
               })
             )}
           </div>
@@ -223,56 +223,56 @@ function posts(state, emit) {
                   ${button({
                     text: text`Show more`,
                     href: `${resolve(doc)}?page=${page + 1}`,
-                    onclick: onclick,
+                    onclick
                   })}
                 </div>
               `
             : null}
         </div>
       </main>
-    `;
-  });
+    `
+  })
 
   // prevent scroll to top on pagination
   // obj -> void
   function onclick(event) {
-    event.preventDefault();
-    emit('pushState', event.currentTarget.href, { persistScroll: true });
+    event.preventDefault()
+    emit('pushState', event.currentTarget.href, { persistScroll: true })
   }
 
   // create onclick handler which emits pushState w/ partial info
   // obj -> fn
   function partial(doc) {
     return function (event) {
-      if (metaKey(event)) return;
-      emit('pushState', event.currentTarget.href, { partial: doc });
-      event.preventDefault();
-    };
+      if (metaKey(event)) return
+      emit('pushState', event.currentTarget.href, { partial: doc })
+      event.preventDefault()
+    }
   }
 }
 
 function meta(state) {
   return state.prismic.getSingle('post_listing', function (err, doc) {
-    if (err) throw err;
-    if (!doc) return null;
-    var props = {
+    if (err) throw err
+    if (!doc) return null
+    const props = {
       title: asText(doc.data.title),
       description: asText(doc.data.description),
       contact: {
-        blurb: doc.data.contact_blurb ? doc.data.contact_blurb : null,
-      },
-    };
+        blurb: doc.data.contact_blurb ? doc.data.contact_blurb : null
+      }
+    }
 
-    var image = doc.data.featured_image;
+    const image = doc.data.featured_image
     if (image && image.url) {
       Object.assign(props, {
         'og:image': src(image.url, 1200),
         'og:image:width': 1200,
         'og:image:height':
-          (1200 * image.dimensions.height) / image.dimensions.width,
-      });
+          (1200 * image.dimensions.height) / image.dimensions.width
+      })
     }
 
-    return props;
-  });
+    return props
+  })
 }

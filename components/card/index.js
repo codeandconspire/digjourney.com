@@ -1,28 +1,28 @@
-var html = require('choo/html');
-var link = require('./link');
-var figure = require('./figure');
-var { className, loader } = require('../base');
+const html = require('choo/html')
+const link = require('./link')
+const figure = require('./figure')
+const { className, loader } = require('../base')
 
-module.exports = card;
-module.exports.loading = loading;
+module.exports = card
+module.exports.loading = loading
 
 function card(props = {}) {
   if (props.link) {
-    props.link.block = true;
+    props.link.block = true
   }
 
-  var attrs = {
+  const attrs = {
     class: className('Card', {
-      'Card--image': props.image,
-    }),
-  };
+      'Card--image': props.image
+    })
+  }
 
-  var image = props.image || null;
-  if (typeof image === 'function') image = image();
-  else if (image) image = figure(image);
+  let image = props.image || null
+  if (typeof image === 'function') image = image()
+  else if (image) image = figure(image)
 
   if (props.image && props.image.width && props.image.height) {
-    attrs.style = `--Card-aspect: ${props.image.height / props.image.width};`;
+    attrs.style = `--Card-aspect: ${props.image.height / props.image.width};`
   }
 
   return html`
@@ -38,7 +38,7 @@ function card(props = {}) {
           ? link(
               Object.assign(
                 {
-                  visible: !props.background && !props.location,
+                  visible: !props.background && !props.location
                 },
                 props.link
               )
@@ -46,36 +46,40 @@ function card(props = {}) {
           : null}
       </div>
     </article>
-  `;
+  `
 }
 
 function loading(opts = {}) {
   return html`
     <article
-      class="${className('Card', { 'Card--background': opts.background })}"
-    >
+      class="${className('Card', { 'Card--background': opts.background })}">
       <div class="u-sm-expand">${opts.image ? figure.loading() : null}</div>
       <div class="Card-content">
         <div class="Card-body">
           ${opts.date
-            ? html`<time class="Card-meta">${loader(6)}</time>`
+            ? html`
+                <time class="Card-meta">${loader(6)}</time>
+              `
             : null}
           <h3 class="Card-title">${loader(8)}</h3>
           <p class="Card-text">${loader(42)}</p>
         </div>
-        ${opts.link ? html`<div class="Card-action">${loader(4)}</div>` : null}
+        ${opts.link
+          ? html`
+              <div class="Card-action">${loader(4)}</div>
+            `
+          : null}
       </div>
     </article>
-  `;
+  `
 }
 
 function date(props) {
   return html`
     <time
       class="Card-meta"
-      datetime="${JSON.stringify(props.datetime).replace(/"/g, '')}"
-    >
+      datetime="${JSON.stringify(props.datetime).replace(/"/g, '')}">
       ${props.text}
     </time>
-  `;
+  `
 }

@@ -1,26 +1,26 @@
-var html = require('choo/html');
-var date = require('../date');
-var grid = require('../grid');
-var person = require('../person');
-var { i18n, loader, luma } = require('../base');
+const html = require('choo/html')
+const date = require('../date')
+const grid = require('../grid')
+const person = require('../person')
+const { i18n, loader, luma } = require('../base')
 
-var COLORS = ['FFCB84', 'DA6526', '07AAB8', 'FFB3B3', '110046'];
+const COLORS = ['FFCB84', 'DA6526', '07AAB8', 'FFB3B3', '110046']
 
-var text = i18n();
+const text = i18n()
 
-module.exports = course;
-module.exports.loading = loading;
+module.exports = course
+module.exports.loading = loading
 
 function course(props) {
-  var colors = [];
+  const colors = []
   if (props.tags) {
     for (let i = 0, len = props.tags.length; i < len; i++) {
-      let color;
+      let color
       for (let i = 0, len = COLORS.length; i < len; i++) {
-        color = COLORS[Math.floor(Math.random() * COLORS.length)];
-        if (!colors.includes(color)) break;
+        color = COLORS[Math.floor(Math.random() * COLORS.length)]
+        if (!colors.includes(color)) break
       }
-      colors.push(color);
+      colors.push(color)
     }
   }
 
@@ -42,8 +42,7 @@ function course(props) {
                               colors[index]
                             ) < 170
                               ? '#fff'
-                              : 'currentColor'};"
-                          >
+                              : 'currentColor'};">
                             ${tag}
                           </li>
                         `
@@ -55,9 +54,9 @@ function course(props) {
               ${props.description}
               ${props.link
                 ? html`
-                    <a class="Course-link" ${props.link}
-                      >${text`Read more about the course`}</a
-                    >
+                    <a class="Course-link" ${props.link}>
+                      ${text`Read more about the course`}
+                    </a>
                   `
                 : null}
             </div>
@@ -70,7 +69,10 @@ function course(props) {
               <h4 class="Course-heading">${text`The course includes`}</h4>
               <ul class="Course-features">
                 ${props.features.map(
-                  (text) => html` <li class="Course-feature">${text}</li> `
+                  (text) =>
+                    html`
+                      <li class="Course-feature">${text}</li>
+                    `
                 )}
               </ul>
             </div>
@@ -92,20 +94,25 @@ function course(props) {
               )}
             </div>
           `
-        ),
+        )
       ])}
       ${props.dates
         ? html`
             <div class="Course-dates">
               <h2><strong>${text`Upcoming course dates`}</strong></h2>
               <ol class="u-sm-expand">
-                ${props.dates.map((item) => html` <li>${date(item)}</li> `)}
+                ${props.dates.map(
+                  (item) =>
+                    html`
+                      <li>${date(item)}</li>
+                    `
+                )}
               </ol>
             </div>
           `
         : null}
     </article>
-  `;
+  `
 }
 
 function loading() {
@@ -144,8 +151,8 @@ function loading() {
               <div class="u-spaceT2">${person.loading({ small: true })}</div>
             </div>
           `
-        ),
+        )
       ])}
     </article>
-  `;
+  `
 }

@@ -1,4 +1,4 @@
-@import "../base";
+@import '../base';
 
 /* @define Principles */
 .Principles {
@@ -46,9 +46,8 @@
   }
 }
 
-
 .Principles-item::before {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   top: 1.3rem;
@@ -90,7 +89,7 @@
 }
 
 .Principles-title {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   max-width: 400px;
 
   font-size: 1.75rem;
@@ -109,7 +108,7 @@
 }
 
 .Principles-body {
-  margin-top: .625rem;
+  margin-top: 0.625rem;
   max-width: 550px;
 
   font-size: 1.125rem;

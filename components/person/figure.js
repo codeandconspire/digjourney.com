@@ -1,16 +1,16 @@
-var html = require('choo/html')
-var assert = require('assert')
-var { pluck } = require('../base')
+const html = require('choo/html')
+const assert = require('assert')
+const { pluck } = require('../base')
 
 module.exports = figure
 figure.loading = loading
 
-function figure (props = {}) {
+function figure(props = {}) {
   assert(props.src, 'figure: src string is required')
-  var src = props.src
-  var attrs = pluck(props, 'width', 'height', 'srcset', 'sizes', 'alt')
+  const src = props.src
+  const attrs = pluck(props, 'width', 'height', 'srcset', 'sizes', 'alt')
   attrs.alt = attrs.alt || ''
-  var icon = props.icon || ''
+  const icon = props.icon || ''
 
   return html`
     <figure class="Person-figure">
@@ -20,7 +20,7 @@ function figure (props = {}) {
   `
 }
 
-function loading (props = {}) {
+function loading(props = {}) {
   return html`
     <div class="Person-figure is-loading">
       <div class="Person-image"></div>

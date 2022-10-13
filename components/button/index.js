@@ -1,11 +1,11 @@
-var html = require('choo/html')
-var { className } = require('../base')
+const html = require('choo/html')
+const { className } = require('../base')
 
 module.exports = button
 
-function button (props) {
+function button(props) {
   if (!props) return null
-  var attrs = Object.assign({}, props)
+  const attrs = Object.assign({}, props)
   delete attrs.text
   delete attrs.theme
 
@@ -14,6 +14,12 @@ function button (props) {
     [`Button--${props.theme}`]: props.theme
   })
 
-  if (attrs.href) return html`<a ${attrs}><span>${props.text}</span></a>`
-  return html`<button ${attrs}><span>${props.text}</span></button>`
+  if (attrs.href) {
+    return html`
+      <a ${attrs}><span>${props.text}</span></a>
+    `
+  }
+  return html`
+    <button ${attrs}><span>${props.text}</span></button>
+  `
 }

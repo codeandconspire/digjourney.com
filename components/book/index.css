@@ -1,4 +1,4 @@
-@import "../base";
+@import '../base';
 
 /* @define Book */
 .Book {
@@ -82,7 +82,7 @@
 }
 
 .Book-rating::before {
-  content: "★★★★★";
+  content: '★★★★★';
   position: absolute;
   color: rgb(var(--color-muted));
 }
@@ -90,7 +90,7 @@
 .Book-rating::after {
   content: attr(data-rating);
   position: relative;
-  color: #FF9300;
+  color: #ff9300;
 }
 
 .Book-author {

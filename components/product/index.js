@@ -1,17 +1,17 @@
-var html = require('choo/html');
-var grid = require('../grid');
-var person = require('../person');
-var button = require('../button');
-var { i18n, loader } = require('../base');
+const html = require('choo/html')
+const grid = require('../grid')
+const person = require('../person')
+const button = require('../button')
+const { i18n, loader } = require('../base')
 
-var text = i18n();
+const text = i18n()
 
-module.exports = product;
-module.exports.loading = loading;
+module.exports = product
+module.exports.loading = loading
 
 function product(props) {
-  var attrs = Object.assign({}, props.image);
-  delete attrs.src;
+  const attrs = Object.assign({}, props.image)
+  delete attrs.src
 
   return html`
     <article class="Product ${props.standalone ? 'Product--standalone' : ''}">
@@ -24,10 +24,14 @@ function product(props) {
         : null}
       <div class="Product-header">
         ${props.duration
-          ? html`<strong class="Product-label">${props.duration}</strong>`
+          ? html`
+              <strong class="Product-label">${props.duration}</strong>
+            `
           : null}
         ${props.title
-          ? html`<h3 class="Product-title">${props.title}</h3>`
+          ? html`
+              <h3 class="Product-title">${props.title}</h3>
+            `
           : null}
         <dl class="Product-properties">
           ${props.target
@@ -83,7 +87,7 @@ function product(props) {
           `
         : null}
     </article>
-  `;
+  `
 }
 
 function loading() {
@@ -134,8 +138,8 @@ function loading() {
               <li class="Product-feature">${loader(14)}</li>
             </ul>
           `
-        ),
+        )
       ])}
     </article>
-  `;
+  `
 }

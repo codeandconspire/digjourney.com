@@ -1,14 +1,14 @@
-var html = require('choo/html');
-var parse = require('date-fns/parse');
-var asElement = require('prismic-element');
-var view = require('../components/view');
-var Hero = require('../components/hero');
-var grid = require('../components/grid');
-var date = require('../components/date');
-var person = require('../components/person');
-var button = require('../components/button');
-var slices = require('../components/slices');
-var {
+const html = require('choo/html')
+const parse = require('date-fns/parse')
+const asElement = require('prismic-element')
+const view = require('../components/view')
+const Hero = require('../components/hero')
+const grid = require('../components/grid')
+const date = require('../components/date')
+const person = require('../components/person')
+const button = require('../components/button')
+const slices = require('../components/slices')
+const {
   i18n,
   asText,
   resolve,
@@ -17,20 +17,20 @@ var {
   srcset,
   HTTPError,
   metaKey,
-  memo,
-} = require('../components/base');
+  memo
+} = require('../components/base')
 
-var text = i18n();
+const text = i18n()
 
-module.exports = view(course, meta, 'page');
+module.exports = view(course, meta, 'page')
 
 function course(state, emit) {
-  emit('theme', 'yellow');
+  emit('theme', 'yellow')
   return state.prismic.getByUID(
     'course',
     state.params.slug,
     function (err, doc) {
-      if (err) throw HTTPError(404, err);
+      if (err) throw HTTPError(404, err)
       if (!doc) {
         return html`
           <main class="View-main">
@@ -39,7 +39,9 @@ function course(state, emit) {
                   blobs: false,
                   theme: 'yellow',
                   label: loader(18),
-                  body: html` <h1>${asText(state.partial.data.title)}</h1> `,
+                  body: html`
+                    <h1>${asText(state.partial.data.title)}</h1>
+                  `
                 })
               : Hero.loading({ theme: 'yellow' })}
             <div class="u-container">
@@ -48,11 +50,11 @@ function course(state, emit) {
               </div>
             </div>
           </main>
-        `;
+        `
       }
 
-      var title = asText(doc.data.title);
-      emit('track', 'view_item', { event_label: title });
+      const title = asText(doc.data.title)
+      emit('track', 'view_item', { event_label: title })
 
       return html`
         <main class="View-main">
@@ -68,23 +70,23 @@ function course(state, emit) {
               ${button(
                 memo(
                   function (link) {
-                    if ((!link.url && !link.id) || link.isBroken) return null;
-                    var attrs = {
+                    if ((!link.url && !link.id) || link.isBroken) return null
+                    const attrs = {
                       theme: 'blue',
                       text: text`Go to application`,
                       href: resolve(doc.data.apply),
-                      onclick: track,
-                    };
-                    if (link.target === '_blank') {
-                      attrs.target = '_blank';
-                      attrs.rel = 'noopenere nofererrer';
+                      onclick: track
                     }
-                    return attrs;
+                    if (link.target === '_blank') {
+                      attrs.target = '_blank'
+                      attrs.rel = 'noopenere nofererrer'
+                    }
+                    return attrs
                   },
                   [doc.data.apply, 'apply']
                 )
               )}
-            `,
+            `
           })}
           ${doc.data.body.map(function (slice, index, list) {
             switch (slice.slice_type) {
@@ -98,7 +100,7 @@ function course(state, emit) {
                             <h4>${text`Location`}</h4>
                             ${asElement(doc.data.location, resolve)}
                           </div>
-                        `,
+                        `
                       ]),
                       grid.cell(
                         { size: { md: '2of3' } },
@@ -115,40 +117,40 @@ function course(state, emit) {
                                   small: true,
                                   image: memo(
                                     function (url) {
-                                      if (!url) return null;
+                                      if (!url) return null
                                       return Object.assign(
                                         {
                                           alt: item.image.alt || '',
                                           sizes: '90px',
                                           srcset: srcset(url, [90, 180], {
                                             transforms: 'q_100',
-                                            aspect: 1,
+                                            aspect: 1
                                           }),
-                                          src: src(url, [60]),
+                                          src: src(url, [60])
                                         },
                                         item.image.dimensions
-                                      );
+                                      )
                                     },
                                     [item.image.url, 'small']
                                   ),
                                   title: asText(item.name),
-                                  body: asElement(item.description, resolve),
+                                  body: asElement(item.description, resolve)
                                 })
                               )
                             )}
                           </div>
                         `
-                      ),
+                      )
                     ])}
                   </div>
-                `;
+                `
               }
               case 'course_schedule': {
-                let now = new Date();
-                let valid = doc.data.schedule.filter(function (item) {
-                  return parse(item.deadline) > now;
-                });
-                if (!valid.length) return null;
+                const now = new Date()
+                const valid = doc.data.schedule.filter(function (item) {
+                  return parse(item.deadline) > now
+                })
+                if (!valid.length) return null
                 return html`
                   <div class="u-container u-space2">
                     <div class="Text">
@@ -172,66 +174,66 @@ function course(state, emit) {
                                       href: resolve(item.link),
                                       text: text`Go to application`,
                                       external: item.link.target === '_blank',
-                                      onclick: track,
+                                      onclick: track
                                     }
-                                  : null,
+                                  : null
                             })}
                           </li>
                         `
                       )}
                     </ol>
                   </div>
-                `;
+                `
               }
               default:
-                return slices(slice, index, list, link);
+                return slices(slice, index, list, link)
             }
           })}
         </main>
-      `;
+      `
 
       // track generated lead
       // obj -> void
       function track() {
-        emit('track', 'generate_lead', { event_label: title });
+        emit('track', 'generate_lead', { event_label: title })
       }
     }
-  );
+  )
 
   // create link handler, emitting pushState w/ partial info
   // obj -> fn
   function link(doc) {
     return function (event) {
-      if (metaKey(event)) return;
-      emit('pushState', event.currentTarget.href, { partial: doc });
-      event.preventDefault();
-    };
+      if (metaKey(event)) return
+      emit('pushState', event.currentTarget.href, { partial: doc })
+      event.preventDefault()
+    }
   }
 }
 
 function meta(state) {
   return state.prismic.getByUID('course', state.params.slug, (err, doc) => {
-    if (err) throw err;
-    if (!doc) return null;
-    var props = {
+    if (err) throw err
+    if (!doc) return null
+    const props = {
       title: asText(doc.data.title),
       description: asText(doc.data.description),
       contact: {
         hubspot: doc.data.hubspot,
-        blurb: doc.data.contact_blurb ? doc.data.contact_blurb : null,
-      },
-    };
+        blurb: doc.data.contact_blurb ? doc.data.contact_blurb : null
+      }
+    }
 
-    var image = doc.data.featured_image;
+    const image = doc.data.featured_image
     if (image && image.url) {
       Object.assign(props, {
         'og:image': src(image.url, 1200),
         'og:image:width': 1200,
         'og:image:height':
-          (1200 * image.dimensions.height) / image.dimensions.width,
-      });
+          (1200 * image.dimensions.height) / image.dimensions.width
+      })
     }
 
-    return props;
-  });
+    return props
+  })
 }

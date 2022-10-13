@@ -1,4 +1,4 @@
-@import "../base";
+@import '../base';
 
 /* @define View */
 .View {
@@ -54,7 +54,7 @@
  */
 
 .View-footer::before {
-  content: "";
+  content: '';
   height: 13vh;
   display: block;
   max-height: 7rem;

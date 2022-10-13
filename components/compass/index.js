@@ -1,19 +1,19 @@
-var html = require('choo/html')
-var figure = require('./figure')
-var grid = require('../grid')
-var { className, loader } = require('../base')
+const html = require('choo/html')
+const figure = require('./figure')
+const grid = require('../grid')
+const { className, loader } = require('../base')
 
 module.exports = compass
 compass.loading = loading
 
-function compass (props = {}) {
-  var attrs = {
+function compass(props = {}) {
+  const attrs = {
     class: className('Compass', {
       'Compass--image': props.image
     })
   }
 
-  var image = null
+  let image = null
   if (props.image) {
     image = figure(props.image)
   }
@@ -23,25 +23,28 @@ function compass (props = {}) {
       <div class="Compass-wrap">
         ${image}
         <div class="Compass-content">
-          ${props.title && html`
-            <h3 class="Compass-title">
-              ${props.title}
-            </h3>
+          ${props.title &&
+          html`
+            <h3 class="Compass-title">${props.title}</h3>
           `}
-          ${props.children && grid({
-            size: {
-              sm: '1of2',
-              md: image ? '1of1' : '1of2',
-              lg: image ? '1of2' : '1of3'
-            }
-          }, props.children)}
+          ${props.children &&
+          grid(
+            {
+              size: {
+                sm: '1of2',
+                md: image ? '1of1' : '1of2',
+                lg: image ? '1of2' : '1of3'
+              }
+            },
+            props.children
+          )}
         </div>
       </div>
     </div>
   `
 }
 
-function loading (props = {}) {
+function loading(props = {}) {
   return html`
     <div class="Compass">
       <div class="Compass-wrap">

@@ -1,4 +1,4 @@
-@import "../base";
+@import '../base';
 
 /* @define Grid */
 :root {
@@ -76,7 +76,7 @@
 
 .Grid--divided .Grid-cell::before {
   flex: 0 0 1px;
-  content: "";
+  content: '';
   display: block;
   width: 100%;
   height: 1px;

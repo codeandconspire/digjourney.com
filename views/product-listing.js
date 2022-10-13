@@ -1,10 +1,10 @@
-var html = require('choo/html');
-var asElement = require('prismic-element');
-var view = require('../components/view');
-var Hero = require('../components/hero');
-var product = require('../components/product');
-var serialize = require('../components/text/serialize');
-var {
+const html = require('choo/html')
+const asElement = require('prismic-element')
+const view = require('../components/view')
+const Hero = require('../components/hero')
+const product = require('../components/product')
+const serialize = require('../components/text/serialize')
+const {
   i18n,
   loader,
   asText,
@@ -12,17 +12,17 @@ var {
   HTTPError,
   memo,
   srcset,
-  resolve,
-} = require('../components/base');
+  resolve
+} = require('../components/base')
 
-var text = i18n();
+const text = i18n()
 
-module.exports = view(products, meta);
+module.exports = view(products, meta)
 
 function products(state, emit) {
-  emit('theme', 'yellow');
+  emit('theme', 'yellow')
   return state.prismic.getSingle('product_listing', function (err, doc) {
-    if (err) throw HTTPError(404, err);
+    if (err) throw HTTPError(404, err)
     if (!doc) {
       return html`
         <main class="View-main">
@@ -34,7 +34,7 @@ function products(state, emit) {
                   ${state.partial.data.description
                     ? asElement(state.partial.data.description, resolve)
                     : null}
-                `,
+                `
               })
             : Hero.loading({ theme: 'yellow' })}
           <div class="u-container">
@@ -43,11 +43,11 @@ function products(state, emit) {
             </div>
           </div>
         </main>
-      `;
+      `
     }
 
-    var title = asText(doc.data.title);
-    emit('track', 'view_item_list', { event_label: title });
+    const title = asText(doc.data.title)
+    emit('track', 'view_item_list', { event_label: title })
 
     return html`
       <main class="View-main">
@@ -56,14 +56,14 @@ function products(state, emit) {
           body: html`
             <h1>${title}</h1>
             ${asElement(doc.data.description, resolve)}
-          `,
+          `
         })}
         <div class="u-container">
           <div class="Text u-space2">
             ${asElement(doc.data.body, resolve, serialize)}
           </div>
           ${doc.data.categories.map(function (slice) {
-            if (slice.slice_type !== 'category') return null;
+            if (slice.slice_type !== 'category') return null
             return html`
               <div class="u-space2">
                 <div class="u-space1">
@@ -74,47 +74,47 @@ function products(state, emit) {
                 <div class="u-space2end">
                   ${slice.items
                     .map(function ({ link }) {
-                      if (!link.id || link.isBroken) return null;
+                      if (!link.id || link.isBroken) return null
                       return state.prismic.getByID(
                         link.id,
                         function (err, doc) {
-                          if (err) return null;
-                          if (!doc) return product.loading();
-                          return product(asProduct(doc));
+                          if (err) return null
+                          if (!doc) return product.loading()
+                          return product(asProduct(doc))
                         }
-                      );
+                      )
                     })
                     .filter(Boolean)}
                 </div>
               </div>
-            `;
+            `
           })}
         </div>
       </main>
-    `;
-  });
+    `
+  })
 
   function asProduct(doc) {
-    var contact = asText(doc.data.contact_name);
-    var title = asText(doc.data.title);
+    const contact = asText(doc.data.contact_name)
+    const title = asText(doc.data.title)
     return {
-      title: title,
+      title,
       body: asElement(doc.data.description, resolve, serialize),
       duration: doc.data.duration,
       target: doc.data.target,
       location: doc.data.location,
       image: memo(
         function (url) {
-          if (!url) return null;
+          if (!url) return null
           return Object.assign(
             {
               alt: doc.data.image.alt || '',
               src: src(url, [500]),
               sizes: '(min-width: 1000px) 500px, 100vw',
-              srcset: srcset(url, [400, 600, 1000, 1200]),
+              srcset: srcset(url, [400, 600, 1000, 1200])
             },
             doc.data.image.dimensions
-          );
+          )
         },
         [doc.data.image.url, 'product-listing']
       ),
@@ -125,70 +125,70 @@ function products(state, emit) {
             body: asElement(doc.data.contact_description, resolve),
             image: memo(
               function (url) {
-                if (!url) return null;
+                if (!url) return null
                 return Object.assign(
                   {
                     alt: doc.data.contact_image.alt || '',
                     sizes: '90px',
                     srcset: srcset(url, [90, 180], {
                       transforms: 'q_100',
-                      aspect: 1,
+                      aspect: 1
                     }),
-                    src: src(url, [60]),
+                    src: src(url, [60])
                   },
                   doc.data.contact_image.dimensions
-                );
+                )
               },
               [doc.data.contact_image.url, 'small']
-            ),
+            )
           }
         : null,
       action: memo(
         function (link) {
-          if ((!link.id && !link.url) || link.isBroken) return null;
-          var props = {
+          if ((!link.id && !link.url) || link.isBroken) return null
+          const props = {
             href: resolve(link),
             text: doc.data.action_text || text`Read more`,
             onclick() {
-              emit('track', 'generate_lead', { event_label: title });
-            },
-          };
-
-          if (link.target === '_blank') {
-            props.rel = 'nonopener noreferer';
-            props.target = '_blank';
+              emit('track', 'generate_lead', { event_label: title })
+            }
           }
 
-          return props;
+          if (link.target === '_blank') {
+            props.rel = 'nonopener noreferer'
+            props.target = '_blank'
+          }
+
+          return props
         },
         [doc.data.action, doc.id]
-      ),
-    };
+      )
+    }
   }
 }
 
 function meta(state) {
   return state.prismic.getSingle('product_listing', function (err, doc) {
-    if (err) throw err;
-    if (!doc) return null;
-    var props = {
+    if (err) throw err
+    if (!doc) return null
+    const props = {
       title: asText(doc.data.title),
       description: asText(doc.data.description),
       contact: {
-        blurb: doc.data.contact_blurb ? doc.data.contact_blurb : null,
-      },
-    };
+        blurb: doc.data.contact_blurb ? doc.data.contact_blurb : null
+      }
+    }
 
-    var image = doc.data.featured_image;
+    const image = doc.data.featured_image
     if (image && image.url) {
       Object.assign(props, {
         'og:image': src(image.url, 1200),
         'og:image:width': 1200,
         'og:image:height':
-          (1200 * image.dimensions.height) / image.dimensions.width,
-      });
+          (1200 * image.dimensions.height) / image.dimensions.width
+      })
     }
 
-    return props;
-  });
+    return props
+  })
 }

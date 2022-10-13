@@ -1,17 +1,17 @@
-var html = require('choo/html')
-var { pluck } = require('../base')
+const html = require('choo/html')
+const { pluck } = require('../base')
 
 module.exports = partners
 
-function partners (items) {
+function partners(items) {
   return html`
     <div class="Partners">
       ${items.map(function (image, index) {
-        var src = image.src
-        var attrs = pluck(image, 'srcset', 'sizes', 'alt')
+        const src = image.src
+        const attrs = pluck(image, 'srcset', 'sizes', 'alt')
         return html`
           <div class="Partners-item">
-            <img class="Partners-logo" ${attrs} src="${src}">
+            <img class="Partners-logo" ${attrs} src="${src}" />
           </div>
         `
       })}

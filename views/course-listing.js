@@ -1,12 +1,12 @@
-var html = require('choo/html');
-var parse = require('date-fns/parse');
-var asElement = require('prismic-element');
-var { Predicates } = require('prismic-javascript');
-var view = require('../components/view');
-var Hero = require('../components/hero');
-var course = require('../components/course');
-var serialize = require('../components/text/serialize');
-var {
+const html = require('choo/html')
+const parse = require('date-fns/parse')
+const asElement = require('prismic-element')
+const { predicate } = require('@prismicio/client')
+const view = require('../components/view')
+const Hero = require('../components/hero')
+const course = require('../components/course')
+const serialize = require('../components/text/serialize')
+const {
   i18n,
   loader,
   asText,
@@ -15,17 +15,17 @@ var {
   memo,
   srcset,
   resolve,
-  metaKey,
-} = require('../components/base');
+  metaKey
+} = require('../components/base')
 
-var text = i18n();
+const text = i18n()
 
-module.exports = view(courses, meta);
+module.exports = view(courses, meta)
 
 function courses(state, emit) {
-  emit('theme', 'yellow');
+  emit('theme', 'yellow')
   return state.prismic.getSingle('course_listing', function (err, doc) {
-    if (err) throw HTTPError(404, err);
+    if (err) throw HTTPError(404, err)
     if (!doc) {
       return html`
         <main class="View-main">
@@ -41,7 +41,7 @@ function courses(state, emit) {
                         serialize
                       )
                     : null}
-                `,
+                `
               })
             : Hero.loading({ theme: 'yellow' })}
           <div class="u-container">
@@ -50,38 +50,42 @@ function courses(state, emit) {
             </div>
           </div>
         </main>
-      `;
+      `
     }
 
-    var title = asText(doc.data.title);
-    emit('track', 'view_item_list', { event_label: title });
+    const title = asText(doc.data.title)
+    emit('track', 'view_item_list', { event_label: title })
 
-    var featured = doc.data.featured
+    const featured = doc.data.featured
       .map(function ({ link }) {
-        if (!link.id || link.isBroken) return null;
+        if (!link.id || link.isBroken) return null
         return state.prismic.getByUID('course', link.uid, function (err, doc) {
-          if (err) return null;
-          if (!doc) return course.loading();
-          return course(asCourse(doc));
-        });
+          if (err) return null
+          if (!doc) return course.loading()
+          return course(asCourse(doc))
+        })
       })
-      .filter(Boolean);
+      .filter(Boolean)
 
-    var opts = {
+    const opts = {
       pageSize: 100,
-      orderings: '[document.first_publication_date desc]',
-    };
-    var predicates = [Predicates.at('document.type', 'course')];
+      orderings: '[document.first_publication_date desc]'
+    }
+    const predicates = [predicate.at('document.type', 'course')]
     doc.data.featured.forEach(function ({ link }) {
-      if (!link.id || link.isBroken) return;
-      predicates.push(Predicates.not('document.id', link.id));
-    });
+      if (!link.id || link.isBroken) return
+      predicates.push(predicate.not('document.id', link.id))
+    })
 
-    var courses = state.prismic.get(predicates, opts, function (err, response) {
-      if (err) return [];
-      if (!response) return [course.loading()];
-      return response.results.map((doc) => course(asCourse(doc)));
-    });
+    const courses = state.prismic.get(
+      predicates,
+      opts,
+      function (err, response) {
+        if (err) return []
+        if (!response) return [course.loading()]
+        return response.results.map((doc) => course(asCourse(doc)))
+      }
+    )
 
     return html`
       <main class="View-main">
@@ -90,7 +94,7 @@ function courses(state, emit) {
           body: html`
             <h1>${title}</h1>
             ${asElement(doc.data.description, resolve, serialize)}
-          `,
+          `
         })}
         <div class="u-container">
           <div class="Text u-space2">
@@ -99,55 +103,55 @@ function courses(state, emit) {
           <div class="u-space2">${featured.concat(courses)}</div>
         </div>
       </main>
-    `;
-  });
+    `
+  })
 
   function asCourse(doc) {
-    var now = new Date();
-    var title = asText(doc.data.title);
+    const now = new Date()
+    const title = asText(doc.data.title)
     return {
-      title: title,
+      title,
       tags: doc.tags,
       description: asElement(doc.data.description, resolve, serialize),
       features: doc.data.features.map(({ text }) => text).filter(Boolean),
       link: {
         href: resolve(doc),
         onclick(event) {
-          partial(doc)(event);
-          emit('track', 'select_content', { event_label: title });
-        },
+          partial(doc)(event)
+          emit('track', 'select_content', { event_label: title })
+        }
       },
       teachers: doc.data.teachers
         .map(function (item) {
-          var name = asText(item.name);
-          if (!name) return null;
+          const name = asText(item.name)
+          if (!name) return null
           return {
             image: memo(
               function (url) {
-                if (!url) return null;
+                if (!url) return null
                 return Object.assign(
                   {
                     alt: item.image.alt || '',
                     sizes: '90px',
                     srcset: srcset(url, [90, 180], {
                       transforms: 'q_100',
-                      aspect: 1,
+                      aspect: 1
                     }),
-                    src: src(url, [60]),
+                    src: src(url, [60])
                   },
                   item.image.dimensions
-                );
+                )
               },
               [item.image.url, 'small']
             ),
             title: name,
-            body: asElement(item.description, resolve, serialize),
-          };
+            body: asElement(item.description, resolve, serialize)
+          }
         })
         .filter(Boolean),
       dates: doc.data.schedule
         .map(function (item) {
-          if (parse(item.deadline) < now) return null;
+          if (parse(item.deadline) < now) return null
           return {
             title: item.title,
             label: item.label,
@@ -159,50 +163,50 @@ function courses(state, emit) {
                     text: text`Go to application`,
                     external: item.link.target === '_blank',
                     onclick() {
-                      emit('track', 'generate_lead', { event_label: title });
-                    },
+                      emit('track', 'generate_lead', { event_label: title })
+                    }
                   }
-                : null,
-          };
+                : null
+          }
         })
-        .filter(Boolean),
-    };
+        .filter(Boolean)
+    }
   }
 
   // create onclick handler which emits pushState w/ partial info
   // obj -> fn
   function partial(doc) {
     return function (event) {
-      if (metaKey(event)) return;
-      emit('pushState', event.currentTarget.href, { partial: doc });
-      event.preventDefault();
-    };
+      if (metaKey(event)) return
+      emit('pushState', event.currentTarget.href, { partial: doc })
+      event.preventDefault()
+    }
   }
 }
 
 function meta(state) {
   return state.prismic.getSingle('course_listing', function (err, doc) {
-    if (err) throw err;
-    if (!doc) return null;
-    var props = {
+    if (err) throw err
+    if (!doc) return null
+    const props = {
       title: asText(doc.data.title),
       description: asText(doc.data.description),
       hubspot: doc.data.hubspot,
       contact: {
-        blurb: doc.data.contact_blurb ? doc.data.contact_blurb : null,
-      },
-    };
+        blurb: doc.data.contact_blurb ? doc.data.contact_blurb : null
+      }
+    }
 
-    var image = doc.data.featured_image;
+    const image = doc.data.featured_image
     if (image && image.url) {
       Object.assign(props, {
         'og:image': src(image.url, 1200),
         'og:image:width': 1200,
         'og:image:height':
-          (1200 * image.dimensions.height) / image.dimensions.width,
-      });
+          (1200 * image.dimensions.height) / image.dimensions.width
+      })
     }
 
-    return props;
-  });
+    return props
+  })
 }

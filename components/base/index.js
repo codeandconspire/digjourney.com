@@ -1,9 +1,9 @@
-var fs = require('fs')
-var path = require('path')
-var LRU = require('nanolru')
-var assert = require('assert')
-var html = require('choo/html')
-var common = require('./lang.json')
+const fs = require('fs')
+const path = require('path')
+const LRU = require('nanolru')
+const assert = require('assert')
+const html = require('choo/html')
+const common = require('./lang.json')
 
 if (typeof window !== 'undefined') {
   require('focus-visible')
@@ -13,43 +13,58 @@ if (typeof window !== 'undefined') {
 // get hex color code for theme
 // str -> str
 exports.themeColor = themeColor
-function themeColor (name) {
+function themeColor(name) {
   switch (name) {
-    case 'gray': return '#F4F3F6'
-    case 'yellow': return '#FFCB84'
-    case 'orange': return '#DA6526'
-    case 'turquoise': return '#07AAB8'
-    case 'pink': return '#FFB3B3'
+    case 'gray':
+      return '#F4F3F6'
+    case 'yellow':
+      return '#FFCB84'
+    case 'orange':
+      return '#DA6526'
+    case 'turquoise':
+      return '#07AAB8'
+    case 'pink':
+      return '#FFB3B3'
     case 'blue':
-    default: return '#110046'
+    default:
+      return '#110046'
   }
 }
 
 // resolve prismic document url
 // obj -> str
 exports.resolve = resolve
-function resolve (doc) {
-  var root = ''
-  var parent = doc.data && doc.data.parent
+function resolve(doc) {
+  let root = ''
+  const parent = doc.data && doc.data.parent
   if (parent && parent.id && !parent.isBroken) {
     root = `/${parent.uid}`
   }
 
   switch (doc.type) {
     case 'website':
-    case 'homepage': return '/'
-    case 'post_listing': return '/insikter'
-    case 'post': return `/insikter/${doc.uid}`
-    case 'product_listing': return '/forelasning'
-    case 'product': return `/forelasning/${doc.uid}`
-    case 'course_listing': return '/utbildning'
-    case 'course': return `/utbildning/${doc.uid}`
-    case 'page': return `${root}/${doc.uid}`
+    case 'homepage':
+      return '/'
+    case 'post_listing':
+      return '/insikter'
+    case 'post':
+      return `/insikter/${doc.uid}`
+    case 'product_listing':
+      return '/forelasning'
+    case 'product':
+      return `/forelasning/${doc.uid}`
+    case 'course_listing':
+      return '/utbildning'
+    case 'course':
+      return `/utbildning/${doc.uid}`
+    case 'page':
+      return `${root}/${doc.uid}`
     case 'Web':
-    case 'Media': return doc.url
+    case 'Media':
+      return doc.url
     default: {
       // handle links to web and media
-      let type = doc.link_type
+      const type = doc.link_type
       if (type === 'Web' || type === 'Media' || type === 'Any') return doc.url
       throw new Error(`Could not resolve href for document type "${doc.type}"`)
     }
@@ -59,7 +74,7 @@ function resolve (doc) {
 // initialize translation utility with given language file
 // obj -> str
 exports.i18n = i18n
-function i18n (source) {
+function i18n(source) {
   source = source || common
 
   // get text by applying as tagged template literal i.e. text`Hello ${str}`
@@ -67,22 +82,22 @@ function i18n (source) {
   return function (strings, ...parts) {
     parts = parts || []
 
-    var key = Array.isArray(strings) ? strings.join('%s') : strings
-    var value = source[key] || common[key]
+    const key = Array.isArray(strings) ? strings.join('%s') : strings
+    let value = source[key] || common[key]
 
     if (!value) {
       value = common[key] = key
       if (typeof window === 'undefined') {
-        var file = path.join(__dirname, 'lang.json')
+        const file = path.join(__dirname, 'lang.json')
         fs.writeFileSync(file, JSON.stringify(common, null, 2))
       }
     }
 
-    var hasForeignPart = false
-    var res = value.split('%s').reduce(function (result, str, index) {
-      var part = parts[index] || ''
+    let hasForeignPart = false
+    const res = value.split('%s').reduce(function (result, str, index) {
+      const part = parts[index] || ''
       if (!hasForeignPart) {
-        hasForeignPart = (typeof part !== 'string' && typeof part !== 'number')
+        hasForeignPart = typeof part !== 'string' && typeof part !== 'number'
       }
       result.push(str, part)
       return result
@@ -95,12 +110,12 @@ function i18n (source) {
 // check if an URL is on the the current domain
 // str -> bool
 exports.isSameDomain = isSameDomain
-function isSameDomain (url) {
-  var external = /^[\w-]+:\/{2,}\[?[\w.:-]+\]?(?::[0-9]*)?/
+function isSameDomain(url) {
+  const external = /^[\w-]+:\/{2,}\[?[\w.:-]+\]?(?::[0-9]*)?/
 
   try {
-    var result = external.test(url) && new window.URL(url)
-    return !result || (result.hostname === window.location.hostname)
+    const result = external.test(url) && new window.URL(url)
+    return !result || result.hostname === window.location.hostname
   } catch (err) {
     return true
   }
@@ -109,12 +124,12 @@ function isSameDomain (url) {
 // get color ligtness from hex
 // str -> num
 exports.luma = luma
-function luma (str) {
-  var hex = str.replace(/^#/, '')
-  var rgb = parseInt(hex, 16)
-  var r = (rgb >> 16) & 0xff
-  var g = (rgb >> 8) & 0xff
-  var b = (rgb >> 0) & 0xff
+function luma(str) {
+  const hex = str.replace(/^#/, '')
+  const rgb = parseInt(hex, 16)
+  const r = (rgb >> 16) & 0xff
+  const g = (rgb >> 8) & 0xff
+  const b = (rgb >> 0) & 0xff
 
   // per ITU-R BT.709
   return 0.2126 * r + 0.7152 * g + 0.0722 * b
@@ -123,9 +138,9 @@ function luma (str) {
 // returns a general file type from an url
 // str -> str
 exports.filetype = filetype
-function filetype (url) {
+function filetype(url) {
   if (!url) return null
-  var type = url.toLowerCase().match(/[^.]+$/)
+  const type = url.toLowerCase().match(/[^.]+$/)
 
   if (!type) return null
 
@@ -137,63 +152,74 @@ function filetype (url) {
     case 'tiff':
     case 'bmp':
     case 'svg':
-    case 'webp': return 'image'
+    case 'webp':
+      return 'image'
     case 'mp4':
     case 'webm':
     case 'mov':
     case 'avi':
     case 'mkv':
     case 'mpg':
-    case 'wmv': return 'video'
+    case 'wmv':
+      return 'video'
     case 'mp3':
     case 'wma':
     case 'flac':
-    case 'wav': return 'audio'
+    case 'wav':
+      return 'audio'
     case 'tar':
-    case 'zip': return 'zip'
+    case 'zip':
+      return 'zip'
     case 'key':
     case 'ppt':
     case 'doc':
     case 'docx':
     case 'txt':
-    case 'pdf': return 'document'
-    default: return null
+    case 'pdf':
+      return 'document'
+    default:
+      return null
   }
 }
 
 // get viewport height
 // () -> num
 exports.vh = vh
-function vh () {
-  return Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+function vh() {
+  return Math.max(
+    document.documentElement.clientHeight,
+    window.innerHeight || 0
+  )
 }
 
 // get viewport width
 // () -> num
 exports.vw = vw
-function vw () {
+function vw() {
   return Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
 }
 
 // compose class name based on supplied conditions
 // (str|obj, obj?) -> str
 exports.className = className
-function className (root, classes) {
+function className(root, classes) {
   if (typeof root === 'object') {
     classes = root
     root = ''
   }
 
-  return Object.keys(classes).reduce((str, key) => {
-    if (!classes[key]) return str
-    return str + ' ' + key
-  }, root).trim()
+  return Object.keys(classes)
+    .reduce((str, key) => {
+      if (!classes[key]) return str
+      return str + ' ' + key
+    }, root)
+    .trim()
 }
 
 // detect if meta key was pressed on event
 // obj -> bool
 exports.metaKey = metaKey
-function metaKey (e) {
+function metaKey(e) {
   if (e.button && e.button !== 0) return true
   return e.ctrlKey || e.metaKey || e.altKey || e.shiftKey
 }
@@ -201,7 +227,7 @@ function metaKey (e) {
 // pick props from object
 // (obj, arr|...str) -> obj
 exports.pluck = pluck
-function pluck (src, ...keys) {
+function pluck(src, ...keys) {
   keys = Array.isArray(keys[0]) ? keys[0] : keys
   return keys.reduce(function (obj, key) {
     if (src[key]) obj[key] = src[key]
@@ -212,23 +238,23 @@ function pluck (src, ...keys) {
 // compose reduce middlewares that boils down list ot truthy values
 // (arr, ...fn) -> arr
 exports.reduce = reduce
-function reduce (list) {
-  var middleware = Array.prototype.slice.call(arguments, 1)
+function reduce(list) {
+  const middleware = Array.prototype.slice.call(arguments, 1)
   return list.reduce(function (result, initial, i, from) {
-    var val = middleware.reduce((val, fn) => val && fn(val, i, from), initial)
+    const val = middleware.reduce((val, fn) => val && fn(val, i, from), initial)
     if (val) result.push(val)
     return result
   }, [])
 }
 
-var AUTO_TRANSFORM = /\?(?:.+)?auto=([^&]+)/
-var COMPRESS = /compress,?/
+const AUTO_TRANSFORM = /\?(?:.+)?auto=([^&]+)/
+const COMPRESS = /compress,?/
 
 // compose src attribute from url for a given size
 // (str, num, obj?) -> str
 exports.src = src
-function src (uri, size, opts = {}) {
-  var { transforms = 'c_fill,f_auto,q_auto', type = 'fetch' } = opts
+function src(uri, size, opts = {}) {
+  let { transforms = 'c_fill,f_auto,q_auto', type = 'fetch' } = opts
 
   // apply default transforms
   if (!/c_/.test(transforms)) transforms += ',c_fill'
@@ -246,30 +272,36 @@ function src (uri, size, opts = {}) {
 // compose srcset attribute from url for given sizes
 // (str, arr, obj?) -> str
 exports.srcset = srcset
-function srcset (uri, sizes, opts = {}) {
+function srcset(uri, sizes, opts = {}) {
   if (AUTO_TRANSFORM.test(uri)) {
     uri = uri.replace(AUTO_TRANSFORM, (match) => match.replace(COMPRESS, ''))
   }
 
-  return sizes.map(function (size) {
-    opts = Object.assign({}, opts)
-    if (Array.isArray(size)) {
-      opts.transforms = opts.transforms ? size[1] + ',' + opts.transforms : size[1]
-      size = size[0]
-    }
-    if (opts.aspect) {
-      let height = `h_${Math.floor(size * opts.aspect)}`
-      opts.transforms = opts.transforms ? `${opts.transforms},${height}` : height
-    }
+  return sizes
+    .map(function (size) {
+      opts = Object.assign({}, opts)
+      if (Array.isArray(size)) {
+        opts.transforms = opts.transforms
+          ? size[1] + ',' + opts.transforms
+          : size[1]
+        size = size[0]
+      }
+      if (opts.aspect) {
+        const height = `h_${Math.floor(size * opts.aspect)}`
+        opts.transforms = opts.transforms
+          ? `${opts.transforms},${height}`
+          : height
+      }
 
-    return `${src(uri, size, opts)} ${size}w`
-  }).join(',')
+      return `${src(uri, size, opts)} ${size}w`
+    })
+    .join(',')
 }
 
 // get HH:mm timestamp from date
 // Date -> str
 exports.timestamp = timestamp
-function timestamp (date) {
+function timestamp(date) {
   return [
     ('0' + date.getHours()).substr(-2),
     ('0' + date.getMinutes()).substr(-2)
@@ -279,9 +311,9 @@ function timestamp (date) {
 // nullable text getter for Prismic text fields
 // (arr?) -> str
 exports.asText = asText
-function asText (richtext) {
+function asText(richtext) {
   if (!richtext || !richtext.length) return null
-  var text = ''
+  let text = ''
   for (let i = 0, len = richtext.length; i < len; i++) {
     text += (i > 0 ? ' ' : '') + richtext[i].text
   }
@@ -291,18 +323,23 @@ function asText (richtext) {
 // create placeholder loading text of given length
 // (num, bool?) -> Element
 exports.loader = loader
-function loader (length, light = false) {
-  var content = '⏳'.repeat(length).split('').reduce(function (str, char) {
-    if (Math.random() > 0.7) char += ' '
-    return str + char
-  }, '')
-  return html`<span class="u-loading${light ? 'Light' : ''}">${content}</span>`
+function loader(length, light = false) {
+  const content = '⏳'
+    .repeat(length)
+    .split('')
+    .reduce(function (str, char) {
+      if (Math.random() > 0.7) char += ' '
+      return str + char
+    }, '')
+  return html`
+    <span class="u-loading${light ? 'Light' : ''}">${content}</span>
+  `
 }
 
 // custom error with HTTP status code
 // (num, Error?) -> HTTPError
 exports.HTTPError = HTTPError
-function HTTPError (status, err) {
+function HTTPError(status, err) {
   if (!(this instanceof HTTPError)) return new HTTPError(status, err)
   if (!err || typeof err === 'string') err = new Error(err)
   err.status = status
@@ -328,15 +365,18 @@ if (Object.setPrototypeOf) {
   HTTPError.__proto__ = Error // eslint-disable-line no-proto
 }
 
-var MEMO = new LRU()
+const MEMO = new LRU()
 
 // momize function
 // (fn, arr) -> any
 exports.memo = memo
-function memo (fn, keys) {
-  assert(Array.isArray(keys) && keys.length, 'memo: keys should be non-empty array')
-  var key = JSON.stringify(keys)
-  var result = MEMO.get(key)
+function memo(fn, keys) {
+  assert(
+    Array.isArray(keys) && keys.length,
+    'memo: keys should be non-empty array'
+  )
+  const key = JSON.stringify(keys)
+  let result = MEMO.get(key)
   if (!result) {
     result = fn.apply(undefined, keys)
     MEMO.set(key, result)

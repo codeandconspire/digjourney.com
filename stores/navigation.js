@@ -1,6 +1,6 @@
 module.exports = navigation
 
-function navigation (state, emitter) {
+function navigation(state, emitter) {
   state.partial = null
 
   emitter.prependListener('pushState', onnavigate)
@@ -10,7 +10,7 @@ function navigation (state, emitter) {
     state.partial = opts.partial || null
   })
 
-  function onnavigate (href, opts = {}) {
+  function onnavigate(href, opts = {}) {
     if (!opts.persistScroll) {
       window.requestAnimationFrame(function () {
         window.scrollTo(0, 0)

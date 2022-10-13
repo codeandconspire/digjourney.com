@@ -1,6 +1,6 @@
 /* @define utilities */
 
-@import "../global";
+@import '../global';
 
 .u-textBold {
   font-weight: bold !important;

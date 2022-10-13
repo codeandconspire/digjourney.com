@@ -1,19 +1,30 @@
-var html = require('choo/html')
-var { loader } = require('../base')
+const html = require('choo/html')
+const { loader } = require('../base')
 
 module.exports = intro
 module.exports.loading = loading
 
-function intro (opts = {}) {
-  var body = opts.body
+function intro(opts = {}) {
+  let body = opts.body
 
   if (typeof window === 'undefined') {
-    if (Array.isArray(body) || body[0] === '<') html`<div>${body}</div>`
-    else body = html`<p>${body}</p>`
+    if (Array.isArray(body) || body[0] === '<') {
+      html`
+        <div>${body}</div>
+      `
+    } else {
+      body = html`
+        <p>${body}</p>
+      `
+    }
   } else if (Array.isArray(body) || body instanceof window.Element) {
-    body = html`<div>${body}</div>`
+    body = html`
+      <div>${body}</div>
+    `
   } else {
-    body = html`<p>${body}</p>`
+    body = html`
+      <p>${body}</p>
+    `
   }
 
   return html`
@@ -24,7 +35,7 @@ function intro (opts = {}) {
   `
 }
 
-function loading (opts = {}) {
+function loading(opts = {}) {
   return html`
     <div class="Intro is-loading">
       <div class="Intro-title">${loader(3)}</div>

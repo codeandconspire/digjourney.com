@@ -1,12 +1,12 @@
-var html = require('choo/html')
-var Component = require('choo/component')
-var { i18n } = require('../base')
+const html = require('choo/html')
+const Component = require('choo/component')
+const { i18n } = require('../base')
 
-var text = i18n()
+const text = i18n()
 
 class Player extends Component {
-  update (content) {
-    var shouldUpdate = content !== this.content
+  update(content) {
+    const shouldUpdate = content !== this.content
     if (shouldUpdate && content) {
       window.addEventListener('wheel', preventScroll, { passive: false })
       window.addEventListener('touchmove', preventScroll, { passive: false })
@@ -15,9 +15,9 @@ class Player extends Component {
     return shouldUpdate
   }
 
-  close (onclose = Function.prototype) {
-    var element = this.element
-    var onanimationend = () => {
+  close(onclose = Function.prototype) {
+    const element = this.element
+    const onanimationend = () => {
       element.removeEventListener('animationend', onanimationend)
       window.removeEventListener('wheel', preventScroll, { passive: false })
       window.removeEventListener('touchmove', preventScroll, { passive: false })
@@ -27,21 +27,28 @@ class Player extends Component {
     element.classList.add('is-closing')
   }
 
-  createElement (content, onclose) {
+  createElement(content, onclose) {
     this.content = content
 
-    if (!content) return html`<div class="Embed Embed--hidden" id="player" hidden></div>`
+    if (!content) {
+      return html`
+        <div class="Embed Embed--hidden" id="player" hidden></div>
+      `
+    }
 
-    var isUrl = typeof content === 'string' && /^(?:https?:)\/\//.test(content)
+    const isUrl =
+      typeof content === 'string' && /^(?:https?:)\/\//.test(content)
 
     return html`
       <div class="Embed Embed--fullscreen" id="player" tabindex="0">
         <div class="Embed-wrapper">
-          ${isUrl ? html`
+          ${isUrl
+            ? html`
             <div class="Embed-iframe">
               <iframe src="${url(content)}" frameborder="0" allowfullscreen>
             </div>
-          ` : content}
+          `
+            : content}
         </div>
         <button class="Embed-close" onclick="${() => this.close(onclose)}">
           <span class="Embed-cross">
@@ -55,15 +62,15 @@ class Player extends Component {
 
 // compose iframe embed url
 // str -> str
-function url (str) {
+function url(str) {
   if (/youtu\.be/.test(str)) {
     str = str.replace(/youtu\.be\/(\w+)$/, 'youtube.com/watch?v=$1')
   }
   if (/youtube/.test(str)) {
-    let id = str.match(/youtube\.com\/watch\?v=(.+)?\??/)[1]
+    const id = str.match(/youtube\.com\/watch\?v=(.+)?\??/)[1]
     return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&showinfo=0`
   } else if (/vimeo/.test(str)) {
-    let id = str.match(/vimeo\.com\/(.+)?\??/)[1]
+    const id = str.match(/vimeo\.com\/(.+)?\??/)[1]
     return `https://player.vimeo.com/video/${id}?badge=0&autoplay=1`
   }
   return str
@@ -71,7 +78,7 @@ function url (str) {
 
 // prevent event default
 // obj -> void
-function preventScroll (event) {
+function preventScroll(event) {
   event.preventDefault()
 }
 

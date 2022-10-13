@@ -1,4 +1,4 @@
-@import "../base";
+@import '../base';
 
 /* @define Compass */
 .Compass {
@@ -23,7 +23,6 @@
     grid-template-columns: 330px 1fr;
   }
 }
-
 
 .Compass-figure {
   flex: 1 0 auto;
@@ -65,7 +64,6 @@
     height: 660px;
   }
 }
-
 
 .Compass--image .Compass-content {
   max-width: 34rem;
