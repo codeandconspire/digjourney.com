@@ -1,13 +1,12 @@
 const html = require('choo/html')
 const raw = require('choo/html/raw')
 const asElement = require('prismic-element')
-const { asText } = require('@prismicio/helpers')
 const error = require('./error')
 const Header = require('../header')
 const Footer = require('../footer')
 const Player = require('../embed/player')
 const PrismicToolbar = require('../prismic-toolbar')
-const { i18n, memo, resolve, metaKey, themeColor } = require('../base')
+const { i18n, memo, resolve, metaKey, themeColor, asText } = require('../base')
 
 const text = i18n()
 

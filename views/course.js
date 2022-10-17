@@ -1,7 +1,6 @@
 const html = require('choo/html')
 const parse = require('date-fns/parse')
 const asElement = require('prismic-element')
-const { asText } = require('@prismicio/helpers')
 const view = require('../components/view')
 const Hero = require('../components/hero')
 const grid = require('../components/grid')
@@ -17,7 +16,8 @@ const {
   srcset,
   HTTPError,
   metaKey,
-  memo
+  memo,
+  asText
 } = require('../components/base')
 
 const text = i18n()

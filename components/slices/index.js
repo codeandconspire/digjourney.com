@@ -1,6 +1,5 @@
 const html = require('choo/html')
 const asElement = require('prismic-element')
-const { asText } = require('@prismicio/helpers')
 const card = require('../card')
 const grid = require('../grid')
 const facts = require('../facts')
@@ -12,7 +11,7 @@ const callout = require('../callout')
 const symbols = require('../symbols')
 const book = require('../book')
 const serialize = require('../text/serialize')
-const { i18n, resolve, srcset, src, memo } = require('../base')
+const { i18n, resolve, srcset, src, memo, asText } = require('../base')
 
 const text = i18n()
 

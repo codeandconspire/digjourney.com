@@ -1,6 +1,5 @@
 const html = require('choo/html')
 const asElement = require('prismic-element')
-const { asText } = require('@prismicio/helpers')
 const view = require('../components/view')
 const Hero = require('../components/hero')
 const slices = require('../components/slices')
@@ -9,7 +8,8 @@ const {
   resolve,
   src,
   HTTPError,
-  metaKey
+  metaKey,
+  asText
 } = require('../components/base')
 
 module.exports = view(page, meta, 'page')

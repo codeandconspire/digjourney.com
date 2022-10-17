@@ -4,6 +4,7 @@ const LRU = require('nanolru')
 const assert = require('assert')
 const html = require('choo/html')
 const common = require('./lang.json')
+const { asText } = require('@prismicio/richtext')
 
 if (typeof window !== 'undefined') {
   require('focus-visible')
@@ -370,4 +371,10 @@ function memo(fn, keys) {
     MEMO.set(key, result)
   }
   return result
+}
+
+// render richtext as string
+// (arr?) -> str
+exports.asText = function (value) {
+  return value == null ? '' : asText(value)
 }

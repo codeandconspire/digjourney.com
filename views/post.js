@@ -3,7 +3,6 @@ const parse = require('date-fns/parse')
 const sv = require('date-fns/locale/sv')
 const format = require('date-fns/format')
 const asElement = require('prismic-element')
-const { asText } = require('@prismicio/helpers')
 const view = require('../components/view')
 const grid = require('../components/grid')
 const card = require('../components/card')
@@ -15,7 +14,8 @@ const {
   resolve,
   src,
   HTTPError,
-  metaKey
+  metaKey,
+  asText
 } = require('../components/base')
 
 const text = i18n()
