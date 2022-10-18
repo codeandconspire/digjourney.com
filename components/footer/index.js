@@ -58,7 +58,7 @@ module.exports = class Footer extends Component {
                     <form
                       class="Footer-form"
                       method="POST"
-                      action="${this.state.mailchimp}"
+                      action="https://digjourney.us3.list-manage.com/subscribe/post?u=da19434c486fcc616e3c247aa&id=efda908eed&v_id=4528&f_id=00ebbee2f0"
                       onsubmit=${onsubmit}>
                       <input type="hidden" name="gdpr[653]" value="Y" />
                       <label for="EMAIL">
@@ -212,16 +212,16 @@ module.exports = class Footer extends Component {
             Accept: 'application/json'
           }
         })
-        .then(function (res) {
-          if (!res.ok) throw new Error(res.statusMessage)
+        .then(async function (res) {
+          if (!res.ok) throw new Error(await res.text())
           return res.json().then(function (data) {
             self.local.message = text`Hooray! You'll hear from us soon.`
             self.local.isLoading = false
             self.rerender()
           })
         })
-        .catch(function () {
-          self.local.message = text`Sorry, this page does not exist.`
+        .catch(function (err) {
+          self.local.message = text(err.message)
           self.local.isLoading = false
           self.rerender()
         })

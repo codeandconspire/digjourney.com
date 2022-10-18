@@ -6,14 +6,17 @@ const body = require('koa-body')
 const compose = require('koa-compose')
 const { get, post } = require('koa-route')
 const prismic = require('@prismicio/client')
+const mailchimp = require('mailchimp-marketing')
 const purge = require('./lib/purge')
 const { resolve } = require('./components/base')
-const subscribe = require('./lib/mailchimp-proxy')
 const imageproxy = require('./lib/cloudinary-proxy')
 
+mailchimp.setConfig({
+  apiKey: process.env.MAILCHIMP_API_KEY,
+  server: process.env.MAILCHIMP_SERVER
+})
+
 const REPOSITORY = 'digjourney'
-const MAILCHIMP =
-  'https://digjourney.us3.list-manage.com/subscribe/post?u=da19434c486fcc616e3c247aa&id=efda908eed&v_id=4528&f_id=00ebbee2f0'
 
 const app = jalla('index.js', {
   watch: !process.env.HEROKU,
@@ -191,35 +194,40 @@ app.use(
  * Forward subscription requests to MailChimp
  */
 app.use(
-  compose([
-    // expose mailchimp endpoint on state
-    function (ctx, next) {
-      ctx.state.mailchimp = MAILCHIMP
-      return next()
-    },
-    // newsletter subscription endpoint
-    post(
-      '/api/subscribe',
-      compose([
-        body({ multipart: true }),
-        async function (ctx, next) {
-          ctx.set('Cache-Control', 'private, no-cache')
-          try {
-            await subscribe(ctx.request.body, MAILCHIMP)
-            if (ctx.accepts('html')) {
-              ctx.redirect('back')
-            } else {
-              ctx.body = {}
-              ctx.type = 'application/json'
+  post(
+    '/api/subscribe',
+    compose([
+      body({ multipart: true }),
+      async function (ctx, next) {
+        ctx.set('Cache-Control', 'private, no-cache')
+        try {
+          await mailchimp.lists.addListMember(
+            process.env.MAILCHIMP_AUDIENCE_ID,
+            {
+              email_address: ctx.request.body.EMAIL,
+              status: 'pending'
             }
-          } catch (err) {
-            if (ctx.accepts('html')) ctx.redirect('back')
-            else ctx.throw(err.status || 400, 'Could not subscribe')
+          )
+          if (ctx.accepts('html')) {
+            ctx.redirect('back')
+          } else {
+            ctx.body = {}
+            ctx.type = 'application/json'
+          }
+        } catch (err) {
+          if (ctx.accepts('html')) {
+            ctx.redirect('back')
+          } else {
+            if (err.response) {
+              const { status, title } = JSON.parse(err.response.text)
+              ctx.throw(status, title)
+            }
+            ctx.throw(400, 'Could not subscribe')
           }
         }
-      ])
-    )
-  ])
+      }
+    ])
+  )
 )
 
 /**

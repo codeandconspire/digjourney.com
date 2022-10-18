@@ -47,5 +47,6 @@
   "Rating: %s of 5": "Betyg: %s av 5",
   "Available at": "Finns hos",
   "Written by %s": "Skriven av %s",
-  "Oops": "Inget här"
+  "Oops": "Inget här",
+  "Member Exists": "Den e-postadressen finns redan"
 }
