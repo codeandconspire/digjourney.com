@@ -327,7 +327,6 @@
 .Text--centerOnlyChildHeading h3:only-child,
 .Text--centerOnlyChildHeading h4:only-child {
   text-align: center;
-  max-width: 30rem;
   margin-left: auto;
   margin-right: auto;
 }

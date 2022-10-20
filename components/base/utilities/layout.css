@@ -34,7 +34,7 @@
 }
 
 .u-calloutFix + .u-calloutFix {
-  margin-top: -8vh !important;
+  /* margin-top: -8vh !important; */
 }
 
 .u-borderT {

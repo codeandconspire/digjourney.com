@@ -36,15 +36,15 @@ function callout(props) {
             : null}
           <div class="Callout-body">
             <div class="Text">${props.body ? props.body : null}</div>
+          ${props.link
+            ? html`
+                <a class="Callout-link" ${link}>
+                  ${props.link.text || text`Read more`}
+                </a>
+              `
+            : null}
           </div>
         </div>
-        ${props.link
-          ? html`
-              <a class="Callout-link" ${link}>
-                ${props.link.text || text`Read more`}
-              </a>
-            `
-          : null}
       </div>
     </article>
   `
@@ -87,9 +87,9 @@ function loading(opts = {}) {
             <div class="Text">
               <p>${loader(48)}</p>
             </div>
+            ${opts.link ? html`<span class="Callout-link">${loader(4)}</a>` : null}
           </div>
         </div>
-        ${opts.link ? html`<span class="Callout-link">${loader(4)}</a>` : null}
       </div>
     </article>
   `
