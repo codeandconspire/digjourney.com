@@ -75,8 +75,16 @@ function posts(state, emit) {
     if (isNaN(page)) page = 1
     const defaults = {
       pageSize: PAGE_SIZE,
-      orderings:
-        '[my.post.alternative_publication_date desc, document.first_publication_date desc]'
+      orderings: [
+        {
+          field: 'document.alternative_publication_date',
+          direction: 'desc'
+        },
+        {
+          field: 'document.first_publication_date',
+          direction: 'desc'
+        }
+      ]
     }
     const predicates = [predicate.at('document.type', 'post')]
     doc.data.featured.forEach(function ({ link }) {
