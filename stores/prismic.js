@@ -207,7 +207,9 @@ function prismicStore(opts) {
         for (let i = 0, value; i < cache.keys.length; i++) {
           value = cache.get(cache.keys[i])
           // guard against unfinshed promises being stringified as empty object
-          if (!(value instanceof Promise)) json[cache.keys[i]] = value
+          if (!(value instanceof Promise) && !(value instanceof Error)) {
+            json[cache.keys[i]] = value
+          }
         }
         return json
       }
