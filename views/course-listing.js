@@ -83,6 +83,7 @@ function courses(state, emit) {
       function (err, response) {
         if (err) return []
         if (!response) return [course.loading()]
+        if (!response.results) return [course.loading()]
         return response.results.map((doc) => course(asCourse(doc)))
       }
     )

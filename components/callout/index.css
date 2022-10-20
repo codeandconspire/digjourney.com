@@ -32,7 +32,7 @@
 
 .Callout-title {
   font-size: 2rem;
-  font-weight: bold;
+  font-weight: 700;
   line-height: 1.25;
 }
 
@@ -55,7 +55,6 @@
 .Callout-link {
   align-self: flex-start;
   display: inline-block;
-  font-weight: bold;
   color: rgb(var(--color-blue));
   padding: 0.1rem 0.3rem;
   margin: 2rem -0.3rem -0.1rem -0.3rem;

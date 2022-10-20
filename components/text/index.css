@@ -23,6 +23,11 @@
   font-size: 1rem;
 }
 
+.Text--large,
+.Text-large {
+  font-size: 1.25rem;
+}
+
 .Text--left {
   margin: 0;
 }
@@ -36,6 +41,11 @@
   .Text-small {
     font-size: 0.9rem;
   }
+
+  .Text--large,
+  .Text-large {
+    font-size: 1.25rem;
+  }
 }
 
 @media (min-width: 800px) and (min-height: 400px) {
@@ -46,6 +56,12 @@
   .Text--small,
   .Text-small {
     font-size: 1rem;
+  }
+
+  .Text--large,
+  .Text-large {
+    font-size: 1.5rem;
+    line-height: 1.4;
   }
 }
 
@@ -231,7 +247,7 @@
 .Text .Text-h4,
 .Text .Text-h5,
 .Text .Text-h6 {
-  font-weight: bold;
+  font-weight: 700;
   line-height: 1.25;
 }
 
@@ -294,7 +310,7 @@
 .Text h6,
 .Text .Text-h6 {
   font-size: 0.8em;
-  font-weight: normal;
+  font-weight: 400;
   text-transform: uppercase;
   color: rgba(var(--color-muted));
 }
@@ -327,7 +343,7 @@
   align-items: center;
   justify-content: center;
   color: #110046;
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 1rem;
 }
 

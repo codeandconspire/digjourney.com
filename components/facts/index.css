@@ -9,7 +9,7 @@
 .Facts-heading {
   font-size: 1.375rem;
   margin-bottom: 1rem;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 @media (min-width: 600px) and (min-height: 400px) {

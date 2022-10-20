@@ -12,24 +12,24 @@
  * Font declaration
  */
 
-@font-face {
+ @font-face {
   font-family: 'Basier Circle';
   font-style: normal;
-  font-weight: bold;
-  src: url('./fonts/basiercircle-bold.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Basier Circle';
-  font-style: normal;
-  font-weight: normal;
+  font-weight: 400;
   src: url('./fonts/basiercircle-regular.woff') format('woff');
 }
 
 @font-face {
   font-family: 'Basier Circle';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./fonts/basiercircle-bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Basier Circle';
   font-style: italic;
-  font-weight: normal;
+  font-weight: 400;
   src: url('./fonts/basiercircle-regularitalic.woff') format('woff');
 }
 
@@ -101,7 +101,7 @@ img {
  */
 
 strong {
-  font-weight: bold;
+  font-weight: 700;
 }
 
 /*

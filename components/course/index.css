@@ -36,7 +36,7 @@
 .Course-title {
   margin-bottom: 0.5em;
   font-size: 2rem;
-  font-weight: bold;
+  font-weight: 700;
   line-height: 1.25;
 }
 
@@ -54,9 +54,8 @@
 .Course-link {
   display: inline-block;
   margin-top: 1em;
-  font-weight: bold;
   padding: 0.1em 0.3em;
-  margin: 2rem -0.3em -0.1em -0.3em;
+  margin: 1.5rem -0.3em -0.1em -0.3em;
   border-radius: 0.1875rem;
   transition: background 400ms var(--ease-out);
   text-decoration: underline;
@@ -76,7 +75,7 @@
 .Course-heading {
   display: block;
   margin: 0 0 1em;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .Course-features {

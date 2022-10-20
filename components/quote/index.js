@@ -15,17 +15,14 @@ function quote(props) {
                 d="M29 55l13.2-22.1c-6.4-2-11.6-6.8-11.6-15.1 0-9 6.8-17.8 18.9-17.8C60.8 0 67 8 67 17.4c0 5.5-2.4 10.7-5 15L48.8 55H29z" />
             </g>
           </svg>
-          <div class="Text">${props.body}</div>
+          <div class="Text Text--large">${props.body}</div>
           ${props.label || props.name
             ? html`
-                <figcaption class="Text Text--small Text--muted">
+                <figcaption class="Text">
                   ${props.name
-                    ? html`
-                        <p style="margin-bottom: 0;">
-                          <strong>${props.name}</strong>
-                          >
-                        </p>
-                      `
+                    ? html`<p style="margin-bottom: 0;">
+                        <strong>${props.name}</strong>
+                      </p>`
                     : null}
                   ${props.label
                     ? html`

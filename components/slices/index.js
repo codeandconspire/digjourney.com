@@ -225,7 +225,7 @@ function slices(slice, index, list, onclick) {
         <section class="u-container u-space2">
           ${slice.primary.heading.length
             ? html`
-                <header class="Text u-space1">
+                <header class="Text Text--centerOnlyChildHeading u-space1">
                   <h2>${asText(slice.primary.heading)}</h2>
                 </header>
               `

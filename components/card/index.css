@@ -73,7 +73,7 @@
 .Card-title {
   margin-bottom: 0.5em;
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 700;
   line-height: 1.25;
   max-width: 40rem;
 }
@@ -153,7 +153,6 @@
 .Card-link {
   display: inline-block;
   color: rgb(var(--color-turquoise));
-  font-weight: bold;
   padding: 0.1em 0.3em;
   margin: 0.5rem -0.3em -0.1em -0.3em;
   border-radius: 0.1875rem;

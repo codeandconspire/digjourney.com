@@ -2,12 +2,12 @@
 
 @import '../global';
 
-.u-textBold {
-  font-weight: bold !important;
+.u-textRegular {
+  font-weight: 400 !important;
 }
 
-.u-textRegular {
-  font-weight: normal !important;
+.u-textBold {
+  font-weight: 700 !important;
 }
 
 .u-textItalic {

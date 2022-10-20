@@ -97,7 +97,7 @@
 .Product-title {
   margin-bottom: 0.5em;
   font-size: 2rem;
-  font-weight: bold;
+  font-weight: 700;
   line-height: 1.25;
 }
 
@@ -126,7 +126,7 @@
 
 .Product-heading {
   margin: 2rem 0 1rem;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .Product-features {

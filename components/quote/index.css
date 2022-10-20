@@ -15,10 +15,12 @@
 .Quote-content {
   max-width: var(--container-medium-width);
   margin: 0 auto;
+  font-weight: 700;
 }
 
 .Quote figcaption {
   margin-top: 1rem;
+  font-weight: 400;
 }
 
 .Quote em {

@@ -69,14 +69,14 @@
 .Person-title {
   font-size: 1.25rem;
   line-height: 1.2;
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 0.2em;
   margin-top: 0.1em;
 }
 
 .Person--small .Person-title {
   font-size: 1rem;
-  font-weight: normal;
+  font-weight: 400;
 }
 
 @media (min-width: 900px) {
@@ -93,12 +93,12 @@
   color: rgb(var(--document-color));
 }
 
-.Person-link {
+.Person-link,
+.Person-text a {
   display: inline-block;
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 0.14em;
-  font-weight: bold;
   padding: 0.1em 0.3em;
   margin: 0 -0.3em;
   border-radius: 0.1875rem;
@@ -106,12 +106,14 @@
   transition: background 400ms var(--ease-out);
 }
 
-.Person-link:hover {
+.Person-link:hover,
+.Person-text a:hover {
   background: rgba(var(--color-turquoise), 0.05);
   transition: none;
 }
 
-.Person-link:active {
+.Person-link:active,
+.Person-text a:active {
   opacity: 0.6;
 }
 

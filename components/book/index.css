@@ -62,7 +62,7 @@
 
 .Book-title {
   font-size: 2rem;
-  font-weight: bold;
+  font-weight: 700;
   line-height: 1.25;
   color: rgb(var(--color-blue));
 }
