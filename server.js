@@ -164,19 +164,19 @@ app.use(
         ? Date.now() + 1000 * 60 * 60 * (24 - new Date().getHours())
         : Date.now() + 1000 * 60 * 30
 
+    const endpoint = prismic.getEndpoint(REPOSITORY)
+    const client = prismic.createClient(endpoint, { fetch })
+
     // Get document preview url
-    const href = await ctx.prismic.resolvePreviewURL({
-      linkResolver(doc) {
-        const lang = doc.lang.substring(0, 2)
-        return resolve(
-          doc,
-          lang === process.env.DEFAULT_LANGUAGE ? '' : doc.lang.substring(0, 2)
-        )
-      },
-      defaultURL: '/',
+    let href = await client.resolvePreviewURL({
+      linkResolver: resolve,
+      defaultURL: '/?preview',
       documentID: documentId,
       previewToken: token
     })
+
+    // Append preview query
+    href += `${href.includes('?') ? '&' : '?'}preview`
 
     ctx.set('Cache-Control', 'max-age=0, private, no-cache')
     ctx.cookies.set(prismic.cookie.preview, token, {
