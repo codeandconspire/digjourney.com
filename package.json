@@ -67,7 +67,7 @@
     "koa-body": "^5.0.0",
     "koa-compose": "^4.1.0",
     "koa-route": "^3.2.0",
-    "mailchimp-marketing": "^5.0.0",
+    "@mailchimp/mailchimp_marketing": "^3.0.0",
     "nanolru": "^1.0.0",
     "nanoraf": "^3.1.0",
     "normalize.css": "^8.0.1",
