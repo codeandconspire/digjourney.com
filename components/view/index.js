@@ -5,7 +5,6 @@ const error = require('./error')
 const Header = require('../header')
 const Footer = require('../footer')
 const Player = require('../embed/player')
-const PrismicToolbar = require('../prismic-toolbar')
 const { i18n, memo, resolve, metaKey, themeColor, asText } = require('../base')
 
 const text = i18n()
@@ -116,9 +115,6 @@ function createView(view, getMeta) {
               !!(meta && meta.hubspot)
             )}
           ${Player.render()}
-          ${state
-            .cache(PrismicToolbar, 'prismic-toolbar')
-            .placeholder(state.href)}
         </body>
       `
 

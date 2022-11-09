@@ -1,5 +1,6 @@
 const LRU = require('nanolru')
 const assert = require('assert')
+const html = require('choo/html')
 const prismic = require('@prismicio/client')
 
 module.exports = prismicStore
@@ -25,6 +26,23 @@ function prismicStore(opts) {
     if (typeof window === 'undefined' && state.prefetch) {
       cache.clear()
     }
+
+    // load preview toolbar
+    emitter.on('DOMContentLoaded', function () {
+      if (
+        /(\?|&)preview(&|$)/.test(window.location.search) ||
+        document.cookie.includes(prismic.cookie.preview)
+      ) {
+        document.head.appendChild(
+          html`
+            <script
+              async
+              defer
+              src="https://static.cdn.prismic.io/prismic.js?new=true&repo=digjourney"></script>
+          `
+        )
+      }
+    })
 
     // expose clear via event
     emitter.on('prismic:clear', function () {
