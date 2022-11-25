@@ -53,6 +53,9 @@ function post(state, emit) {
 
     if (doc.data.related_posts && doc.data.related_posts.length) {
       related = doc.data.related_posts
+      related = related.filter(function (item) {
+        return !item.post.isBroken && item.post.slug
+      })
     }
 
     let date = doc.data.alternative_publication_date
