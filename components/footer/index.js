@@ -168,24 +168,6 @@ module.exports = class Footer extends Component {
             </div>
           </div>
         </div>
-
-        ${hubspot
-          ? html`
-              <div id="my-messages-container"></div>
-              <script>
-                function onConversationsAPIReady() {
-                  window.HubSpotConversations.widget.open()
-                }
-
-                if (window.HubSpotConversations) {
-                  onConversationsAPIReady()
-                } else {
-                  window.hsConversationsOnReady = [onConversationsAPIReady]
-                }
-              </script>
-              <!-- End of HubSpot Embed Code -->
-            `
-          : null}
       </footer>
     `
 
