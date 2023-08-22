@@ -75,6 +75,7 @@ function course(state, emit) {
                       theme: 'blue',
                       text: text`Go to application`,
                       href: resolve(doc.data.apply),
+                      class: 'u-spaceT4',
                       onclick: track
                     }
                     if (link.target === '_blank') {
