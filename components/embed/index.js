@@ -9,7 +9,7 @@ const text = i18n()
 // https://www.youtube.com/watch?foo=bar&v=WwE7TxtoyqM&bin=baz
 // https://youtu.be/gd6_ZECm58g
 const YOUTUBE_RE =
-  /https?:\/\/(?:www.)?youtu\.?be(?:\.com\/watch\?(?:.*?)v=|\/)(.+?)(?:&|$)/
+  /^https?:\/\/(?:www.)?youtu(?:(?:\.be\)|(?:be\.com)))\/(?:(?:watch\?(?:.*?)v=|\/)|(?:(?:shorts|v)\/))(.+?)(?:\?|&|$)/
 
 module.exports = embed
 module.exports.id = id
@@ -59,10 +59,14 @@ function embed(props) {
 // obj -> str
 function id(props) {
   switch (props.provider_name) {
-    case 'YouTube':
-      return props.embed_url.match(YOUTUBE_RE)[1]
-    case 'Vimeo':
-      return props.embed_url.match(/vimeo\.com\/(.+)?\??/)[1]
+    case 'YouTube': {
+      const match = props.embed_url.match(YOUTUBE_RE)
+      return match ? match[1] : null
+    }
+    case 'Vimeo': {
+      const match = props.embed_url.match(/vimeo\.com\/(.+)?\??/)
+      return match ? match[1] : null
+    }
     default:
       return null
   }
