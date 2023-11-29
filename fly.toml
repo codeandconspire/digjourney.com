@@ -1,6 +1,9 @@
 app = "digjourney"
 primary_region = "arn"
 
+[env]
+  NODE_ENV = "production"
+
 [build]
   builder = "paketobuildpacks/builder:base"
   buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
