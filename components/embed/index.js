@@ -7,9 +7,10 @@ const text = i18n()
 
 // match short and long youtube links
 // https://www.youtube.com/watch?foo=bar&v=WwE7TxtoyqM&bin=baz
+// https://youtu.be/nEXl5RwjbKU?foo=bar
 // https://youtu.be/gd6_ZECm58g
 const YOUTUBE_RE =
-  /^https?:\/\/(?:www.)?youtu(?:(?:\.be\)|(?:be\.com)))\/(?:(?:watch\?(?:.*?)v=|\/)|(?:(?:shorts|v)\/))(.+?)(?:\?|&|$)/
+  /https?:\/\/(?:www.)?youtu\.?be(?:\.com\/watch\?(?:.*?)v=|\/)(.+?)(?:\?|&|$)/
 
 module.exports = embed
 module.exports.id = id

@@ -2,6 +2,13 @@ const html = require('choo/html')
 const Component = require('choo/component')
 const { i18n } = require('../base')
 
+// match short and long youtube links
+// https://www.youtube.com/watch?foo=bar&v=WwE7TxtoyqM&bin=baz
+// https://youtu.be/nEXl5RwjbKU?foo=bar
+// https://youtu.be/gd6_ZECm58g
+const YOUTUBE_RE =
+  /https?:\/\/(?:www.)?youtu\.?be(?:\.com\/watch\?(?:.*?)v=|\/)(.+?)(?:\?|&|$)/
+
 const text = i18n()
 
 class Player extends Component {
@@ -63,12 +70,11 @@ class Player extends Component {
 // compose iframe embed url
 // str -> str
 function url(str) {
-  if (/youtu\.be/.test(str)) {
-    str = str.replace(/youtu\.be\/(\w+)$/, 'youtube.com/watch?v=$1')
-  }
-  if (/youtube/.test(str)) {
-    const id = str.match(/youtube\.com\/watch\?v=(.+)?\??/)[1]
-    return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&showinfo=0`
+  if (/youtu\.?be/.test(str)) {
+    let [, query = ''] = str.match(/(?:\?(.+))?$/)
+    query = query.replace(/t=(\d+)\w?(&|$)/, ';start=$1')
+    const id = str.match(YOUTUBE_RE)[1]
+    return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&showinfo=0&${query}`
   } else if (/vimeo/.test(str)) {
     const id = str.match(/vimeo\.com\/(.+)?\??/)[1]
     return `https://player.vimeo.com/video/${id}?badge=0&autoplay=1`
