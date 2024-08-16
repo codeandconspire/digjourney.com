@@ -6,15 +6,9 @@ const body = require('koa-body')
 const compose = require('koa-compose')
 const { get, post } = require('koa-route')
 const prismic = require('@prismicio/client')
-const mailchimp = require('@mailchimp/mailchimp_marketing')
 const purge = require('./lib/purge')
 const { resolve } = require('./components/base')
 const imageproxy = require('./lib/cloudinary-proxy')
-
-mailchimp.setConfig({
-  apiKey: process.env.MAILCHIMP_API_KEY,
-  server: process.env.MAILCHIMP_SERVER
-})
 
 const REPOSITORY = 'digjourney'
 
@@ -191,7 +185,7 @@ app.use(
 )
 
 /**
- * Forward subscription requests to MailChimp
+ * Forward subscription requests to HubSpot
  */
 app.use(
   post(
@@ -201,13 +195,43 @@ app.use(
       async function (ctx, next) {
         ctx.set('Cache-Control', 'private, no-cache')
         try {
-          await mailchimp.lists.addListMember(
-            process.env.MAILCHIMP_AUDIENCE_ID,
+          const { email } = ctx.request.body
+
+          ctx.assert(email, 400, 'Email is required')
+
+          // Try and create a new contact, don't bother with errors
+          await fetch('https://api.hubapi.com/crm/v3/objects/contacts', {
+            method: 'POST',
+            headers: {
+              authorization: `Bearer ${process.env.HUBSPOT_API_KEY}`,
+              'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+              properties: {
+                email
+              }
+            })
+          })
+
+          // Try and subscribe the new contact, don't bother with errors
+          await fetch(
+            'https://api.hubapi.com/communication-preferences/v3/subscribe',
             {
-              email_address: ctx.request.body.EMAIL,
-              status: 'pending'
+              method: 'POST',
+              headers: {
+                authorization: `Bearer ${process.env.HUBSPOT_API_KEY}`,
+                'content-type': 'application/json'
+              },
+              body: JSON.stringify({
+                emailAddress: email,
+                legalBasis: 'CONSENT_WITH_NOTICE',
+                subscriptionId: process.env.HUBSPOT_SUBSCRIPTION_ID,
+                legalBasisExplanation:
+                  'User opted in through the newsletter signup form.'
+              })
             }
           )
+
           if (ctx.accepts('html')) {
             ctx.redirect('back')
           } else {
@@ -215,13 +239,10 @@ app.use(
             ctx.type = 'application/json'
           }
         } catch (err) {
+          console.error(err)
           if (ctx.accepts('html')) {
             ctx.redirect('back')
           } else {
-            if (err.response) {
-              const { status, title } = JSON.parse(err.response.text)
-              ctx.throw(status, title)
-            }
             ctx.throw(400, 'Could not subscribe')
           }
         }

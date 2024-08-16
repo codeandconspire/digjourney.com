@@ -58,18 +58,17 @@ module.exports = class Footer extends Component {
                     <form
                       class="Footer-form"
                       method="POST"
-                      action="https://digjourney.us3.list-manage.com/subscribe/post?u=da19434c486fcc616e3c247aa&id=efda908eed&v_id=4528&f_id=00ebbee2f0"
+                      action="/api/subscribe"
                       onsubmit=${onsubmit}>
-                      <input type="hidden" name="gdpr[653]" value="Y" />
-                      <label for="EMAIL">
+                      <label for="email">
                         <span class="u-hiddenVisually">
                           ${text`Fill in your e-mail address`}
                         </span>
                         <input
                           class="Footer-email"
                           type="email"
-                          name="EMAIL"
-                          id="EMAIL"
+                          name="email"
+                          id="email"
                           placeholder="${text`Fill in your e-mail address`}"
                           disabled=${this.local.isLoading}
                           required />
