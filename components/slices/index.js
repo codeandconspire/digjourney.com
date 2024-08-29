@@ -50,8 +50,8 @@ function slices(slice, index, list, onclick) {
               750,
               1125,
               1440,
-              [2880, 'q_80'],
-              [3840, 'q_60']
+              [2880, 'q_90'],
+              [3840, 'q_80']
             ])
           }
 
@@ -481,7 +481,7 @@ function video(props) {
     width: props.thumbnail_width,
     height: props.thumbnail_height,
     sizes: '100vw',
-    srcset: srcset(id, [640, 750, 1125, 1440, [2880, 'q_70'], [3840, 'q_60']], {
+    srcset: srcset(id, [640, 750, 1125, 1440, [2880, 'q_80'], [3840, 'q_70']], {
       type: provider
     })
   })

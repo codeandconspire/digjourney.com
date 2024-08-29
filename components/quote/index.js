@@ -20,9 +20,11 @@ function quote(props) {
             ? html`
                 <figcaption class="Text">
                   ${props.name
-                    ? html`<p style="margin-bottom: 0;">
-                        <strong>${props.name}</strong>
-                      </p>`
+                    ? html`
+                        <p style="margin-bottom: 0;">
+                          <strong>${props.name}</strong>
+                        </p>
+                      `
                     : null}
                   ${props.label
                     ? html`

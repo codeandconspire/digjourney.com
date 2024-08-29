@@ -255,6 +255,12 @@ const COMPRESS = /compress,?/
 // (str, num, obj?) -> str
 exports.src = src
 function src(uri, size, opts = {}) {
+  uri = uri.replaceAll('?auto=format,compress', '')
+  uri = uri.replaceAll('?auto=compress,format', '')
+  uri = uri.replaceAll('?auto=format', '')
+  uri = uri.replace(/,\s*$/, '')
+  uri = uri.replaceAll('&rect', '?rect')
+
   let { transforms = 'c_fill,f_auto,q_auto', type = 'fetch' } = opts
 
   // apply default transforms

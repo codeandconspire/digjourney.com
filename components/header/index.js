@@ -90,7 +90,9 @@ module.exports = class Header extends Component {
                     ${href
                       ? html`
                           <a
-                            class="Header-link ${href === currentHref ? 'is-active' : ''}"
+                            class="Header-link ${href === currentHref
+                              ? 'is-active'
+                              : ''}"
                             href="${href}"
                             onclick=${onclick}>
                             ${children.length ? symbol.chevron(label) : label}
@@ -108,7 +110,9 @@ module.exports = class Header extends Component {
                               ({ label, href, description, onclick }) => html`
                                 <li class="Header-item">
                                   <a
-                                    class="Header-link ${href === currentHref ? 'is-active' : ''}"
+                                    class="Header-link ${href === currentHref
+                                      ? 'is-active'
+                                      : ''}"
                                     href="${href}"
                                     onclick=${onclick}>
                                     <div>
