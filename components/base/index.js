@@ -255,11 +255,12 @@ const COMPRESS = /compress,?/
 // (str, num, obj?) -> str
 exports.src = src
 function src(uri, size, opts = {}) {
-  uri = uri.replaceAll('?auto=format,compress', '')
-  uri = uri.replaceAll('?auto=compress,format', '')
-  uri = uri.replaceAll('?auto=format', '')
-  uri = uri.replace(/,\s*$/, '')
-  uri = uri.replaceAll('&rect', '?rect')
+  const url = new URL(uri)
+
+  const auto = url.searchParams.get('auto')
+  if (auto) {
+    url.searchParams.set('auto', auto.replace(/(format|compress),?/g, ''))
+  }
 
   let { transforms = 'c_fill,f_auto,q_auto', type = 'fetch' } = opts
 
@@ -268,12 +269,9 @@ function src(uri, size, opts = {}) {
   if (!/f_/.test(transforms)) transforms += ',f_jpg'
   if (!/q_/.test(transforms)) transforms += ',q_auto'
 
-  // trim prismic domain from uri
-  if (AUTO_TRANSFORM.test(uri)) {
-    uri = uri.replace(AUTO_TRANSFORM, (match) => match.replace(COMPRESS, ''))
-  }
-
-  return `/media/${type}/${transforms ? transforms + ',' : ''}w_${size}/${uri}`
+  return `/media/${type}/${
+    transforms ? transforms + ',' : ''
+  }w_${size}/${encodeURIComponent(url.toString())}`
 }
 
 // compose srcset attribute from url for given sizes
