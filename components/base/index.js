@@ -255,11 +255,17 @@ const COMPRESS = /compress,?/
 // (str, num, obj?) -> str
 exports.src = src
 function src(uri, size, opts = {}) {
-  const url = new URL(uri)
+  try {
+    const url = new URL(uri)
 
-  const auto = url.searchParams.get('auto')
-  if (auto) {
-    url.searchParams.set('auto', auto.replace(/(format|compress),?/g, ''))
+    const auto = url.searchParams.get('auto')
+    if (auto) {
+      url.searchParams.set('auto', auto.replace(/(format|compress),?/g, ''))
+    }
+
+    uri = url.toString()
+  } catch (err) {
+    // noop
   }
 
   let { transforms = 'c_fill,f_auto,q_auto', type = 'fetch' } = opts
@@ -271,7 +277,7 @@ function src(uri, size, opts = {}) {
 
   return `/media/${type}/${
     transforms ? transforms + ',' : ''
-  }w_${size}/${encodeURIComponent(url.toString())}`
+  }w_${size}/${encodeURIComponent(uri)}`
 }
 
 // compose srcset attribute from url for given sizes
