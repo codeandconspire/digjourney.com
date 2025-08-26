@@ -195,7 +195,18 @@ app.use(
       async function (ctx, next) {
         ctx.set('Cache-Control', 'private, no-cache')
         try {
-          const { email } = ctx.request.body
+          const { email, name } = ctx.request.body
+
+          // Honeypot: silently accept but do nothing if filled
+          if (typeof name === 'string' && name.trim() !== '') {
+            if (ctx.accepts('html')) {
+              ctx.redirect('back')
+            } else {
+              ctx.body = {}
+              ctx.type = 'application/json'
+            }
+            return
+          }
 
           ctx.assert(email, 400, 'Email is required')
 

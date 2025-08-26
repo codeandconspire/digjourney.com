@@ -73,6 +73,14 @@ module.exports = class Footer extends Component {
                           disabled=${this.local.isLoading}
                           required />
                       </label>
+                      <input
+                        class="u-hidden"
+                        type="text"
+                        name="name"
+                        id="name"
+                        tabindex="-1"
+                        autocomplete="off"
+                        aria-hidden="true" />
                       ${button({
                         class: 'Footer-button',
                         theme: 'pink',
