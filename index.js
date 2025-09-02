@@ -39,6 +39,14 @@ app.route(
   lazy(() => splitRequire('./views/post'))
 )
 app.route(
+  '/evenemang',
+  lazy(() => splitRequire('./views/event-listing'))
+)
+app.route(
+  '/evenemang/:slug',
+  lazy(() => splitRequire('./views/event'))
+)
+app.route(
   '/forelasning',
   lazy(() => splitRequire('./views/product-listing'))
 )

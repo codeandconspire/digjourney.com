@@ -16,6 +16,8 @@
   "homepage": "Hemsidan",
   "post_listing": "Alla blogginlägg",
   "post": "Blogginlägg",
+  "event_listing": "Alla evenemang",
+  "event": "Evenemang",
   "product_listing": "Våra tjänster",
   "product": "Rådgivning",
   "course_listing": "Alla utbildningar",
@@ -43,10 +45,12 @@
   "Published by %s on %s": "Skrivet av %s den %s",
   "Show more": "Visa fler insikter",
   "Related posts": "Fler insikter",
+  "Related events": "Fler evenemang",
   "Play %s": "Spela %s",
   "Rating: %s of 5": "Betyg: %s av 5",
   "Available at": "Finns hos",
   "Written by %s": "Skriven av %s",
   "Oops": "Inget här",
-  "Member Exists": "Den e-postadressen finns redan"
+  "Member Exists": "Den e-postadressen finns redan",
+  "Show more events": "Show more events"
 }

@@ -50,6 +50,10 @@ function resolve(doc) {
       return '/insikter'
     case 'post':
       return `/insikter/${doc.uid}`
+    case 'event_listing':
+      return '/evenemang'
+    case 'event':
+      return `/evenemang/${doc.uid}`
     case 'product_listing':
       return '/forelasning'
     case 'product':
