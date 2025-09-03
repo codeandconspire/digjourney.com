@@ -38,9 +38,11 @@ function event(state, emit) {
                   center: true,
                   blobs: false,
                   label: loader(12),
-                  body: html`
-                    <h1>${asText(state.partial.data.title)}</h1>
-                  `
+                  body: state.partial.data.title
+                    ? html`
+                        <h1>${asText(state.partial.data.title)}</h1>
+                      `
+                    : null
                 })
               : Hero.loading({ theme: 'gray' })}
             <div class="u-container u-space2 u-spaceB0">
