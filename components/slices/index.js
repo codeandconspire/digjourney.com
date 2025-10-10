@@ -109,6 +109,11 @@ function slices(slice, index, list, onclick) {
     }
     case 'callout': {
       const link = slice.primary.link
+
+      if (link.isBroken) {
+        return null
+      }
+
       let title = asText(slice.primary.heading)
       if (!title && link.id) title = asText(link.data.title)
       let body = asElement(slice.primary.text, resolve, serialize)
