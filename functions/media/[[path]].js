@@ -41,13 +41,16 @@ export async function onRequestGet(context) {
   const match = url.pathname.match(/^\/media\/([^/]+)\/([^/]+)\/(.+)$/)
   if (!match) return new Response('Not found', { status: 404 })
 
-  const [, , transform, rawUri] = match
+  const [, type, transform, rawUri] = match
   let source = decodeURIComponent(rawUri)
   if (url.search) source += url.search
 
+  // For video providers the URI is the embed id (e.g. a YouTube video id),
+  // not a full URL — resolve it to the provider's thumbnail. Other types
+  // (`fetch`, used for Prismic images) carry a full source URL verbatim.
   let target
   try {
-    target = new URL(source)
+    target = new URL(await resolveSource(type, source))
   } catch (err) {
     return new Response('Invalid source URL', { status: 400 })
   }
@@ -76,6 +79,33 @@ export async function onRequestGet(context) {
   headers.set('Cache-Control', `public, max-age=${ONE_YEAR}`)
 
   return new Response(upstream.body, { status: 200, headers })
+}
+
+// Resolve a `/media/:type/...` source to a fetchable image URL. Video
+// providers pass an embed id that maps to a thumbnail; everything else is
+// already a full URL.
+async function resolveSource(type, source) {
+  switch (type) {
+    case 'youtube': {
+      // maxresdefault.jpg doesn't exist for every video; fall back to
+      // hqdefault.jpg, which is always present.
+      const max = `https://i.ytimg.com/vi/${source}/maxresdefault.jpg`
+      const ok = await fetch(max, { method: 'HEAD' })
+        .then((res) => res.ok)
+        .catch(() => false)
+      return ok ? max : `https://i.ytimg.com/vi/${source}/hqdefault.jpg`
+    }
+    case 'vimeo': {
+      const oembed = `https://vimeo.com/api/oembed.json?width=1920&url=${encodeURIComponent(
+        `https://vimeo.com/${source}`
+      )}`
+      const data = await fetch(oembed).then((res) => (res.ok ? res.json() : null))
+      if (data && data.thumbnail_url) return data.thumbnail_url
+      throw new Error('Unable to resolve Vimeo thumbnail')
+    }
+    default:
+      return source
+  }
 }
 
 // Translate a Cloudinary transform string to Cloudflare `cf.image` options.
