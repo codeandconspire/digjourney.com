@@ -12,5 +12,5 @@ primary_region = "fra"
   buildpacks = ["paketo-buildpacks/nodejs"]
 
 [http_service]
-  internal_port = 8080
+  internal_port = 8081
   force_https = true

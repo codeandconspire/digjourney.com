@@ -6,8 +6,10 @@
   "scripts": {
     "build": "jalla build index.js",
     "start": "node server.js",
+    "prerender": "node -r dotenv/config bin/prerender.js",
+    "pages:build": "npm run build && node bin/prerender.js",
+    "preview": "npx wrangler pages dev out",
     "format": "eslint '**/*.js' --fix && prettier --write '**/*.(js|css)'",
-    "purge": "node -r dotenv/config -e \"require('./lib/purge')('../index.js', console.log)\"",
     "test": "prettier --check '**/*.(js|css)' && eslint '**/*.js'"
   },
   "eslintConfig": {
@@ -17,7 +19,21 @@
     "rules": {
       "indent": "off",
       "space-before-function-paren": "off"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "functions/**/*.js"
+        ],
+        "parserOptions": {
+          "sourceType": "module"
+        },
+        "env": {
+          "serviceworker": true,
+          "browser": true
+        }
+      }
+    ]
   },
   "engines": {
     "node": "18.x"
@@ -56,11 +72,9 @@
   "dependencies": {
     "@prismicio/client": "^6.7.1",
     "@prismicio/richtext": "^2.1.1",
-    "cccpurge": "^2.0.0",
     "choo": "^7.1.0",
     "choo-meta": "^2.0.0",
     "choo-service-worker": "^3.0.0",
-    "cloudinary": "^1.32.0",
     "date-fns": "^1.30.1",
     "focus-visible": "^5.2.0",
     "jalla": "^1.0.0-41",
@@ -75,6 +89,7 @@
     "postcss-url": "^10.1.3",
     "prismic-element": "^2.1.0",
     "prismic-richtext": "1.0.3",
-    "smoothscroll-polyfill": "^0.4.4"
+    "smoothscroll-polyfill": "^0.4.4",
+    "wayfarer": "^6.6.4"
   }
 }

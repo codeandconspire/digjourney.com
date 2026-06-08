@@ -16,16 +16,17 @@ need arise.
 ### Prismic ([link](https://prismic.io))
 The content is managed on Prismic and fetched while rendering pages.
 
-### Cloudflare ([link](https://www.cloudflare.com))
-To ensure fast load times the site is hosted behind Cloudflare which caches
-assets, images and HTML pages. The cached HTML pages are purged when changes are
-published to Prismic or when deploying a new version of the page.
+### Cloudflare Pages ([link](https://www.cloudflare.com))
+The site is hosted on Cloudflare Pages as a statically prerendered snapshot of
+the app, with a few dynamic endpoints running as Pages Functions. Publishing in
+Prismic triggers a rebuild + redeploy. See [MIGRATION.md](MIGRATION.md) for the
+build pipeline, project settings and cutover steps.
 
-### Cloudinary ([link](https://cloudinary.com))
+### Cloudflare Images
 Editors are encouraged to upload high resolution images to Prismic. These images
-are then transformed using Cloudinary before being served to the client. To keep
-costs down the transformations are proxied through our own server which allows
-us to cache the image with Cloudflare.
+are resized and optimised on the fly via Cloudflare Image Transformations,
+proxied through the `/media/*` Pages Function (functions/media/[[path]].js) and
+cached on Cloudflare's edge.
 
 ## Development
 Local development is configured by reading environment variables from the local `.env`

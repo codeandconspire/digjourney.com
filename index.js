@@ -11,7 +11,7 @@ const REPOSITORY = 'digjourney'
 
 app.state.origin =
   process.env.NODE_ENV === 'development'
-    ? 'http://localhost:8080'
+    ? 'http://localhost:8081'
     : `https://${process.env.HOST}`
 
 if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
