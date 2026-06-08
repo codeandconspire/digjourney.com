@@ -79,18 +79,19 @@ async function main() {
 async function enumerateUrls() {
   const app = require('../index.js')
   const routes = Object.keys(getAllRoutes(app.router.router))
-  const all = []
 
-  for (const route of routes) {
-    // wayfarer represents the catch-all ('/*') as '/:'
-    const isDynamic = /\/:/.test(route)
-    if (!isDynamic) {
-      all.push(route)
-      continue
-    }
-    const lookup = route === '/:' ? '/*' : route
-    const resolved = await promisifyResolve(lookup)
-    if (Array.isArray(resolved)) all.push(...resolved)
+  // wayfarer represents the catch-all ('/*') as '/:'
+  const isDynamic = (route) => /\/:/.test(route)
+  const all = routes.filter((route) => !isDynamic(route))
+
+  // Resolve the dynamic document types from Prismic in parallel.
+  const expanded = await Promise.all(
+    routes
+      .filter(isDynamic)
+      .map((route) => promisifyResolve(route === '/:' ? '/*' : route))
+  )
+  for (const urls of expanded) {
+    if (Array.isArray(urls)) all.push(...urls)
   }
 
   return [...new Set(all.filter(Boolean))]
@@ -195,7 +196,11 @@ async function snapshotExtras() {
 async function copyAssets() {
   const src = path.join(ROOT, 'dist', 'public')
   console.log('Copying static assets from dist/public…')
-  await fs.cp(src, OUT, { recursive: true })
+  // Skip source maps — no need to ship/upload them to production.
+  await fs.cp(src, OUT, {
+    recursive: true,
+    filter: (s) => !s.endsWith('.map')
+  })
 }
 
 async function writeRedirects() {
