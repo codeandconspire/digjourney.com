@@ -33,6 +33,10 @@ const ORIGIN = `http://localhost:${PORT}`
 const OUT = path.resolve(process.cwd(), process.env.PRERENDER_OUT || 'out')
 const ROOT = path.resolve(__dirname, '..')
 const CONCURRENCY = Number(process.env.PRERENDER_CONCURRENCY || 8)
+// Abort a single page render if it stalls (usually a transient Prismic hiccup
+// during SSR). Without this, Node's fetch waits ~300s before erroring, so one
+// stalled route blocks the whole crawl for minutes. Aborted requests are retried.
+const REQUEST_TIMEOUT = Number(process.env.PRERENDER_TIMEOUT || 30000)
 const EXTRA_FILES = ['/robots.txt', '/sw.js']
 
 main().catch((err) => {
@@ -129,7 +133,10 @@ async function waitForServer(timeout = 60000) {
   const deadline = Date.now() + timeout
   while (Date.now() < deadline) {
     try {
-      const res = await fetch(ORIGIN + '/', { redirect: 'manual' })
+      const res = await fetch(ORIGIN + '/', {
+        redirect: 'manual',
+        signal: AbortSignal.timeout(5000)
+      })
       if (res.status > 0) return
     } catch (err) {
       // not up yet
@@ -158,7 +165,10 @@ async function crawl(urls) {
 
 async function fetchPage(url, attempt = 1) {
   try {
-    const res = await fetch(ORIGIN + url, { redirect: 'manual' })
+    const res = await fetch(ORIGIN + url, {
+      redirect: 'manual',
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT)
+    })
     if (res.status >= 200 && res.status < 300) {
       return { ok: true, url, body: await res.text() }
     }
@@ -169,6 +179,7 @@ async function fetchPage(url, attempt = 1) {
     // 3xx/4xx are non-fatal (redirected or removed); 5xx fails the build
     return { ok: false, url, status: res.status, fatal: res.status >= 500 }
   } catch (err) {
+    // includes timeouts (AbortError) — retry, they're usually transient
     if (attempt < 3) {
       await sleep(500 * attempt)
       return fetchPage(url, attempt + 1)
