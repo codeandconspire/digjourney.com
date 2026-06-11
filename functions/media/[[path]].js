@@ -3,18 +3,29 @@
  * Transformations.
  *
  * Keeps the legacy `/media/:type/:transform/:uri` URL contract (these URLs are
- * baked into the prerendered HTML/CSS by components/base `src`/`srcset`), but
- * resizes/optimises the remote Prismic source via `cf.image` instead of
- * Cloudinary. Transformations must be enabled on the zone, and responses are
- * cached on Cloudflare's edge.
+ * baked into the prerendered HTML/CSS by components/base `src`/`srcset`) by
+ * redirecting to the zone's `/cdn-cgi/image/<options>/<source>` endpoint.
+ *
+ * The redirect is required: the `cf.image` fetch option is only honoured in
+ * Workers, not Pages Functions, so transforming inline from here silently
+ * returns the original image. `/cdn-cgi/image/` is handled by the Cloudflare
+ * edge before the app and transformations must be enabled on the zone
+ * (dashboard → Images → Transformations, including remote origins for
+ * images.prismic.io and the video thumbnail hosts).
+ *
+ * The redirect targets the production origin so local `wrangler pages dev`
+ * and *.pages.dev previews (where `/cdn-cgi/image/` is unavailable) serve
+ * correctly transformed images too.
  *
  * The Cloudinary-style transform tokens are translated to Cloudflare options:
- *   c_fill → fit:cover     f_auto → format negotiated from Accept
- *   c_fit  → fit:contain   f_jpg  → format:jpeg
- *   c_crop → fit:crop      q_auto → (default quality)
- *   w_800  → width:800     q_90   → quality:90
- *   h_600  → height:600    g_face → gravity:face
+ *   c_fill → fit=cover     f_auto → format=auto (negotiated from Accept)
+ *   c_fit  → fit=contain   f_jpg  → format=jpeg
+ *   c_crop → fit=crop      q_auto → (default quality)
+ *   w_800  → width=800     q_90   → quality=90
+ *   h_600  → height=600    g_face → gravity=face
  */
+
+const ORIGIN = 'https://digjourney.com'
 
 const ONE_YEAR = 60 * 60 * 24 * 365
 
@@ -55,30 +66,18 @@ export async function onRequestGet(context) {
     return new Response('Invalid source URL', { status: 400 })
   }
 
-  const accept = request.headers.get('Accept') || ''
-  const image = mapTransforms(transform, accept)
+  const options = mapTransforms(transform)
+  const location = options
+    ? `${ORIGIN}/cdn-cgi/image/${options}/${target.href}`
+    : target.href
 
-  const upstream = await fetch(target.href, {
-    cf: { image },
-    headers: { Accept: accept }
+  return new Response(null, {
+    status: 301,
+    headers: {
+      Location: location,
+      'Cache-Control': `public, max-age=${ONE_YEAR}`
+    }
   })
-  if (!upstream.ok) {
-    return new Response('Upstream image error', { status: upstream.status })
-  }
-
-  const headers = new Headers()
-  for (const name of [
-    'content-type',
-    'etag',
-    'last-modified',
-    'content-length'
-  ]) {
-    const value = upstream.headers.get(name)
-    if (value) headers.set(name, value)
-  }
-  headers.set('Cache-Control', `public, max-age=${ONE_YEAR}`)
-
-  return new Response(upstream.body, { status: 200, headers })
 }
 
 // Resolve a `/media/:type/...` source to a fetchable image URL. Video
@@ -108,9 +107,10 @@ async function resolveSource(type, source) {
   }
 }
 
-// Translate a Cloudinary transform string to Cloudflare `cf.image` options.
-function mapTransforms(transform, accept) {
-  const image = {}
+// Translate a Cloudinary transform string to a `/cdn-cgi/image/` options
+// string.
+function mapTransforms(transform) {
+  const options = []
 
   for (const token of transform.split(',')) {
     const sep = token.indexOf('_')
@@ -121,39 +121,31 @@ function mapTransforms(transform, accept) {
     switch (key) {
       case 'w': {
         const n = Number(value)
-        if (n) image.width = n
+        if (n) options.push(`width=${n}`)
         break
       }
       case 'h': {
         const n = Number(value)
-        if (n) image.height = n
+        if (n) options.push(`height=${n}`)
         break
       }
       case 'q': {
         const n = Number(value)
-        if (value !== 'auto' && n) image.quality = n
+        if (value !== 'auto' && n) options.push(`quality=${n}`)
         break
       }
       case 'c':
-        image.fit = FIT[value] || 'cover'
+        options.push(`fit=${FIT[value] || 'cover'}`)
         break
       case 'f':
-        image.format = value === 'auto' ? 'auto' : FORMAT[value] || value
+        options.push(`format=${value === 'auto' ? 'auto' : FORMAT[value] || value}`)
         break
       case 'g':
-        image.gravity = value
+        options.push(`gravity=${value}`)
         break
       // ignore unrecognised tokens
     }
   }
 
-  // Workers/Functions don't honour format:auto — negotiate from Accept,
-  // falling back to the source format (omit) for older clients.
-  if (image.format === 'auto') {
-    if (accept.includes('image/avif')) image.format = 'avif'
-    else if (accept.includes('image/webp')) image.format = 'webp'
-    else delete image.format
-  }
-
-  return image
+  return options.join(',')
 }
